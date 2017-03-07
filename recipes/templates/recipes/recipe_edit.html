@@ -1,0 +1,47 @@
+{% extends 'recipes/base.html' %}
+{% block title %}
+    Edit {{ recipe.name }} - {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+    <h1>Edit "{{ recipe.name }}"</h1>
+    <form role="form" name="form" action="" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <hr>
+        {{ ri_formset.management_form }}
+        <h2>Ingredients</h2>
+        <table>
+            {% for form in ri_formset %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                {% if forloop.first %}
+                    <thead>
+                        {% for field in form.visible_fields %}
+                            <th>{{ field.label_tag }}</th>
+                        {% endfor %}
+                    </thead>
+                {% endif %}
+                <tr>
+                    {% for field in form.visible_fields %}
+                        <td>{{ field }}<br>{{ field.errors }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <hr>
+        <h2>Preparation</h2>
+        {{ rs_formset.management_form }}
+
+        <ol>
+            {% for form in rs_formset %}
+                {% for hidden in form.hidden_fields %}
+                    {{ hidden }}
+                {% endfor %}
+                    <li>{{ form.text }} {{form.DELETE }}</li>
+            {% endfor %}
+        </ol>
+        <button type="submit">Submit</button>
+    </form>
+{% endblock content %}

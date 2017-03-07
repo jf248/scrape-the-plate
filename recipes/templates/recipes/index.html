@@ -1,0 +1,13 @@
+{% extends 'recipes/base.html' %}
+{% block title %}
+    Homepage - {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+    <h2>Recipes</h2>
+    <ul>
+        {% for recipe in recipes %}
+        <li><a href="{% url 'recipes:recipe_detail' slug=recipe.slug %}">{{ recipe.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

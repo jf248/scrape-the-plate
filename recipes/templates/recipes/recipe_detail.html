@@ -1,0 +1,26 @@
+{% extends 'recipes/base.html' %}
+{% block title %}
+    {{ recipe.name }} - {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+    <h1>{{ recipe.name }}</h1>
+    <h2>Ingredients</h2>
+    <ul>
+        {% for ri in recipe.recipeingredient_set.all %}
+            <li>{{ ri.text }}</li>
+        {% endfor %}
+    </ul>
+    <h2>Preparation</h2>
+    <ol>
+        {% for rs in recipe.recipestep_set.all %}
+            <li>{{ rs.text }}</li>
+        {% endfor %}
+    </ol>
+    <a href="{% url 'recipes:recipe_edit' slug=recipe.slug %}">Edit</a>
+    {% if recipe.slug in request.session.marks %}
+       <a href="{% url 'recipes:recipe_mark' slug=recipe.slug %}">Un-mark</a>
+    {% else %}
+        <a href="{% url 'recipes:recipe_mark' slug=recipe.slug %}">Mark</a>
+    {% endif %}
+{% endblock content %}

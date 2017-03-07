@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+            Scrape the Plate
+        {% endblock title %}
+    </title>
+    <link rel="stylesheet" href="{% static 'recipes/css/style.css' %}" />
+</head>
+<body>
+    {% block header %}
+        <h1>Scrape the Plate</h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="{% url 'recipes:index' %}">Home</a>
+                </li>
+                <li>
+                    <a href="{% url 'recipes:about' %}">About</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'auth_logout' %}">Logout</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{% url 'auth_login' %}">Login</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'registration_register' %}">Register</a>
+                    </li>
+                {% endif %}
+                {{ request.session.marks }}
+            </ul>
+        </nav>
+    {% endblock header %}
+    {% block content %}{% endblock content %}
+    {% block footer %}{% endblock footer %}
+</body>
+</html>
