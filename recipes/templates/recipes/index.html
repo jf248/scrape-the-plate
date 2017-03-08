@@ -10,4 +10,5 @@
         <li><a href="{% url 'recipes:recipe_detail' slug=recipe.slug %}">{{ recipe.name }}</a></li>
         {% endfor %}
     </ul>
+    <a href="{% url 'recipes:add_recipe' %}">Add another recipe</a>
 {% endblock content %}

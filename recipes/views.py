@@ -1,8 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.views.generic import TemplateView
 from django.forms import inlineformset_factory
-from .models import Recipe, RecipeIngredient, RecipeStep
-from .forms import RecipeForm
+from .models import Recipe, RecipeIngredient, RecipeStep, Ingredient
+from .forms import RecipeForm, IngredientForm
 
 
 def index(request):
@@ -28,7 +28,12 @@ def recipe_detail(request, slug):
 
 
 def recipe_edit(request, slug):
-    recipe = Recipe.objects.get(slug=slug)
+    if slug is None:
+        recipe = Recipe()
+        new = True
+    else:
+        recipe = Recipe.objects.get(slug=slug)
+        new = False
     RecipeIngredientInlineFormset = inlineformset_factory(
         Recipe, RecipeIngredient, fields=('ingredient', 'text',), extra=0
     )
@@ -45,7 +50,7 @@ def recipe_edit(request, slug):
             request.POST, request.FILES, instance=recipe)
         if form.is_valid() and ri_formset.is_valid() and \
                 rs_formset.is_valid():
-            # We need to generate slug field, so dont't commit and use
+            # We need to generate slug field, so don't commit and use
             # Recipe's overridden save() method
             recipe = form.save(commit=False)
             recipe.save()
@@ -61,6 +66,7 @@ def recipe_edit(request, slug):
             'form': form,
             'ri_formset': ri_formset,
             'rs_formset': rs_formset,
+            'new': new
     })
 
 
@@ -89,6 +95,8 @@ def toggle_mark(request, slug):
     else:
         marks[slug] = True
     request.session['marks'] = marks
+
+
 
 
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from recipes.models import Recipe
+from recipes.models import Recipe, RecipeIngredient
 
 
 # set up automated slug creation
@@ -10,3 +10,4 @@ class RecipeAdmin(admin.ModelAdmin):
 
 # and register it
 admin.site.register(Recipe, RecipeAdmin)
+admin.site.register(RecipeIngredient)
