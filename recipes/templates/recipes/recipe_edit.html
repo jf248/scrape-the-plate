@@ -4,8 +4,12 @@
 {% endblock title %}
 
 {% block content %}
-    <h1>Edit "{{ recipe.name }}"</h1>
-    <form role="form" name="form" action="" method="post">
+    {% if new %}
+        <h1>New Recipe</h1>
+    {% else %}
+        <h1>Edit "{{ recipe.name }}"</h1>
+    {% endif %}
+    <form role="form" action="" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <hr>
@@ -13,9 +17,6 @@
         <h2>Ingredients</h2>
         <table>
             {% for form in ri_formset %}
-                {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
                 {% if forloop.first %}
                     <thead>
                         {% for field in form.visible_fields %}
@@ -23,25 +24,35 @@
                         {% endfor %}
                     </thead>
                 {% endif %}
-                <tr>
+                <tr class="recipeingredient_set">
                     {% for field in form.visible_fields %}
                         <td>{{ field }}<br>{{ field.errors }}</td>
                     {% endfor %}
+                    {% for hidden in form.hidden_fields %}
+                        <td class="hidden">{{ hidden }}</td>
+                    {% endfor %}
                 </tr>
             {% endfor %}
+
         </table>
+        <a href="#" class="add_more" fs="recipeingredient_set">Add another ingredient</a>
+
+
         <hr>
         <h2>Preparation</h2>
         {{ rs_formset.management_form }}
 
         <ol>
             {% for form in rs_formset %}
-                {% for hidden in form.hidden_fields %}
-                    {{ hidden }}
-                {% endfor %}
-                    <li>{{ form.text }} {{form.DELETE }}</li>
+                    <li class="recipestep_set">{{ form.text }} {{form.DELETE }}{% for h in form.hidden_fields %}{{ h }}{% endfor %}</li>
             {% endfor %}
         </ol>
-        <button type="submit">Submit</button>
+        <a href="#" class="add_more" fs="recipestep_set">Add another ingredient</a>
+        <p><button type="submit">Submit</button></p>
     </form>
+        <script>
+            $('.add_more').click(function() {
+                cloneMore($(this).attr('fs'));
+            });
+        </script>
 {% endblock content %}

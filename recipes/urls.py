@@ -12,6 +12,8 @@ extra_patterns = [
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^about/$', views.AboutView.as_view(), name='about'),
+    url(r'^add_recipe/$', views.recipe_edit, {'slug': None},
+        name='add_recipe'),
     url(r'^(?P<slug>[-\w]+)/', include(extra_patterns)),
 ]
 
