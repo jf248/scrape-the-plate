@@ -13,6 +13,9 @@ settings_local.py
 post-double.py
 labels
 
+# PyCharm
+.idea/
+
 # npm modules
 node_modules/
 
