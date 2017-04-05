@@ -13,6 +13,12 @@ settings_local.py
 post-double.py
 labels
 
+# npm
+node_modules/
+
+# PyCharm
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
