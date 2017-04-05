@@ -1,3 +1,95 @@
-body {
-    background-color: whitesmoke;
+body { 
+    padding-top: 70px;
+    counter-reset: item;
+}
+
+.ingredient-text-ingredient-phrase {
+    background-color: yellow
+}
+
+.ingredient-label {
+    margin-bottom: 6px;
+    display: block;
+    color: #959595;
+}
+
+.buttons {
+    float: right;
+}
+
+.ingredient-form-container:first-of-type {
+    margin-top: 45px
+}
+
+.ingredient-form-container {
+    position: relative;
+    padding-top: 45px;
+}
+
+.ingredient-form-container:after {
+
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #959595;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    counter-increment: item;
+    content: "Ingredient " counter(item);
+}
+
+.ingredient-text-container {
+    background-color: #eee;
+    border: 1px solid #ccc;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    padding: 6px 12px 6px 12px;
+    color: #555;
+    vertical-align: middle;
+    border-radius: 4px;
+    cursor: text;
+    margin-bottom: 15px;
+    height: 34px;
+}
+
+.ingredient-helper {
+    padding: 6px 22px 6px 12px;
+}
+
+.center-cropped {
+  object-fit: cover;
+  object-position: center;
+  height: 140px;
+  width: 140px;
+  margin-bottom: 10px;
+}
+
+input[type="file"] {
+  display: inline;
+}
+
+
+@media print {
+  
+  footer, img {
+    display: none!important
+  }
+
+  .no-print {
+    display: none!important
+  }
+
+  .recipe-actions {
+    display: none!important
+  }
+  
+  .print-page-break-after {
+    page-break-after: always;
+  }
+
+  .print-inline > div {
+    display: inline-block!important;
+  }
+
 }

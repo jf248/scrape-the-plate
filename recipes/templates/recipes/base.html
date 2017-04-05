@@ -3,43 +3,53 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
         {% block title %}
             Scrape the Plate
         {% endblock title %}
     </title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-    <script src="{% static 'recipes/js/base.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'recipes/css/style.css' %}"/>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'recipes/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-combobox/css/bootstrap-combobox.css' %}">
+    {% block css %}{% endblock %}
 </head>
 <body>
-    {% block header %}
-        <h1>Scrape the Plate</h1>
-        <nav>
-            <ul>
-                <li>
-                    <a href="{% url 'recipes:index' %}">Home</a>
-                </li>
-                <li>
-                    <a href="{% url 'recipes:about' %}">About</a>
-                </li>
-                {% if user.is_authenticated %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'recipes:index' %}">Scrape the Plate</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <!-- <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li> -->
+                    <li><a href="{% url 'recipes:about' %}">About</a></li>
+                    <li><a href="{% url 'recipes:scrape' '1' %}">Scrape</a></li>
+                    <li><a href="{% url 'recipes:index' %}">Search</a></li>
+                </ul>
+
+                <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="{% url 'auth_logout' %}">Logout</a>
+                <form class="navbar-form">
+                    <a href="{% url 'recipes:about' %}"><button type="button" class="btn btn-default" id="recipes-print-button"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Print ({{ request.session.print_number }})</button></a>
+                </form>
                     </li>
-                {% else %}
-                    <li>
-                        <a href="{% url 'auth_login' %}">Login</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'registration_register' %}">Register</a>
-                    </li>
-                {% endif %}
-                {{ request.session.marks }}
-            </ul>
-        </nav>
-    {% endblock header %}
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'auth_logout' %}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{% url 'auth_login' %}">Login</a></li>
+                        <li><a href="{% url 'registration_register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block jumbotron %}{% endblock jumbotron %}
+    <div class="container">
     {% block content %}{% endblock content %}
     {% block footer %}{% endblock footer %}
+    </div>
+    <script src="{% static 'recipes/js/bundle.js' %}"></script>
+
 </body>
 </html>

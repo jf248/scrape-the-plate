@@ -16,11 +16,15 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.http import HttpResponsePermanentRedirect
+from django.conf.urls.static import static
+from django.conf import settings
 
+
+# todo: " + static(set..." only works in debug development mode
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # redirect / to /recipes/
     url(r'^$', lambda r: HttpResponsePermanentRedirect('recipes/')),
     url(r'^recipes/', include('recipes.urls', namespace='recipes')),
     url(r'^accounts/', include('registration.backends.simple.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

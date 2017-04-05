@@ -1,26 +1,49 @@
 {% extends 'recipes/base.html' %}
+
 {% block title %}
     {{ recipe.name }} - {{ block.super }}
 {% endblock title %}
 
 {% block content %}
-    <h1>{{ recipe.name }}</h1>
-    <h2>Ingredients</h2>
-    <ul>
-        {% for ri in recipe.recipeingredient_set.all %}
-            <li>{{ ri.text }}</li>
+<div class="row">
+    <div class="col-sm-12 clearfix">
+        <div class="no-print" style="display: inline-block; margin-right: 20px">
+            <img src="{{ recipe.image.url }}" class="center-cropped" style="width: 200px; height: 200px">
+        </div>
+        <div style="display: inline-block;">
+            <h1>{{ recipe.name }}</h1>
+            <div class="clearfix" style="margin-bottom: 5px;">
+                <div style="display: inline-block;">
+                    <ul class="list-inline">
+                        <li>{{ recipe.source|default:"My own" }}</li>
+                        <li><span class="recipe-label">Serves: </span>{{ recipe.serves }}</li>
+                        <li><span class="recipe-label">Time: </span>{{ recipe.prep_time }}</li>
+                    </ul>
+
+                </div>
+                <div style="display: inline-block;">
+                    [MARK BUTTON]
+                </div>
+                <div>
+                    [TAGS]
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <h3>Ingredients</h3>
+        <ul class="list-unstyled">
+        {% for ingredient in recipe.recipeingredient_set.all %}
+            <li>{{ ingredient }}</li>
         {% endfor %}
-    </ul>
-    <h2>Preparation</h2>
-    <ol>
-        {% for rs in recipe.recipestep_set.all %}
-            <li>{{ rs.text }}</li>
-        {% endfor %}
-    </ol>
-    <a href="{% url 'recipes:recipe_edit' slug=recipe.slug %}">Edit</a>
-    {% if recipe.slug in request.session.marks %}
-       <a href="{% url 'recipes:recipe_mark' slug=recipe.slug %}">Un-mark</a>
-    {% else %}
-        <a href="{% url 'recipes:recipe_mark' slug=recipe.slug %}">Mark</a>
-    {% endif %}
+        </ul>
+    </div>
+    <div class="col-sm-8">
+        <h3>Preparation</h3>
+        {{ recipe.preparation }}
+    </div>
+</div>
+
 {% endblock content %}

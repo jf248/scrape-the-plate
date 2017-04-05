@@ -1,0 +1,13 @@
+{% extends 'recipes/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    New Recipe - {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+    <div class="col-sm-12">
+        <div class="page-header"><h1>Step 2  <small>Raw text of the recipe</small></h1></div>
+        {% crispy form %}
+    </div>
+{% endblock content %}

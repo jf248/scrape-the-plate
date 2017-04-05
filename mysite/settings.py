@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'recipes',  # added recipes app
     'registration',  # added django-registration-redux package
+    'crispy_forms',  # added django-crispy-forms
+    'formtools', # added django-formtools
 ]
 
 MIDDLEWARE = [
@@ -107,7 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Los_Angeles'
 
 USE_I18N = True
 
@@ -120,6 +122,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # django-registration-redux settings
 ACCOUNT_ACTIVATION_DAYS = 7
@@ -135,3 +138,11 @@ EMAIL_PORT = 1025
 
 # login redirect
 LOGIN_REDIRECT_URL = "recipes:index"
+
+
+# Media
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
+
+# Crispy
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

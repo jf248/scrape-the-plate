@@ -1,21 +1,19 @@
 from django.conf.urls import url, include
-from django.urls import reverse_lazy
 from . import views
-from django.contrib.auth import views as auth_views
 
-extra_patterns = [
-    url(r'^$', views.recipe_detail, name='recipe_detail'),
-    url(r'^edit/$', views.recipe_edit, name='recipe_edit'),
+
+recipe_patterns = [
+    url(r'^$', views.RecipeDetail.as_view(), name='recipe_detail'),
+    # url(r'^edit/$', views.recipe_edit, name='recipe_edit'),
     url(r'^mark/$', views.recipe_mark, name='recipe_mark'),
 ]
 
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^about/$', views.AboutView.as_view(), name='about'),
-    url(r'^add_recipe/$', views.recipe_edit, {'slug': None},
-        name='add_recipe'),
-    url(r'^(?P<slug>[-\w]+)/', include(extra_patterns)),
+    url(r'^scrape/$', views.scrape_view),
+    url(r'^scrape/(?P<step>[1-3]{1})/$', views.scrape_view, name='scrape'),
+    url(r'^ingredient/', include(views.IngredientViews.urls())),
+    url(r'^(?P<slug>[-\w]+)/', include(recipe_patterns)),
 ]
-
-# registration urls, copied from registration.auth_urls.py
 

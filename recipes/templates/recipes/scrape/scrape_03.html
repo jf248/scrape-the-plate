@@ -1,0 +1,19 @@
+{% extends 'recipes/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    New Recipe - {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+    <div class="col-sm-12">
+        <div class="page-header"><h1>Step 3  <small>Match the ingredients</small></h1></div>
+        <p class="lead">Highlight the <b>ingredient phrase</b> in each expression and select a matching <b>ingredient item</b>.</p>
+        <p class="lead">Matched phrases and items will be remembered for future scrapes.</p>
+        <form role="form" action="" method="post" class="">
+            {% crispy form helper %}
+            <button type="submit" class="btn btn-default">Next</button>
+        </form>
+    </div>
+{% endblock content %}
+

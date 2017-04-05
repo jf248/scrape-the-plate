@@ -1,0 +1,24 @@
+{
+  "name": "scrape-the-plate",
+  "version": "1.0.0",
+  "description": "A django web app for scraping and saving recipes",
+  "main": "recipes/static/recipes/js/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jf248/scrape-the-plate.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jf248/scrape-the-plate/issues"
+  },
+  "homepage": "https://github.com/jf248/scrape-the-plate#readme",
+  "dependencies": {
+    "@danielfarrell/bootstrap-combobox": "^1.1.8",
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1"
+  }
+}

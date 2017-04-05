@@ -1,0 +1,16 @@
+{% extends 'recipes/base.html' %}
+
+{% block title %}
+    Ingredients - {{ block.super }}
+{% endblock title %}
+
+{% block content%}
+    <form method="post" action="">
+        {{ formset.management_form }}
+        <table>
+            {% for form in formset %}
+            {{ form }}
+            {% endfor %}
+        </table>
+    </form>
+{% endblock content %}

@@ -1,14 +1,27 @@
 {% extends 'recipes/base.html' %}
+
 {% block title %}
-    Homepage - {{ block.super }}
+    Home - {{ block.super }}
 {% endblock title %}
 
+{% block jumbotron %}
+    <div class="container">
+      <div class="jumbotron">
+          <h1>Scrape, scrape, scrape</h1>
+          <p>Scrape recipes from the web (or add your own) and save them all here</p>
+          <p>Easily print a meal's worth of recipes in one go. A handy grocery list will be included</p>
+          <p><a class="btn btn-primary btn-lg" href="{% url 'recipes:scrape' '1' %}" role="button">Get scraping</a></p>
+      </div>
+    </div>
+{% endblock jumbotron %}
+
 {% block content %}
-    <h2>Recipes</h2>
-    <ul>
-        {% for recipe in recipes %}
-        <li><a href="{% url 'recipes:recipe_detail' slug=recipe.slug %}">{{ recipe.name }}</a></li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'recipes:add_recipe' %}">Add another recipe</a>
+    <div class="col-sm-12">
+        <div class="page-header"><h1>Recipes</h1></div>
+        <ul class="list-group">
+            {% for recipe in recipes %}
+            <li class="list-group-item"><a href="{% url 'recipes:recipe_detail' slug=recipe.slug %}">{{ recipe.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
 {% endblock content %}
