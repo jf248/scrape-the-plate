@@ -10,15 +10,16 @@ import {
 } from '@material-ui/core';
 
 import {
-  ToggleField,
   Actions,
   ActionsLeft,
   ActionsRight,
+  ToggleField,
 } from 'lib/mui-components';
 
 import { TextField } from 'components/utils';
 import {
   IngredientsSection,
+  NotesSection,
   PreparationSection,
   ResetDialog,
   TitleField,
@@ -27,18 +28,18 @@ import { ControlWrapper } from '..';
 
 const styles = theme => ({
   actions: {
+    alignItems: 'center',
     display: 'flex',
     flexWrap: 'wrap',
-    alignItems: 'center',
   },
   actionsLeft: {
-    flex: '1 0 auto',
     display: 'flex',
+    flex: '1 0 auto',
     justifyContent: 'flex-start',
   },
   actionsRight: {
-    flex: '0 1 auto',
     display: 'flex',
+    flex: '0 1 auto',
     justifyContent: 'flex-end',
   },
   marginRight: {
@@ -80,9 +81,23 @@ function Step2Pres(props) {
                 })}
               />
               <TextField
+                className={classes.marginRight}
+                {...getInputProps({
+                  label: 'Prep. time',
+                  name: 'prep_time',
+                  type: 'number',
+                  step: 1,
+                })}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">minutes</InputAdornment>
+                  ),
+                }}
+              />
+              <TextField
                 {...getInputProps({
                   label: 'Cooking time',
-                  name: 'prep_time',
+                  name: 'cook_time',
                   type: 'number',
                   step: 1,
                 })}
@@ -105,6 +120,10 @@ function Step2Pres(props) {
               />
             </div>
           </div>
+          <NotesSection
+            className={classes.marginBottom}
+            inputProps={getInputProps({ name: 'notes' })}
+          />
           <ControlWrapper>
             <IngredientsSection
               inputProps={getInputProps({ name: 'ingredients' })}
