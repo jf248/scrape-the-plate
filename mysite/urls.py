@@ -26,7 +26,7 @@ from react import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/v1/', include('recipes.urls')),
-    url(r'^.*/$', ensure_csrf_cookie(views.FrontendAppView.as_view())),
+    url(r'^', ensure_csrf_cookie(views.FrontendAppView.as_view())),
 ]
 
 # Development mode: allow django.views.static.serve() to also serve media
