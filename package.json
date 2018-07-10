@@ -9,23 +9,13 @@
     "lint-django": "flake8",
     "format-django": ":",
     "test-django": "$VIRTUAL_ENV/bin/python manage.py test",
-    "heroku-postbuild": "cd frontend/ && yarn install && yarn run build",
-    "precommit": "lint-staged"
+    "heroku-postbuild": "cd frontend/ && yarn install && yarn run build"
   },
-  "lint-staged": {
-      "*.js": [
-          "eslint --fix",
-          "git add",
-          "cd frontend && yarn test -nowatch && cd .."
-      ],
-      "*.py": [
-          "autoflake --in-place --remove-all-unused-imports --remove-unused-variables --exclude='*/migrations/*,*/settings/__init__.py'",
-          "autopep8 --in-place --exclude='*/migrations/*'",
-          "git add",
-          "flake8",
-          "$VIRTUAL_ENV/bin/python manage.py test"
-      ]
-  },
+  "pre-commit": [
+    "lint",
+    "format",
+    "test"
+  ],
   "cacheDirectories": [
     "node_modules",
     "frontend/node_modules"
@@ -41,6 +31,6 @@
   "license": "MIT",
   "homepage": "https://github.com/jf248/scrape-the-plate#readme",
   "devDependencies": {
-    "lint-staged": "^7.2.0"
+    "pre-commit": "^1.2.2"
   }
 }
