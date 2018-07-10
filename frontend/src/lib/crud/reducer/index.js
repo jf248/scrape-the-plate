@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 
 import resources from './resources';
 import loading from './loading';
+import { RESET_STORE } from '../actions';
 
 /**
  * State shape:
@@ -23,8 +24,17 @@ import loading from './loading';
  * }
  */
 
-export default initialResources =>
+const appReducer = initialResources =>
   combineReducers({
     resources: resources(initialResources),
     loading,
   });
+
+export default initialResources => {
+  return (state, action) => {
+    if (action.type === RESET_STORE) {
+      state = undefined;
+    }
+    return appReducer(initialResources)(state, action);
+  };
+};

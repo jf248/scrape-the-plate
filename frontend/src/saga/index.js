@@ -3,6 +3,7 @@ import { all } from 'redux-saga/effects';
 import authorize from './authorize';
 import failure from './failure';
 import success from './success';
+import logInOrOut from './logInOrOut';
 
 import scrape from 'controllers/Scraper/saga';
 import recordForm from 'controllers/RecordForm/saga';
@@ -19,5 +20,6 @@ export default function*() {
     authorize(),
     failure(),
     success(),
+    logInOrOut(),
   ]);
 }
