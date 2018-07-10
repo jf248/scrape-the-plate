@@ -72,6 +72,13 @@ class User(AbstractUser, AbstractModel):
         self.email = self.username
 
 
+class Book(AbstractModel):
+    title = models.CharField(max_length=255)
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, blank=True, null=True
+    )
+
+
 class Recipe(AbstractModel):
     public = models.BooleanField(default=False)
     user = models.ForeignKey(
@@ -81,14 +88,18 @@ class Recipe(AbstractModel):
     slug = models.SlugField(unique=True, editable=False)
     ingredients = models.ManyToManyField(Ingredient, blank=True)
     preparation = models.TextField(blank=True)
+    notes = models.TextField(blank=True)
     tags = models.ManyToManyField(Tag, blank=True)
     source = models.ForeignKey(
         Source, on_delete=models.PROTECT, null=True, blank=True
     )
     url = models.URLField(blank=True)
-    prep_time = models.IntegerField(
-        verbose_name="Preparation Time", null=True, blank=True
+    book = models.ForeignKey(
+        Book, on_delete=models.PROTECT, null=True, blank=True
     )
+    page = models.IntegerField(null=True, blank=True)
+    prep_time = models.IntegerField(null=True, blank=True)
+    cook_time = models.IntegerField(null=True, blank=True)
     serves = models.IntegerField(blank=True, null=True)
     image = ImageField(
         upload_to=general.path_and_rename("images/recipes"),
