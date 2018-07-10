@@ -1,5 +1,5 @@
 from ._abstract import AbstractScraper
-from ._utils import normalize_string
+from ._utils import normalize_string, get_minutes, get_serves
 
 
 class SeriousEats(AbstractScraper):
@@ -35,10 +35,35 @@ class SeriousEats(AbstractScraper):
         ]
 
     def serves(self):
-        return None
+        raw_serves = self.soup.find(
+            'span',
+            {'itemprop': 'recipeYield'}
+        )
+        return get_serves(raw_serves.get_text())
 
     def image(self):
-        return self.soup.find(id="recipe-gallery-frame").find('img')['src']
+        return self.soup.find(
+            'img',
+            {'itemprop': 'image'}
+        )['src']
 
-    def total_time(self):
-        return None
+    def prep_time(self):
+        raw_prep_time = self.soup.find(text='Active time:').findNext(
+            'span',
+            {'class': 'info'}
+        )
+        return get_minutes(raw_prep_time.get_text())
+
+    def cook_time(self):
+        raw_cook_time = self.soup.find(text='Total time:').findNext(
+            'span',
+            {'class': 'info'}
+        )
+        return get_minutes(raw_cook_time.get_text())
+
+    def notes(self):
+        raw_notes = self.soup.find(
+            'div',
+            {'class': 'recipe-introduction-body'}
+        )
+        return normalize_string(raw_notes.get_text())

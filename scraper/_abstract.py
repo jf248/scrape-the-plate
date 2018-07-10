@@ -26,7 +26,9 @@ class AbstractScraper():
             'preparation',
             'serves',
             'title',
-            'total_time',
+            'prep_time',
+            'cook_time',
+            'notes',
         ]
         if name in decorated_methods:
             return on_exception_return(to_return)(
@@ -73,8 +75,10 @@ class AbstractScraper():
     def title(self):
         raise NotImplementedError("This should be implemented.")
 
-    def total_time(self):
-        """ total time it takes to preparate the recipe in minutes """
+    def prep_time(self):
+        raise NotImplementedError("This should be implemented.")
+
+    def cook_time(self):
         raise NotImplementedError("This should be implemented.")
 
     def ingredients(self):
@@ -84,6 +88,9 @@ class AbstractScraper():
         raise NotImplementedError("This should be implemented.")
 
     def image(self):
+        raise NotImplementedError("This should be implemented.")
+
+    def notes(self):
         raise NotImplementedError("This should be implemented.")
 
     def links(self):
@@ -105,7 +112,9 @@ class AbstractScraper():
             'preparation',
             'serves',
             'title',
-            'total_time',
+            'prep_time',
+            'cook_time',
+            'notes',
         ]
         for method in methods:
             try:

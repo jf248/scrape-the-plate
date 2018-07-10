@@ -9,22 +9,20 @@ TIME_REGEX = re.compile(
 )
 
 
-def get_minutes(element):
+def get_minutes(string):
     try:
-        tstring = element.get_text()
-
         # sometimes formats are like this: '12-15 minutes'
-        if '-' in tstring:
-            tstring = tstring.split('-')[1]
+        if '-' in string:
+            string = string.split('-')[1]
 
-        matched = TIME_REGEX.search(tstring)
+        matched = TIME_REGEX.search(string)
 
         minutes = int(matched.groupdict().get('minutes') or 0)
         minutes += 60 * int(matched.groupdict().get('hours') or 0)
 
         return minutes
     except AttributeError:  # if dom_element not found or no matched
-        return 0
+        return None
 
 
 def normalize_string(string):

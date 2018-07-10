@@ -1,5 +1,6 @@
 from ._abstract import AbstractScraper
-from ._utils import normalize_string
+from ._utils import normalize_string, get_minutes, get_serves
+import re
 
 
 class Food52(AbstractScraper):
@@ -36,10 +37,19 @@ class Food52(AbstractScraper):
         ]
 
     def serves(self):
-        return None
+        raw_serves = self.soup.find(text=re.compile('Makes:'))
+        return get_serves(raw_serves)
 
     def image(self):
         return self.soup.find(id="recipe-gallery-frame").find('img')['src']
 
-    def total_time(self):
+    def prep_time(self):
+        raw_prep_time = self.soup.find(text=re.compile('Prep time'))
+        return get_minutes(raw_prep_time)
+
+    def cook_time(self):
         return None
+
+    def notes(self):
+        raw_note = self.soup.find('span', {'class': 'recipe-note'})
+        return normalize_string(raw_note.get_text())
