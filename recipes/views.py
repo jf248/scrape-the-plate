@@ -124,8 +124,9 @@ class AuthViewSet(viewsets.ViewSet):
     @action(methods=['post'], detail=False)
     def verify(self, request):
         user = request.user
-        if user.is_authenticated:
-            data = self._get_response_data(user)
+        if user and user.is_authenticated:
+            token = Token.objects.get(user=user)
+            data = self._get_response_data(user, token)
             return Response(data)
         raise PermissionDenied()
 

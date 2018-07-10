@@ -17,6 +17,7 @@ export default ({ login, signup, verify }, httpClient = defaultHttpClient) => (
   };
 
   const handleResponse = ({ response, error }) => {
+    console.log('response/error', { response, error });
     if (response) {
       if (!response.token) {
         throw Error('Auth response should contain a token field');
