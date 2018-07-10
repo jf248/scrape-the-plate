@@ -14,7 +14,6 @@ import {
 
 class FormController extends PureComponent {
   componentDidMount() {
-    console.log('FormController didMount');
     register(this.props.name);
   }
 
