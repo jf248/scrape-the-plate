@@ -1,0 +1,18 @@
+model,pk,name
+recipes.grocerygroup,1,Bakery
+recipes.grocerygroup,2,Baking
+recipes.grocerygroup,3,Canned
+recipes.grocerygroup,4,Condiments
+recipes.grocerygroup,5,Dairy
+recipes.grocerygroup,6,Deli
+recipes.grocerygroup,7,"Drinks, hard"
+recipes.grocerygroup,8,"Drinks, soft"
+recipes.grocerygroup,9,Fish and meat
+recipes.grocerygroup,10,Frozen
+recipes.grocerygroup,11,General grocery
+recipes.grocerygroup,12,"Produce, fruit"
+recipes.grocerygroup,13,"Produce, herbs"
+recipes.grocerygroup,14,"Produce, veg."
+recipes.grocerygroup,15,"Produce, veg. fridge"
+recipes.grocerygroup,16,Special (World)
+recipes.grocerygroup,17,Spices

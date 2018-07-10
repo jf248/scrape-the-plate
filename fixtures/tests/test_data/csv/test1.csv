@@ -1,0 +1,3 @@
+model,pk,name,group
+app.model,1,name1,1
+app.model,2,"name 2",1

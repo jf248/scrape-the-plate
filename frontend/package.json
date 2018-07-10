@@ -1,0 +1,89 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^1.1.0",
+    "@material-ui/icons": "^1.1.0",
+    "connected-react-router": "^4.3.0",
+    "js-cookie": "^2.2.0",
+    "prop-types": "^15.6.1",
+    "qs": "^6.5.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.1",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.16.0",
+    "redux-thunk": "^2.2.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "test-nowatch": "CI=true react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "format": "prettier --write 'src/**/*.js'",
+    "lint": "eslint --fix 'src/**/*.js'"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "eslint": "^4.17.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.15.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.6.1",
+    "prettier": "^1.13.4"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "singleQuote": true,
+    "semi": true
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true,
+      "jest/globals": true
+    },
+    "extends": [
+      "prettier",
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:import/errors"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "experimentalObjectRestSpread": true,
+        "jsx": true
+      },
+      "sourceType": "module"
+    },
+    "plugins": [
+      "react",
+      "import",
+      "jest"
+    ],
+    "rules": {
+      "no-console": "off",
+      "react/prop-types": "off",
+      "react/display-name": "off",
+      "no-restricted-globals": "error"
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": [
+            "src",
+            "lib"
+          ]
+        }
+      }
+    }
+  },
+  "proxy": "http://localhost:8000"
+}

@@ -1,0 +1,130 @@
+[
+{
+  "model": "recipes.source",
+  "pk": 1,
+  "fields": {
+    "name": "Food 52",
+    "domain_name": "food52.com"
+  }
+},
+{
+  "model": "recipes.source",
+  "pk": 2,
+  "fields": {
+    "name": "Serious Eats",
+    "domain_name": "seriouseats.com"
+  }
+},
+{
+  "model": "recipes.ingredient",
+  "pk": 1,
+  "fields": {
+    "text": "Salt"
+  }
+},
+{
+  "model": "recipes.ingredient",
+  "pk": 2,
+  "fields": {
+    "text": "Water"
+  }
+},
+{
+  "model": "recipes.ingredient",
+  "pk": 3,
+  "fields": {
+    "text": "4 large eggs"
+  }
+},
+{
+  "model": "recipes.ingredient",
+  "pk": 4,
+  "fields": {
+    "text": "1 small pinch of cayenne pepper"
+  }
+},
+{
+  "model": "recipes.ingredient",
+  "pk": 5,
+  "fields": {
+    "text": "Kosher salt"
+  }
+},
+{
+  "model": "recipes.ingredient",
+  "pk": 6,
+  "fields": {
+    "text": "2 tablespoons unsalted butter"
+  }
+},
+{
+  "model": "recipes.ingredient",
+  "pk": 7,
+  "fields": {
+    "text": "3 tablespoons cream cheese"
+  }
+},
+{
+  "model": "recipes.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$100000$f6KjGiWkHrNm$SCnDPwX0ELUPzEHrN6D+PtBWb+i3Xg16ITLkFzKqo/0=",
+    "last_login": null,
+    "is_superuser": false,
+    "username": "jf248@outlook.com",
+    "first_name": "Josh",
+    "last_name": "Freedman",
+    "email": "jf248@outlook.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2018-06-27T08:02:37.212Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "recipes.recipe",
+  "pk": 1,
+  "fields": {
+    "public": true,
+    "user": 1,
+    "title": "Salted Water For Boiling",
+    "slug": "salted-water-for-boiling",
+    "preparation": "Add salt to water.\n\nStir.",
+    "source": null,
+    "url": "",
+    "prep_time": null,
+    "serves": null,
+    "image": "images/recipes/default.png",
+    "ingredients": [
+      1,
+      2
+    ],
+    "tags": []
+  }
+},
+{
+  "model": "recipes.recipe",
+  "pk": 2,
+  "fields": {
+    "public": true,
+    "user": 1,
+    "title": "Wylie Dufresne's Soft-scrambled Egg Grilled Cheese",
+    "slug": "wylie-dufresnes-soft-scrambled-egg-grilled-cheese",
+    "preparation": "To make the scrambled eggs, whisk the eggs and cayenne in a small bowl; season generously with salt (about 1/4 teaspoon Diamond Crystal kosher salt or 1/8 teaspoon fine salt is good).\n\nHeat the 2 tablespoons butter in a medium saucepan over medium heat. As soon as it begins to foam, add the eggs and cook, whisking constantly, until they have set in small curds and are beginning to look dry, about 1 minute. Immediately remove from heat and whisk in cream cheese. Note: Eggs can be scrambled 2 hours ahead, then spread into a single layer in a sheet pan. Store tightly covered at room temperature, then trim into squares to fit each sandwich. Don't worry about the initial shape being perfect, as you can press any lingering scraps of egg into the sandwiches as well\u2014no waste!\n\nWhen you\u2019re ready to make the sandwiches, divide the cheese between the slices of bread and top with egg mixture. Close up sandwiches.\n\nHeat a dry large skillet over medium-low and brush very lightly with butter. Toast sandwiches until the bread is golden brown and the cheese has melted, about 3 minutes per side. Serve immediately.\n\nNote: At Du's, Dufresne also serves a bacon version. To make your own: cut 2 slices of bacon per sandwich into lardons, pan-fry to render out the bacon fat, then drain the crisped bacon on paper towels, reserving the fat. Scramble the eggs in a mix of half butter, half bacon fat. Fold the crisped, drained bacon into the eggs with the cream cheese.",
+    "source": 1,
+    "url": "https://food52.com/recipes/77313-wylie-dufresne-s-soft-scrambled-egg-grilled-cheese",
+    "prep_time": null,
+    "serves": 7,
+    "image": "images/recipes/default.png",
+    "ingredients": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "tags": []
+  }
+}
+]

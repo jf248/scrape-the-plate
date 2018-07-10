@@ -1,0 +1,47 @@
+{
+  "name": "scrape-the-plate",
+  "version": "1.0.0",
+  "description": "A web app for scraping and collating recipes",
+  "scripts": {
+    "lint": "yarn lint-django && cd frontend/ && yarn lint && cd ..",
+    "format": "yarn format-django && cd frontend/ && yarn format && cd ..",
+    "test": "yarn test-django && cd frontend/ && yarn test-nowatch && cd ..",
+    "lint-django": "flake8",
+    "format-django": ":",
+    "test-django": "$VIRTUAL_ENV/bin/python manage.py test",
+    "pre-commit": "yarn lint && yarn format && yarn test",
+    "heroku-postbuild": "cd frontend/ && yarn install && yarn run build",
+    "lint-staged": "lint-staged"
+  },
+  "lint-staged": {
+      "*.js": [
+          "eslint --fix",
+          "git add",
+          "cd frontend && yarn test -nowatch && cd .."
+      ],
+      "*.py": [
+          "autoflake --in-place --remove-all-unused-imports --remove-unused-variables --exclude='*/migrations/*,*/settings/__init__.py'",
+          "autopep8 --in-place --exclude='*/migrations/*'",
+          "git add",
+          "flake8",
+          "$VIRTUAL_ENV/bin/python manage.py test"
+      ]
+  },
+  "cacheDirectories": [
+    "node_modules",
+    "frontend/node_modules"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jf248/scrape-the-plate.git"
+  },
+  "keywords": [
+    "recipes"
+  ],
+  "author": "Joshua Freedman",
+  "license": "MIT",
+  "homepage": "https://github.com/jf248/scrape-the-plate#readme",
+  "devDependencies": {
+    "lint-staged": "^7.2.0"
+  }
+}

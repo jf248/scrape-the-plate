@@ -1,0 +1,32 @@
+[
+    {
+        "fields": {
+            "group": 1,
+            "name": "name1"
+        },
+        "model": "app.model",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "group": 1,
+            "name": "name 2"
+        },
+        "model": "app.model",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "value": 47.3
+        },
+        "model": "app.model2",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "value": 54.63
+        },
+        "model": "app.model2",
+        "pk": 2
+    }
+]

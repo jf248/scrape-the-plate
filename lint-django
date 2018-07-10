@@ -1,0 +1,6 @@
+#! /bin/bash
+# Requires autoflake and autopep8. pip install --user autoflake autopep8
+# Excludes all files in the ./migrations/ folder.
+autoflake --in-place --recursive --remove-all-unused-imports --remove-unused-variables --exclude='*/migrations/*,*/settings/__init__.py' .
+autopep8 --in-place --recursive --exclude="*/migrations/*" .
+flake8

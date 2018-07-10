@@ -1,0 +1,175 @@
+model,pk,name,group
+recipes.groceryitem,1,bagels,1
+recipes.groceryitem,2,"bread, sliced granary",1
+recipes.groceryitem,3,"bread, sour dough",1
+recipes.groceryitem,4,challah,1
+recipes.groceryitem,5,cinnamon twist,1
+recipes.groceryitem,6,baking powder,2
+recipes.groceryitem,7,baking soda,2
+recipes.groceryitem,8,chocolate chip,2
+recipes.groceryitem,9,"flour, AP",2
+recipes.groceryitem,10,"flour, Bread",2
+recipes.groceryitem,11,"sugar, brown",2
+recipes.groceryitem,12,"sugar, caster",2
+recipes.groceryitem,13,"sugar, granular",2
+recipes.groceryitem,14,yeast,2
+recipes.groceryitem,15,"black bean, canned",3
+recipes.groceryitem,16,"cannellini, canned",3
+recipes.groceryitem,17,"chickpeas, canned",3
+recipes.groceryitem,18,"kidney bean, canned",3
+recipes.groceryitem,19,tomato paste,3
+recipes.groceryitem,20,tomato sauce,3
+recipes.groceryitem,21,"tomato, whole canned",3
+recipes.groceryitem,22,"tuna, canned",3
+recipes.groceryitem,23,canola oil spray,4
+recipes.groceryitem,24,caper,4
+recipes.groceryitem,25,honey,4
+recipes.groceryitem,26,ketchup,4
+recipes.groceryitem,27,maple syrup,4
+recipes.groceryitem,28,mayonnaise,4
+recipes.groceryitem,29,molass,4
+recipes.groceryitem,30,"mustard, Dijon",4
+recipes.groceryitem,31,olive oil,4
+recipes.groceryitem,32,peanut butter,4
+recipes.groceryitem,33,sesame oil,4
+recipes.groceryitem,34,vegetable oil,4
+recipes.groceryitem,35,butter,5
+recipes.groceryitem,36,"cheese, Cottage",5
+recipes.groceryitem,37,"cheese, Cream",5
+recipes.groceryitem,38,"cheese, Parmesan",5
+recipes.groceryitem,39,egg,5
+recipes.groceryitem,40,"milk, 1%",5
+recipes.groceryitem,41,"milk, whole",5
+recipes.groceryitem,42,"yogurt, Siggis",5
+recipes.groceryitem,43,"cheese, Brie",6
+recipes.groceryitem,44,"cheese, Cheddar",6
+recipes.groceryitem,45,"cheese, Feta",6
+recipes.groceryitem,46,"cheese, Goat's",6
+recipes.groceryitem,47,"cheese, Mozzarella",6
+recipes.groceryitem,48,dip,6
+recipes.groceryitem,49,hummus,6
+recipes.groceryitem,50,beer,7
+recipes.groceryitem,51,"wine, red",7
+recipes.groceryitem,52,"wine, red cooking",7
+recipes.groceryitem,53,"wine, white",7
+recipes.groceryitem,54,"wine, white cooking",7
+recipes.groceryitem,55,coffee,8
+recipes.groceryitem,56,diet coke,8
+recipes.groceryitem,57,"water, sparkling",8
+recipes.groceryitem,58,"beef, ground",9
+recipes.groceryitem,59,"chicken , thigh (no bone/skin)",9
+recipes.groceryitem,60,"chicken, drumstick",9
+recipes.groceryitem,61,"chicken, thigh",9
+recipes.groceryitem,62,"chicken, whole",9
+recipes.groceryitem,63,cod,9
+recipes.groceryitem,64,"lamb, ground",9
+recipes.groceryitem,65,"lamb, shoulder",9
+recipes.groceryitem,66,"lamb, shoulder chop",9
+recipes.groceryitem,67,radish,9
+recipes.groceryitem,68,smoked salmon,9
+recipes.groceryitem,69,ice cream,10
+recipes.groceryitem,70,peas,10
+recipes.groceryitem,71,soybean,10
+recipes.groceryitem,72,bolani,11
+recipes.groceryitem,73,cereal,11
+recipes.groceryitem,74,"chickpea, raw",11
+recipes.groceryitem,75,chocolate bar,11
+recipes.groceryitem,76,couscous,11
+recipes.groceryitem,77,cracker,11
+recipes.groceryitem,78,crisp,11
+recipes.groceryitem,79,farro,11
+recipes.groceryitem,80,noodle,11
+recipes.groceryitem,81,oat,11
+recipes.groceryitem,82,olive,11
+recipes.groceryitem,83,"pasta, farfalle",11
+recipes.groceryitem,84,"pasta, spaghetti",11
+recipes.groceryitem,85,pine nut,11
+recipes.groceryitem,86,pop-corn,11
+recipes.groceryitem,87,puff pastry,11
+recipes.groceryitem,88,quinoa,11
+recipes.groceryitem,89,"rice, brown",11
+recipes.groceryitem,90,"rice, white",11
+recipes.groceryitem,91,sweet,11
+recipes.groceryitem,92,tea,11
+recipes.groceryitem,93,tofu,11
+recipes.groceryitem,94,tortilla,11
+recipes.groceryitem,95,"vinegar, cider",11
+recipes.groceryitem,96,"vinegar, red wine",11
+recipes.groceryitem,97,"vinegar, rice",11
+recipes.groceryitem,98,"vinegar, white wine",11
+recipes.groceryitem,99,apple,12
+recipes.groceryitem,100,apricot,12
+recipes.groceryitem,101,avocado,12
+recipes.groceryitem,102,banana,12
+recipes.groceryitem,103,blueberry,12
+recipes.groceryitem,104,grape,12
+recipes.groceryitem,105,lemon,12
+recipes.groceryitem,106,lime,12
+recipes.groceryitem,107,nectarine,12
+recipes.groceryitem,108,orange,12
+recipes.groceryitem,109,peach,12
+recipes.groceryitem,110,plum,12
+recipes.groceryitem,111,pomegranate seed,12
+recipes.groceryitem,112,raspberry,12
+recipes.groceryitem,113,strawberry,12
+recipes.groceryitem,114,tangerine,12
+recipes.groceryitem,115,cilantro (coriander),13
+recipes.groceryitem,116,mint,13
+recipes.groceryitem,117,"parsley, curly",13
+recipes.groceryitem,118,"parsley, flat leaf",13
+recipes.groceryitem,119,rosemary,13
+recipes.groceryitem,120,thyme,13
+recipes.groceryitem,121,corn,14
+recipes.groceryitem,122,garlic,14
+recipes.groceryitem,123,green bean,14
+recipes.groceryitem,124,"onion, red",14
+recipes.groceryitem,125,"onion, white",14
+recipes.groceryitem,126,"onion, yellow",14
+recipes.groceryitem,127,"potato, mini",14
+recipes.groceryitem,128,"potato, regular",14
+recipes.groceryitem,129,shallot,14
+recipes.groceryitem,130,"tomato, grape",14
+recipes.groceryitem,131,"tomato, plum",14
+recipes.groceryitem,132,asparagus,15
+recipes.groceryitem,133,beetroot,15
+recipes.groceryitem,134,bell pepper,15
+recipes.groceryitem,135,bok choy,15
+recipes.groceryitem,136,broccoli,15
+recipes.groceryitem,137,"cabbage, green",15
+recipes.groceryitem,138,carrot,15
+recipes.groceryitem,139,cauliflower,15
+recipes.groceryitem,140,celery,15
+recipes.groceryitem,141,cucumber,15
+recipes.groceryitem,142,eggplant,15
+recipes.groceryitem,143,ginger,15
+recipes.groceryitem,144,kale,15
+recipes.groceryitem,145,leek,15
+recipes.groceryitem,146,"lettuce, iceberg",15
+recipes.groceryitem,147,"lettuce, romaine",15
+recipes.groceryitem,148,"mushroom, button",15
+recipes.groceryitem,149,"mushroom, shitake",15
+recipes.groceryitem,150,"onion, green (scallion)",15
+recipes.groceryitem,151,parsnip,15
+recipes.groceryitem,152,"pepper, chili",15
+recipes.groceryitem,153,rocket,15
+recipes.groceryitem,154,spinach,15
+recipes.groceryitem,155,bread crumb,16
+recipes.groceryitem,156,coconut milk,16
+recipes.groceryitem,157,egg noodles,16
+recipes.groceryitem,158,matzo,16
+recipes.groceryitem,159,rice vinegar,16
+recipes.groceryitem,160,soy sauce,16
+recipes.groceryitem,161,"stock, powder chicken",16
+recipes.groceryitem,162,"stock, vegetable",16
+recipes.groceryitem,163,tahini paste,16
+recipes.groceryitem,164,"vinegar, balsamic",16
+recipes.groceryitem,165,all spice,17
+recipes.groceryitem,166,"cinnamon, ground",17
+recipes.groceryitem,167,"coriander, ground",17
+recipes.groceryitem,168,cumin,17
+recipes.groceryitem,169,nutmeg,17
+recipes.groceryitem,170,"pepper, whole",17
+recipes.groceryitem,171,poppy seed,17
+recipes.groceryitem,172,salt,17
+recipes.groceryitem,173,turmeric,17
+recipes.groceryitem,174,"water, tap",11
