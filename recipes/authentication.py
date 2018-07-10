@@ -4,7 +4,8 @@ from rest_framework import authentication, exceptions
 class CustomTokenAuthentication(authentication.TokenAuthentication):
     def authenticate_credentials(self, key):
         try:
-            token = self.model.objects.select_related('user').get(key=key)
+            token = self.get_model().objects.select_related('user') \
+                    .get(key=key)
         except self.get_model().DoesNotExist:
             return (None, '')
 
