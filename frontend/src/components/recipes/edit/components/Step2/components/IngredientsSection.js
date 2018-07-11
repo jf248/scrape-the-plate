@@ -1,42 +1,18 @@
 import React from 'react';
-import classNames from 'classnames';
-import { Typography, withStyles } from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
 
-import {
-  ExpansionSection,
-  ExpansionDetails,
-  ExpansionSummary,
-} from 'lib/mui-components';
-import { IngredientsField } from '.';
-
-const styles = () => ({
-  root: {},
-  details: {
-    display: 'block',
-  },
-});
-
-IngredientsSection.defaultProps = {};
+import IngredientsField from './IngredientsField';
+import Section from './Section';
 
 function IngredientsSection(props) {
-  const { classes, className: classNameProp, inputProps, ...rest } = props;
+  const { inputProps } = props;
 
-  const className = classNames(classes.root, classNameProp);
+  const caption = 'Add ingredients one by one, or paste them all at once.';
 
   return (
-    <ExpansionSection className={className} initialExpanded {...rest}>
-      <ExpansionSummary expandIcon={<ExpandMore />}>
-        <Typography variant={'subheading'}>Ingredients</Typography>
-      </ExpansionSummary>
-      <ExpansionDetails className={classes.details}>
-        <Typography variant={'caption'} paragraph>
-          Add ingredients one by one, or paste them all at once.
-        </Typography>
-        <IngredientsField {...inputProps} />
-      </ExpansionDetails>
-    </ExpansionSection>
+    <Section caption={caption} title={'Ingredients'}>
+      <IngredientsField {...inputProps} />
+    </Section>
   );
 }
 
-export default withStyles(styles)(IngredientsSection);
+export default IngredientsSection;

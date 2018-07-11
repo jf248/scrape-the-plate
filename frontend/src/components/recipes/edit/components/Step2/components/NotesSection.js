@@ -1,13 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Typography, withStyles } from '@material-ui/core';
-import { ExpandMore } from '@material-ui/icons';
-
 import {
-  ExpansionSection,
-  ExpansionDetails,
-  ExpansionSummary,
-} from 'lib/mui-components';
+  ExpansionPanel,
+  ExpansionPanelDetails,
+  ExpansionPanelSummary,
+  Typography,
+  withStyles,
+} from '@material-ui/core';
+import { ExpandMore } from '@material-ui/icons';
 
 import { TextField } from 'components/utils';
 
@@ -26,19 +26,19 @@ function NotesSection(props) {
   const className = classNames(classes.root, classNameProp);
 
   return (
-    <ExpansionSection className={className} initialExpanded {...rest}>
-      <ExpansionSummary expandIcon={<ExpandMore />}>
+    <ExpansionPanel className={className} defaultExpanded {...rest}>
+      <ExpansionPanelSummary expandIcon={<ExpandMore />}>
         <Typography variant={'subheading'}>Notes</Typography>
-      </ExpansionSummary>
-      <ExpansionDetails className={classes.details}>
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails className={classes.details}>
         <TextField
           {...inputProps}
           placeholder={'Notes...'}
           fullWidth
           multiline={true}
         />
-      </ExpansionDetails>
-    </ExpansionSection>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
   );
 }
 

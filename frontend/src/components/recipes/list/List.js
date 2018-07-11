@@ -32,7 +32,7 @@ function List() {
     /* eslint-disable react/jsx-key */
     <Compose
       components={[
-        <RecordsMany fetchOnUpdate resource={'recipes'} render={renderFunc} />,
+        <RecordsMany resource={'recipes'} />,
         <Auth />,
         (render, { goFetch }, { isLoggedIn }) => (
           <Updater {...{ goFetch, isLoggedIn, render }} />

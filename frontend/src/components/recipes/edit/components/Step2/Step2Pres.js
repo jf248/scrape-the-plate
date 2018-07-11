@@ -1,11 +1,9 @@
 import React from 'react';
-import classNames from 'classnames';
 import {
   Button,
   Card,
   CardContent,
   Divider,
-  InputAdornment,
   withStyles,
 } from '@material-ui/core';
 
@@ -16,32 +14,20 @@ import {
   ToggleField,
 } from 'lib/mui-components';
 
-import { TextField } from 'components/utils';
 import {
   IngredientsSection,
   NotesSection,
   PreparationSection,
   ResetDialog,
   TitleField,
+  FlexContainer,
+  FlexLeft,
+  FlexRight,
+  DetailsSection,
+  SourceSection,
 } from './components';
-import { ControlWrapper } from '..';
 
 const styles = theme => ({
-  actions: {
-    alignItems: 'center',
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  actionsLeft: {
-    display: 'flex',
-    flex: '1 0 auto',
-    justifyContent: 'flex-start',
-  },
-  actionsRight: {
-    display: 'flex',
-    flex: '0 1 auto',
-    justifyContent: 'flex-end',
-  },
   marginRight: {
     marginRight: theme.spacing.unit * 2,
   },
@@ -65,50 +51,14 @@ function Step2Pres(props) {
     <React.Fragment>
       <Card>
         <CardContent>
-          <TitleField
-            className={classes.marginBottom}
-            {...getInputProps({ name: 'title' })}
-          />
-          <div className={classNames(classes.actions, classes.marginBottom)}>
-            <div className={classes.actionsLeft}>
-              <TextField
+          <FlexContainer className={classes.marginBottom}>
+            <FlexLeft>
+              <TitleField
                 className={classes.marginRight}
-                {...getInputProps({
-                  label: 'Serves',
-                  name: 'serves',
-                  type: 'number',
-                  step: 1,
-                })}
+                {...getInputProps({ name: 'title' })}
               />
-              <TextField
-                className={classes.marginRight}
-                {...getInputProps({
-                  label: 'Prep. time',
-                  name: 'prep_time',
-                  type: 'number',
-                  step: 1,
-                })}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">minutes</InputAdornment>
-                  ),
-                }}
-              />
-              <TextField
-                {...getInputProps({
-                  label: 'Cooking time',
-                  name: 'cook_time',
-                  type: 'number',
-                  step: 1,
-                })}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">minutes</InputAdornment>
-                  ),
-                }}
-              />
-            </div>
-            <div className={classes.actionsRight}>
+            </FlexLeft>
+            <FlexRight>
               <ToggleField
                 {...getInputProps({
                   label: 'Public',
@@ -118,22 +68,28 @@ function Step2Pres(props) {
                   color: 'primary',
                 })}
               />
-            </div>
-          </div>
-          <NotesSection
-            className={classes.marginBottom}
-            inputProps={getInputProps({ name: 'notes' })}
+            </FlexRight>
+          </FlexContainer>
+          <IngredientsSection
+            defaultExpanded
+            inputProps={getInputProps({ name: 'ingredients' })}
           />
-          <ControlWrapper>
-            <IngredientsSection
-              inputProps={getInputProps({ name: 'ingredients' })}
-            />
-          </ControlWrapper>
-          <ControlWrapper>
-            <PreparationSection
-              inputProps={getInputProps({ name: 'preparation' })}
-            />
-          </ControlWrapper>
+          <PreparationSection
+            defaultExpanded
+            inputProps={getInputProps({ name: 'preparation' })}
+          />
+          <NotesSection inputProps={getInputProps({ name: 'notes' })} />
+          <DetailsSection
+            prepTimeInputProps={getInputProps({ name: 'prep_time' })}
+            cookTimeInputProps={getInputProps({ name: 'cook_time' })}
+            servesInputProps={getInputProps({ name: 'serves' })}
+          />
+          <SourceSection
+            sourceInputProps={getInputProps({ name: 'source' })}
+            urlInputProps={getInputProps({ name: 'url' })}
+            bookInputProps={getInputProps({ name: 'book' })}
+            pageInputProps={getInputProps({ name: 'page' })}
+          />
         </CardContent>
         <Divider />
         <Actions>

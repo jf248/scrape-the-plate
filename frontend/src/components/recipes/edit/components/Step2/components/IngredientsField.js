@@ -1,5 +1,5 @@
 import React from 'react';
-import { Ingredient } from '../components';
+import Ingredient from './Ingredient';
 import ListField from 'lib/react-listfield';
 
 function IngredientsField(props) {
