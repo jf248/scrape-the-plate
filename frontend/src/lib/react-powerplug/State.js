@@ -1,6 +1,6 @@
 import { Component } from 'react';
 
-import { renderProps, noop } from './utils';
+import { renderProps, noop, shallowEqualObjects } from './utils';
 
 class State extends Component {
   state = {
@@ -18,7 +18,7 @@ class State extends Component {
     if (enableReinitialize) {
       const shouldReinitialize =
         enableReinitialize === true
-          ? initial !== prevProps.initial
+          ? shallowEqualObjects(initial, prevProps.initial)
           : enableReinitialize(prevProps.initial, initial);
       if (shouldReinitialize) {
         return this.setState({ ...initial });
