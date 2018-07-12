@@ -7,8 +7,11 @@
     "format": "yarn format-django && cd frontend/ && yarn format && cd ..",
     "test": "yarn test-django && cd frontend/ && yarn test-nowatch && cd ..",
     "lint-django": "flake8",
+    "lint-frontend": "eslint --fix 'frontend/src/**/*.js'",
+    "format-frontend": "prettier --write 'frontend/src/**/*.js'",
     "format-django": ":",
     "test-django": "$VIRTUAL_ENV/bin/python manage.py test",
+    "test-frontend": "jest",
     "heroku-postbuild": "cd frontend/ && yarn install && yarn run build"
   },
   "pre-commit": [
@@ -16,6 +19,59 @@
     "format",
     "test"
   ],
+  "prettier": {
+    "trailingComma": "es5",
+    "singleQuote": true,
+    "semi": true
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "env": {
+      "browser": true,
+      "es6": true,
+      "node": true,
+      "jest/globals": true
+    },
+    "extends": [
+      "prettier",
+      "eslint:recommended",
+      "plugin:react/recommended",
+      "plugin:import/errors"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "experimentalObjectRestSpread": true,
+        "jsx": true
+      },
+      "sourceType": "module"
+    },
+    "plugins": [
+      "react",
+      "import",
+      "jest"
+    ],
+    "rules": {
+      "no-console": "off",
+      "react/prop-types": "off",
+      "react/display-name": "off",
+      "no-restricted-globals": "error"
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "moduleDirectory": [
+            "frontend/src",
+            "frontend/node_modules"
+          ]
+        }
+      }
+    }
+  },
+  "babel": {
+    "presets": [
+      "react-app"
+    ]
+  },
   "cacheDirectories": [
     "node_modules",
     "frontend/node_modules"
@@ -31,6 +87,17 @@
   "license": "MIT",
   "homepage": "https://github.com/jf248/scrape-the-plate#readme",
   "devDependencies": {
-    "pre-commit": "^1.2.2"
-  }
+    "babel-eslint": "^8.2.6",
+    "babel-preset-react-app": "^3.1.2",
+    "eslint": "^5.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jest": "^21.17.0",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.10.0",
+    "jest": "^23.4.0",
+    "pre-commit": "^1.2.2",
+    "prettier": "^1.13.7"
+  },
+  "dependencies": {}
 }

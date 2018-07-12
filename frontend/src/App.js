@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'reacaasdtasfdasdasdff';
 import createSagaMiddleware from 'redux-saga';
 import { all } from 'redux-saga/effects';
 import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
