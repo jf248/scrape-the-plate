@@ -14,6 +14,9 @@ import MenuItem from './MenuItem';
 const styles = theme => ({
   paper: {
     zIndex: theme.zIndex.modal,
+    position: 'absolute',
+    left: 0,
+    right: 0,
   },
   listContainer: {
     overflowY: 'auto',

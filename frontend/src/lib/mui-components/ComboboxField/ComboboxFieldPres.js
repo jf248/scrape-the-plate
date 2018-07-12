@@ -8,8 +8,7 @@ import Menu from './Menu';
 const styles = () => ({
   root: {
     position: 'relative',
-    display: 'inline-flex',
-    flexDirection: 'column',
+    display: 'inline-block',
   },
 });
 
@@ -25,7 +24,6 @@ class ComboboxFieldPres extends React.Component {
       noMatchText,
       renderMenuItem,
       renderSelectedItem,
-      style,
       SubheaderProps,
       TextFieldProps,
 
@@ -44,7 +42,7 @@ class ComboboxFieldPres extends React.Component {
     const className = classNames(classes.root, classNameProp);
 
     return (
-      <div ref={innerRef} className={className} style={style} {...rest}>
+      <div ref={innerRef} className={className} {...rest}>
         <Input
           downshiftProps={downshiftProps}
           multiple={multiple}

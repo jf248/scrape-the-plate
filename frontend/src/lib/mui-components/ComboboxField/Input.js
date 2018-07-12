@@ -1,11 +1,11 @@
 import React from 'react';
-import { TextField, withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
 import classnames from 'classnames';
 
 import { noop } from '../utils';
-import InputWithTypeahead from '../InputWithTypeahead';
 import Button from './Button';
 import SelectedItem from './SelectedItem';
+import TextField from '../TextField';
 
 Input.defaultProps = {
   selectedItems: [],
@@ -14,15 +14,6 @@ Input.defaultProps = {
 };
 
 const styles = theme => ({
-  // eslint-disable-line no-unused-vars
-  typeAheadRoot: {
-    flex: '1000 1 6px',
-  },
-  Input: {
-    display: 'flex',
-    flexFlow: 'row wrap',
-    alignItems: 'center',
-  },
   withMarginBottom: {
     marginBottom: theme.spacing.unit,
   },
@@ -33,13 +24,7 @@ function Input(props) {
     classes,
     disabled,
     downshiftProps,
-    inputProps: {
-      typeAheadRootProps: {
-        className: typeAheadRootClassName,
-        typeAheadRootPropsProp,
-      } = {},
-      ...inputPropsProp
-    } = {},
+    inputProps: inputPropsProp,
     InputProps: InputPropsProp,
     multiple,
     renderSelectedItem: renderSelectedItemProp,
@@ -79,37 +64,23 @@ function Input(props) {
     />
   );
 
-  const rootProps = {
-    className: classnames(
-      classes.typeAheadRoot,
-      { [classes.withMarginBottom]: withMargin },
-      typeAheadRootClassName
-    ),
-    ...typeAheadRootPropsProp,
-  };
+  const inputClassName = classnames({ [classes.withMarginBottom]: withMargin });
 
-  const inputProps = { rootProps, typeAheadText, ...inputPropsProp };
+  const inputProps = { className: inputClassName, ...inputPropsProp };
 
   const InputProps = {
     startAdornment,
     endAdornment,
-    inputComponent: InputWithTypeahead,
     ...InputPropsProp,
-    className: classnames(classes.Input, InputPropsProp.className),
-  };
-
-  const InputLabelProps = {
-    shrink: selectedItems.length > 0 || undefined,
   };
 
   return (
     <TextField
       {...downshiftProps.getInputProps({
-        className: classes.textField,
         disabled,
         inputProps,
         InputProps,
-        InputLabelProps,
+        typeAheadText,
         ...rest,
       })}
     />
