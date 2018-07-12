@@ -1,7 +1,9 @@
 import React from 'react';
 import { Divider, Grid, Typography, withStyles } from '@material-ui/core';
 
-import { AppContent, AppFabButton } from 'lib/mui-app';
+import { AppContent } from 'lib/mui-app';
+
+import FabButton from './FabButton';
 
 const styles = theme => ({
   step: {
@@ -52,7 +54,7 @@ function ViewPres(props) {
           {preparationSteps}
         </Grid>
       </Grid>
-      <AppFabButton variant={'edit'} to={`/recipes/${id}/edit`} />
+      <FabButton variant={'edit'} to={`/recipes/${id}/edit`} />
     </AppContent>
   );
 }
