@@ -18,7 +18,7 @@ class State extends Component {
     if (enableReinitialize) {
       const shouldReinitialize =
         enableReinitialize === true
-          ? shallowEqualObjects(initial, prevProps.initial)
+          ? !shallowEqualObjects(initial, prevProps.initial)
           : enableReinitialize(prevProps.initial, initial);
       if (shouldReinitialize) {
         return this.setState({ ...initial });
