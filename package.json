@@ -3,22 +3,30 @@
   "version": "1.0.0",
   "description": "A web app for scraping and collating recipes",
   "scripts": {
-    "lint": "yarn lint-django && cd frontend/ && yarn lint && cd ..",
-    "format": "yarn format-django && cd frontend/ && yarn format && cd ..",
-    "test": "yarn test-django && cd frontend/ && yarn test-nowatch && cd ..",
+    "lint": "yarn lint-django && yarn lint-frontend",
+    "format": "yarn format-django && yarn format-frontend",
+    "test": "yarn test-django && yarn test-frontend",
     "lint-django": "flake8",
     "lint-frontend": "eslint --fix 'frontend/src/**/*.js'",
-    "format-frontend": "prettier --write 'frontend/src/**/*.js'",
     "format-django": ":",
+    "format-frontend": "prettier --write 'frontend/src/**/*.js'",
     "test-django": "$VIRTUAL_ENV/bin/python manage.py test",
     "test-frontend": "jest",
-    "heroku-postbuild": "cd frontend/ && yarn install && yarn run build"
+    "heroku-postbuild": "cd frontend/ && yarn install && yarn run build",
+    "precommit": "lint-staged && yarn test-django"
   },
-  "pre-commit": [
-    "lint",
-    "format",
-    "test"
-  ],
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add",
+      "jest --bail --findRelatedTests"
+    ],
+    "*.py": [
+        "autoflake --in-place --remove-all-unused-imports --remove-unused-variables --exclude='*/migrations/*,*/settings/__init__.py'",
+        "autopep8 --in-place --exclude='*/migrations/*'",
+        "flake8"
+    ]
+  },
   "prettier": {
     "trailingComma": "es5",
     "singleQuote": true,
@@ -95,8 +103,9 @@
     "eslint-plugin-jest": "^21.17.0",
     "eslint-plugin-prettier": "^2.6.2",
     "eslint-plugin-react": "^7.10.0",
+    "husky": "^0.14.3",
     "jest": "^23.4.0",
-    "pre-commit": "^1.2.2",
+    "lint-staged": "^7.2.0",
     "prettier": "^1.13.7"
   },
   "dependencies": {}
