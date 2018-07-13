@@ -13,6 +13,7 @@
     "test-django": "$VIRTUAL_ENV/bin/python manage.py test",
     "test-frontend": "jest",
     "heroku-postbuild": "cd frontend/ && yarn install && yarn run build",
+    "dumpdata": "$VIRTUAL_ENV/bin/python manage.py dumpdata --indent=2 recipes > fixtures-data/dumped.json ",
     "precommit": "lint-staged && yarn test-django"
   },
   "lint-staged": {
