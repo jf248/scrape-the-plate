@@ -85,7 +85,7 @@ class Recipe(AbstractModel):
         get_user_model(), on_delete=models.CASCADE, blank=True, null=True
     )
     title = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True, editable=False)
+    slug = models.SlugField(unique=True, editable=False, max_length=255)
     ingredients = models.ManyToManyField(Ingredient, blank=True)
     preparation = models.TextField(blank=True)
     notes = models.TextField(blank=True)
