@@ -6,11 +6,11 @@ import { Compose, renderProps } from 'lib/react-powerplug';
 
 function Loading(props) {
   const renderFunc = (crud, auth) => {
-    const { isLoading: authIsLoading } = auth;
     const { isLoading: crudIsLoading } = crud;
+    const { isLoggingIn: authIsLoading } = auth;
 
-    const loading = authIsLoading || crudIsLoading;
-    return renderProps(props, { loading });
+    const isLoading = authIsLoading || crudIsLoading;
+    return renderProps(props, { isLoading });
   };
 
   return (

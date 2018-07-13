@@ -8,6 +8,7 @@ import logInOrOut from './logInOrOut';
 import scrape from 'controllers/Scraper/saga';
 import recordForm from 'controllers/RecordForm/saga';
 import loginForm from 'controllers/LoginForm/saga';
+import view from 'controllers/View/saga';
 
 export default function*() {
   yield all([
@@ -15,6 +16,7 @@ export default function*() {
     scrape(),
     recordForm(),
     loginForm(),
+    view(),
 
     // These sagas combine actions from differenct controller components:
     authorize(),

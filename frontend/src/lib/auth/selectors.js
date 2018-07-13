@@ -1,2 +1,2 @@
 export const isLoggedIn = state => state.auth.isLoggedIn;
-export const isLoading = state => state.auth.isLoading;
+export const isLoggingIn = state => state.auth.isLoggingIn;

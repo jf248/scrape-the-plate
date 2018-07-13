@@ -1,6 +1,6 @@
 import React from 'react';
-import { Record } from 'lib/crud';
 
+import ViewController from 'controllers/View'
 import ViewPres from './ViewPres';
 
 function View(props) {
@@ -13,7 +13,7 @@ function View(props) {
     return <ViewPres {...{ record }} />;
   };
 
-  return <Record resource={'recipes'} id={id} render={renderFunc} />;
+  return <ViewController resource={'recipes'} id={id} render={renderFunc} />;
 }
 
 export default View;

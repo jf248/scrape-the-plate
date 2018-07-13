@@ -2,18 +2,19 @@ import React from 'react';
 
 import { AppFrame } from 'lib/mui-app';
 
+import { drawer } from 'config';
 import LoginModal from './LoginModal';
 import LoginButton from './LoginButton';
 import Snackbar from './Snackbar';
 import CircularProgress from './CircularProgress';
-import { drawer } from 'config';
+import ComponentOr404 from './ComponentOr404';
 
 Route.defaultProps = {
   component: 'div',
 };
 
 function Route(props) {
-  const { component: Component, title, computedMatch: match, ...rest } = props;
+  const { component, title, computedMatch: match, ...rest } = props;
 
   return (
     <AppFrame
@@ -22,7 +23,7 @@ function Route(props) {
       ActionsComponent={LoginButton}
       MiddleComponent={CircularProgress}
     >
-      <Component match={match} {...rest} />
+      <ComponentOr404 component={component} match={match} {...rest} />
       <LoginModal />
       <Snackbar />
     </AppFrame>
