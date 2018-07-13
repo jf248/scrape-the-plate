@@ -1,11 +1,31 @@
 import React from 'react';
-import { Divider, Grid, Typography, withStyles } from '@material-ui/core';
+import {
+  IconButton,
+  Divider,
+  Grid,
+  Typography,
+  withStyles,
+} from '@material-ui/core';
+import { MoreVert, Restaurant } from '@material-ui/icons';
 
 import { AppContent } from 'lib/mui-app';
+import { Link } from 'lib/mui-components';
 
 import FabButton from './FabButton';
 
 const styles = theme => ({
+  source: {},
+  titleWrapper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  title: {
+    flex: '1 1 0',
+  },
+  icon: {},
+  fontIcon: {
+    display: 'inline',
+  },
   step: {
     paddingBottom: theme.spacing.unit * 2,
   },
@@ -19,7 +39,7 @@ const styles = theme => ({
 
 function ViewPres(props) {
   const { classes, record = {} } = props;
-  const { id, title, ingredients, preparation } = record;
+  const { id, title, ingredients, preparation, source, url } = record;
   const ingredientItems =
     ingredients &&
     ingredients.map((ingredient, index) => (
@@ -38,7 +58,32 @@ function ViewPres(props) {
     ));
   return (
     <AppContent>
-      <Typography variant={'display1'}>{title}</Typography>
+      <div className={classes.titleWrapper}>
+        <Typography className={classes.title} variant={'display1'}>
+          {title}
+        </Typography>
+        <IconButton className={classes.icon}>
+          <MoreVert />
+        </IconButton>
+      </div>
+      <div>
+        {source && (
+          <span style={{ display: 'flex', alignItems: 'center' }}>
+            <Restaurant color={'disabled'} />
+            <Typography variant={'subheading'}>
+              <Link
+                className={classes.source}
+                target={'_blank'}
+                onClick={event => event.stopPropagation()}
+                href={url}
+              >
+                {source && source.name}
+              </Link>
+            </Typography>
+          </span>
+        )}
+      </div>
+
       <Divider className={classes.divider} />
       <Grid container spacing={32}>
         <Grid item xs={12} sm={4}>

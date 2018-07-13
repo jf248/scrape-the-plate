@@ -10,8 +10,7 @@ const styles = theme => ({
     bottom: theme.spacing.unit * 2,
     right: theme.spacing.unit * 2,
   },
-  fab: {
-  }
+  fab: {},
 });
 
 AppFabButton.defaultProps = {
@@ -53,18 +52,18 @@ function AppFabButton(props) {
 
   const buttonProps = {
     variant: 'fab',
-    color: 'primary',
+    color: 'secondary',
     component,
     ...buttonPropsProp,
     className: classNames(classes.fab, buttonPropsProp.className),
   };
 
   return (
-        <Tooltip {...tooltipProps}>
-          <div className={classes.wrapper}>
-          <Button {...buttonProps}>{variant.icon}</Button>
-          </div>
-        </Tooltip>
+    <Tooltip {...tooltipProps}>
+      <div className={classes.wrapper}>
+        <Button {...buttonProps}>{variant.icon}</Button>
+      </div>
+    </Tooltip>
   );
 }
 

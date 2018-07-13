@@ -9,12 +9,13 @@ import {
 } from '@material-ui/core';
 
 import { Link } from 'lib/mui-components';
+import { formatMins } from 'utils';
 
 const styles = theme => ({
   root: {},
   cardAction: {
     display: 'block',
-    textAlign: 'initial'
+    textAlign: 'initial',
   },
   card: {
     width: '200px',
@@ -78,20 +79,6 @@ function ListItemPres(props) {
     }
   };
 
-  const formatMins = mins => {
-    if (mins < 60) {
-      return `${mins} min`;
-    }
-
-    let hours = Math.round(mins / 60);
-    const half = mins % 60 < 30 && mins % 60 !== 0;
-    if (half) {
-      hours = hours + 0.5;
-    }
-
-    return `${hours} hr`;
-  };
-
   const getSubheader = () => {
     const formatLabel = ([title, content]) => {
       if (!content) {
@@ -100,7 +87,7 @@ function ListItemPres(props) {
 
       const formattedTitle = <span>{`${title} `}</span>;
       return (
-        <span style={{fontSize: '12px'}}>
+        <span style={{ fontSize: '12px' }}>
           {title && formattedTitle}
           {`${content}`}
         </span>
@@ -119,7 +106,18 @@ function ListItemPres(props) {
     const last = labels.length - 1;
     return (
       <React.Fragment>
-        {source && <React.Fragment><Link target={'_blank'} onClick={event => event.stopPropagation()} href={url}>{source.name}</Link><br/></React.Fragment>}
+        {source && (
+          <React.Fragment>
+            <Link
+              target={'_blank'}
+              onClick={event => event.stopPropagation()}
+              href={url}
+            >
+              {source.name}
+            </Link>
+            <br />
+          </React.Fragment>
+        )}
         <span>
           {labels.map((label, index) => (
             <React.Fragment key={index}>
@@ -132,10 +130,14 @@ function ListItemPres(props) {
     );
   };
 
-  const handleClick = () => push(`/recipes/${id}`)
+  const handleClick = () => push(`/recipes/${id}`);
   return (
-      <Card className={classes.card}>
-    <ButtonBase focusRipple onClick={handleClick} className={classes.cardAction}>
+    <Card className={classes.card}>
+      <ButtonBase
+        focusRipple
+        onClick={handleClick}
+        className={classes.cardAction}
+      >
         <CardHeader
           classes={{
             title: classes.title,
@@ -144,8 +146,8 @@ function ListItemPres(props) {
           subheader={getSubheader()}
         />
         {renderContent()}
-    </ButtonBase>
-      </Card>
+      </ButtonBase>
+    </Card>
   );
 }
 

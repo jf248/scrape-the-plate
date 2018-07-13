@@ -1,6 +1,9 @@
 import React from 'react';
 
-import ViewController from 'controllers/View'
+import { Compose } from 'lib/react-powerplug';
+import { Record } from 'lib/crud';
+
+import ViewController from 'controllers/View';
 import ViewPres from './ViewPres';
 
 function View(props) {
@@ -9,11 +12,26 @@ function View(props) {
       params: { id },
     },
   } = props;
-  const renderFunc = ({ record }) => {
+  const renderFunc = ({ record: recipeRecord }, { record: sourceRecord }) => {
+    const record = { ...recipeRecord };
+    record.source = sourceRecord;
+
     return <ViewPres {...{ record }} />;
   };
 
-  return <ViewController resource={'recipes'} id={id} render={renderFunc} />;
+  return (
+    /* eslint-disable react/jsx-key */
+    <Compose
+      components={[
+        <ViewController resource={'recipes'} id={id} render={renderFunc} />,
+        (render, { record: { source: sourceId } = {} }) => (
+          <Record resource={'sources'} id={sourceId} render={render} />
+        ),
+      ]}
+      render={renderFunc}
+    />
+    /* eslint-enable react/jsx-key */
+  );
 }
 
 export default View;
