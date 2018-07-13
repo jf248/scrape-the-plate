@@ -29,6 +29,8 @@ class ListPres extends React.PureComponent {
       ids,
       push,
     } = this.props;
+
+    const tooltipTitle = 'Scrape a recipe for a URL. Or create your own.'
     return (
       <React.Fragment>
         <AppSearchBar>
@@ -37,7 +39,7 @@ class ListPres extends React.PureComponent {
               <Filter onChange={setFilter} filter={params.filter} />
             </FlexLeft>
             <FlexRight>
-              <Tooltip title={'Scrape a recipe for a URL. Or create your own.'}>
+              <Tooltip title={tooltipTitle}>
                 <Button onClick={() => push('/recipes/create')} color={'primary'}>{'+ scrape / create'}</Button>
               </Tooltip>
             </FlexRight>
@@ -53,8 +55,8 @@ class ListPres extends React.PureComponent {
             page={params.page}
             onChangePage={setPage}
           />
+          <AppFabButton variant={'add'} tooltipProps={{title: tooltipTitle}} to={`/recipes/create`} />
         </AppContent>
-          <AppFabButton variant={'add'} to={`/recipes/create`} />
       </React.Fragment>
     );
   }

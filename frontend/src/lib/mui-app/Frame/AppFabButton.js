@@ -5,28 +5,13 @@ import { Link } from 'react-router-dom';
 import { ModeEdit as EditIcon, Add as AddIcon } from '@material-ui/icons';
 
 const styles = theme => ({
-  outerContainer: {
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
-    width: '100%',
-  },
-  innerContainer: {
-    width: '100%',
-    margin: '0 auto',
-    display: 'flex',
-    padding: '0px 16px',
-    justifyContent: 'flex-end',
-    [theme.breakpoints.up('md')]: {
-      maxWidth: '932px',
-    },
-    [theme.breakpoints.down('sm')]: {
-      padding: '0px 24px',
-    },
+  wrapper: {
+    position: 'absolute',
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2,
   },
   fab: {
-    margin: theme.spacing.unit * 2,
-  },
+  }
 });
 
 AppFabButton.defaultProps = {
@@ -60,7 +45,7 @@ function AppFabButton(props) {
   const tooltipProps = {
     id: 'tooltip-fab',
     title: variant.title,
-    placement: 'left',
+    placement: 'top',
     ...tooltipPropsProp,
   };
 
@@ -75,13 +60,11 @@ function AppFabButton(props) {
   };
 
   return (
-    <div className={classes.outerContainer}>
-      <div className={classes.innerContainer}>
         <Tooltip {...tooltipProps}>
+          <div className={classes.wrapper}>
           <Button {...buttonProps}>{variant.icon}</Button>
+          </div>
         </Tooltip>
-      </div>
-    </div>
   );
 }
 

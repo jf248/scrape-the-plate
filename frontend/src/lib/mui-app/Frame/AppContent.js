@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
+    position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     flex: '1 1 100%',
