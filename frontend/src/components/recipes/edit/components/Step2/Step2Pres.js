@@ -15,14 +15,17 @@ import {
 } from 'lib/mui-components';
 
 import {
+
+  FlexContainer,
+  FlexLeft,
+  FlexRight,
+} from 'components/utils'
+import {
   IngredientsSection,
   NotesSection,
   PreparationSection,
   ResetDialog,
   TitleField,
-  FlexContainer,
-  FlexLeft,
-  FlexRight,
   DetailsSection,
   SourceSection,
 } from './components';

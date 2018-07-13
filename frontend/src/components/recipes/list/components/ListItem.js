@@ -3,7 +3,6 @@ import React from 'react';
 import { Compose } from 'lib/react-powerplug';
 import { Record } from 'lib/crud'
 
-import RoutePush from 'controllers/RoutePush'
 import ListItemPres from './ListItemPres';
 
 ListItem.defaultProps = {
@@ -11,11 +10,11 @@ ListItem.defaultProps = {
 };
 
 function ListItem(props) {
-  const { item: itemProp } = props;
+  const { item: itemProp, push } = props;
 
   const { source: sourceId } = itemProp;
 
-  const renderFunc = ({ push }, {record: sourceRecord}) => {
+  const renderFunc = ({record: sourceRecord}) => {
 
     // Make a copy of item and mutate the copy
   const item = { ...itemProp };
@@ -31,7 +30,6 @@ function ListItem(props) {
     /* eslint-disable react/jsx-key */
   <Compose
     components={[
-      <RoutePush/>,
       <Record resource={'sources'} id={sourceId}/>
     ]}
     render={renderFunc}

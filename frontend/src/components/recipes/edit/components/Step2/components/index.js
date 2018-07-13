@@ -6,4 +6,3 @@ export { default as SourceSection } from './SourceSection';
 export { default as DetailsSection } from './DetailsSection';
 export { default as ResetDialog } from './ResetDialog';
 export { default as NotesSection } from './NotesSection';
-export { FlexContainer, FlexLeft, FlexRight } from './Flex';

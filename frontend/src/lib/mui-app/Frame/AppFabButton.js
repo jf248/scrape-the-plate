@@ -60,6 +60,7 @@ function AppFabButton(props) {
   const tooltipProps = {
     id: 'tooltip-fab',
     title: variant.title,
+    placement: 'left',
     ...tooltipPropsProp,
   };
 
