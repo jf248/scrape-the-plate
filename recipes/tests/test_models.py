@@ -70,13 +70,6 @@ class SourceTests(SavePatcherMixin, ModelTesterMixin, TestCase):
             ordering=['name']
         )
 
-    def test_save_normalizes(self):
-        source = self.mixer.blend(self.model_cls, name='  foo  ')
-        source.save()
-
-        self.mock_save.assert_called_with(source)
-        self.assertEqual(source.name, 'Foo')
-
     def test_get_id_from_domain_name(self):
         self.doCleanups()       # stop patches so can save to database
         mixer = Mixer(commit=True)
@@ -106,14 +99,6 @@ class RecipeTests(SavePatcherMixin, ModelTesterMixin, TestCase):
             ordering=['slug']
         )
 
-    def test_save_normalizes(self):
-        recipe = self.mixer.blend(self.model_cls, title='  foo foo ')
-        recipe.save()
-
-        self.mock_save.assert_called_with(recipe)
-        self.assertEqual(recipe.title, 'Foo Foo')
-        self.assertEqual(recipe.slug, 'foo-foo')
-
     def test_clean_raises_if_slug_exists(self):
         self.doCleanups()
         mixer = Mixer(commit=True)
@@ -133,13 +118,6 @@ class RecipeTests(SavePatcherMixin, ModelTesterMixin, TestCase):
 
 
 class GroceryGroupTests(SavePatcherMixin, ModelTesterMixin, TestCase):
-
-    def test_save_corrects_name(self):
-        gg = self.mixer.blend(models.GroceryGroup, name='  tests  ')
-        gg.save()
-
-        self.mock_save.assert_called_with(gg)
-        self.assertEqual(gg.name, 'Tests')
 
     def test_meta(self):
         self.assertMeta(models.GroceryGroup,

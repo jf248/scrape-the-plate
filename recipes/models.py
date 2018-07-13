@@ -46,11 +46,6 @@ class Source(AbstractModel):
         except ObjectDoesNotExist:
             return None
 
-    def normalize(self):
-        d = self.__dict__
-        if 'name' in d:
-            d['name'] = general.capitalize_correct(d['name'])
-
     def __str__(self):
         return self.name
 
@@ -122,8 +117,7 @@ class Recipe(AbstractModel):
     def normalize(self):
         d = self.__dict__
         if 'title' in d:
-            d['title'] = general.capitalize_correct(self.title)
-            d['slug'] = slugify(d['title'])
+            d['slug'] = slugify(self.title)
 
     def _slug_exists(self):
         qs = Recipe.objects.filter(slug=self.slug)
@@ -142,10 +136,6 @@ class Recipe(AbstractModel):
 
 class GroceryGroup(models.Model):
     name = models.CharField(max_length=255, unique=True)
-
-    def save(self, *args, **kwargs):
-        self.name = general.capitalize_correct(self.name)
-        super(GroceryGroup, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.name
