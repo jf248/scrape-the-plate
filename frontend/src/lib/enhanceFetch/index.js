@@ -1,4 +1,5 @@
 export { default as compose } from './compose';
+
 export {
   addJsonHeaders,
   addAuthToken,
@@ -7,4 +8,5 @@ export {
   thenCombineResponse,
   thenJson,
   thenFormatResponse,
+  thenLogResponse,
 } from './enhancers';

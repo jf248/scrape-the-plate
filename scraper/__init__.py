@@ -29,8 +29,7 @@ def _url_path_to_dict(path):
     return url_dict
 
 
-# TODO: change to test=False for production
-def scrape(url_path, test=True):
+def scrape(url_path, test=False):
     _dict = _url_path_to_dict(url_path)
     if _dict is None:
         raise InvalidURLError('Not a valid URL.')

@@ -7,7 +7,8 @@ import {
   thenCombineResponse,
   thenJson,
   thenFormatResponse,
-  logRequest,
+  logRequest, // eslint-disable-line no-unused-vars
+  thenLogResponse, // eslint-disable-line no-unused-vars
 } from 'lib/enhanceFetch';
 
 const getCsrfToken = () => Cookies.get('csrftoken');
@@ -29,14 +30,30 @@ const formatResponse = ({ response, error }) => {
   }
   return { response, error };
 };
+
+
+/**
+ * To add logs for development:
+ *
+ * const enhancedFetch = compose(
+ *   addJsonHeaders,
+ *   addAuthToken(getAuthToken),
+ *   addCsrfToken(getCsrfToken),
+ *   logRequest,
+ *   thenCombineResponse,
+ *   thenJson,
+ *   thenFormatResponse(formatResponse),
+ *   thenLogResponse,
+ * )(fetch);
+ */
+
 const enhancedFetch = compose(
   addJsonHeaders,
   addAuthToken(getAuthToken),
   addCsrfToken(getCsrfToken),
-  logRequest,
   thenCombineResponse,
   thenJson,
-  thenFormatResponse(formatResponse)
+  thenFormatResponse(formatResponse),
 )(fetch);
 
 export default enhancedFetch;

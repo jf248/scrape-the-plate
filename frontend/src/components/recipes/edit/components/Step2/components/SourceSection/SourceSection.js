@@ -10,6 +10,7 @@ function SourceSection(props) {
     urlInputProps,
     bookInputProps,
     pageInputProps,
+    ...rest
   } = props;
 
   const types = [
@@ -17,6 +18,8 @@ function SourceSection(props) {
     { label: 'Book', value: 'book' },
     { label: 'Website', value: 'website' },
   ];
+
+  const isScraped = !!sourceInputProps && !!sourceInputProps.value;
 
   const renderFunc = ({ setState, state }) => {
     const onChangeType = type => setState({ type });
@@ -31,17 +34,19 @@ function SourceSection(props) {
           urlInputProps,
           bookInputProps,
           pageInputProps,
+          ...rest
         }}
       />
     );
   };
 
-  const isScraped = !!sourceInputProps && !!sourceInputProps.value;
 
+  // TODO: initial type should be based on initialValues, i.e. if scraped -> url
+  // and disabled
   return (
     /* eslint-disable react/jsx-key */
     <Compose
-      components={[<State initial={{ type: 'user' }} />]}
+      components={[<State enableReinitialize initial={{ type: isScraped ? 'website' : 'user' }} />]}
       render={renderFunc}
     />
     /* eslint-enable react/jsx-key */

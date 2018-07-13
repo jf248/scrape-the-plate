@@ -36,6 +36,7 @@ function ComboboxController(props) {
     onChange,
     onSelect,
     selectedItem,
+    isOpen: isControlledOpen,
     ...rest
   } = props;
 
@@ -63,6 +64,9 @@ function ComboboxController(props) {
     items = filterFunc
       ? filterFunc(items, query)
       : defaultFilterFunc(items, query);
+    if (isControlledOpen) {
+      return items;
+    }
     return items.filter(item => !selectedItem.includes(item));
   };
 
@@ -132,10 +136,13 @@ function ComboboxController(props) {
     }
   };
 
-  const handleChange = ({ selectedItem }) => {
+  const handleChange = (state) => {
     // We only want to expose changes to selectedItem, not the full state object
     // that includes typeAhead.
-    selectedItem && onChange && onChange(selectedItem);
+    if (state.hasOwnProperty('selectedItem')) {
+      const { selectedItem } = state;
+      onChange && onChange(selectedItem);
+    }
   };
 
   const handleKeyDown = props => event => {
@@ -228,7 +235,6 @@ function ComboboxController(props) {
   };
 
   const stateReducer = (selectedItem, setState) => (state, changes) => {
-    console.log('changes', changes);
     const { inputValue, isOpen } = changes;
 
     if (isOpen === true) {
@@ -303,6 +309,7 @@ function ComboboxController(props) {
       typeAheadText,
       selectedItemFocusIndex,
       groupedItems,
+      isControlledOpen,
       downshiftProps,
     });
   };
@@ -323,6 +330,7 @@ function ComboboxController(props) {
             onSelect={callAll(handleSelect(setState), onSelect)}
             stateReducer={stateReducer(selectedItem, setState)}
             inputValue={inputValue}
+            isOpen={isControlledOpen}
             {...rest}
           >
             {render}

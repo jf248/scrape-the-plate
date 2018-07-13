@@ -26,6 +26,7 @@ function Input(props) {
     downshiftProps,
     inputProps: inputPropsProp,
     InputProps: InputPropsProp,
+    isControlledOpen,
     multiple,
     renderSelectedItem: renderSelectedItemProp,
     selectedItemFocusIndex,
@@ -61,6 +62,7 @@ function Input(props) {
       disabled={disabled}
       downshiftProps={downshiftProps}
       multiple={multiple}
+      isControlledOpen={isControlledOpen}
     />
   );
 

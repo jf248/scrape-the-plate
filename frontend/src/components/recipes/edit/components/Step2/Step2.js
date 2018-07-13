@@ -40,7 +40,7 @@ function Step2(props) {
             validate,
             normalize,
             initialValues,
-            meta: { redirect: {}, snackbar: {} },
+            meta: { onSuccess: {redirect: {}, snackbar: {}} },
           }}
         />,
         <Modals />,

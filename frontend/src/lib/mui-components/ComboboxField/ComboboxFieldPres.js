@@ -35,6 +35,7 @@ class ComboboxFieldPres extends React.Component {
       selectedItemFocusIndex,
       groupedItems,
       downshiftProps,
+      isControlledOpen,
       innerRef,
       ...rest
     } = this.props;
@@ -52,6 +53,7 @@ class ComboboxFieldPres extends React.Component {
           selectedItems={selectedItems}
           {...TextFieldProps}
           onKeyDown={onKeyDown}
+          isControlledOpen={isControlledOpen}
         />
         <Menu
           downshiftProps={downshiftProps}

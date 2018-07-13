@@ -85,14 +85,14 @@ class RecipeFilter(filters.FilterSet):
 
     class Meta:
         model = Recipe
-        fields = ('id',)
+        fields = ()
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.RecipeSerializer
     pagination_class = CustomPagination
     filter_class = RecipeFilter
-    filter_backends = (SearchFilter, )
+    filter_backends = (SearchFilter, filters.DjangoFilterBackend)
     search_fields = ('title',)
 
     def perform_create(self, serializer):

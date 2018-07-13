@@ -6,7 +6,7 @@ import { isRequired } from 'lib/form/validators';
 import LoginForm from 'controllers/LoginForm';
 import LoginModal from 'controllers/LoginModal';
 import LoginContentPres from './LoginContentPres';
-
+// TODO: remove default
 function LoginContent() {
   const renderFunc = ({ getInputProps, getSubmitProps }, { close }) => {
     return <LoginContentPres {...{ getInputProps, getSubmitProps, close }} />;
@@ -16,7 +16,7 @@ function LoginContent() {
     /* eslint-disable react/jsx-key */
     <Compose
       components={[
-        <LoginForm isLogin validate={isRequired(['username', 'password'])} />,
+        <LoginForm initialValues={{username: 'jf248@outlook.com', password: 'password'}} isLogin validate={isRequired(['username', 'password'])} />,
         <LoginModal />,
       ]}
       render={renderFunc}

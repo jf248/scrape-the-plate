@@ -31,7 +31,7 @@ export const addCsrfToken = getToken => fetchFunc => {
 
 export const logRequest = fetchFunc => {
   const next = (url, init = {}) => {
-    console.log('Making request', url, init);
+    console.log('Making request:', url, init);
     return fetchFunc(url, init);
   };
   return next;
@@ -78,6 +78,13 @@ export const thenJson = fetchFunc => {
 export const thenFormatResponse = formatter => fetchFunc => {
   const next = (url, init) => {
     return fetchFunc(url, init).then(response => formatter(response));
+  };
+  return next;
+};
+
+export const thenLogResponse = fetchFunc => {
+  const next = (url, init = {}) => {
+    return fetchFunc(url, init).then(response => { console.log('Response:', response); return response; });
   };
   return next;
 };

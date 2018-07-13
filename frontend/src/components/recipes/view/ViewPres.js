@@ -40,7 +40,7 @@ function ViewPres(props) {
     <AppContent>
       <Typography variant={'display1'}>{title}</Typography>
       <Divider className={classes.divider} />
-      <Grid container>
+      <Grid container spacing={32}>
         <Grid item xs={12} sm={4}>
           <Typography variant={'title'} paragraph>
             Ingredients

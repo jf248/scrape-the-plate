@@ -133,9 +133,11 @@ class Recipe(AbstractModel):
 
     @staticmethod
     def get_user_and_public_recipes(user):
-        return Recipe.objects.filter(
-            models.Q(user=user.id) | models.Q(public=True)
-        )
+        if user:
+            return Recipe.objects.filter(
+                models.Q(user=user.id) | models.Q(public=True)
+            )
+        return Recipe.objects.filter(public=True)
 
 
 class GroceryGroup(models.Model):

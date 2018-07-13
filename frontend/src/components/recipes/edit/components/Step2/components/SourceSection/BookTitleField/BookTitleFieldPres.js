@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 
 import { TextField } from 'components/utils';
+import BookTitleDialog from '../BookTitleDialog';
 
 const styles = () => ({
   root: {},
@@ -16,31 +17,44 @@ function BookTitleFieldPres(props) {
   const {
     classes,
     className: classNameProp,
-    id,
+    value,
     error,
+    ids,
     data,
+    onChange,
     touched,
+    isModalOpen,
+    onCloseModal,
     onOpenModal,
     onBlur,
+    title,
     ...rest
   } = props;
 
   const className = classNames(classes.root, classNameProp);
 
-  const value = data[id] && data[id].name ? data[id].name : '';
   return (
     <React.Fragment>
       <TextField
         {...{
+          label: 'Title',
           touched,
           error,
           className,
           onClick: onOpenModal,
           onBlur,
-          value,
+          value: title,
           ...rest,
         }}
       />
+      <BookTitleDialog {...{
+        onChange,
+        open: isModalOpen,
+        onClose: onCloseModal,
+        ids,
+        data,
+        value,
+      }}/>
     </React.Fragment>
   );
 }
@@ -48,12 +62,4 @@ function BookTitleFieldPres(props) {
 export default withStyles(styles)(BookTitleFieldPres);
 
 /*
-      <BookTitleDialog {...{
-        onChangeId,
-        open: isModalOpen,
-        onClose: onCloseModal,
-        ids,
-        data,
-        id,
-      }}/>
 */

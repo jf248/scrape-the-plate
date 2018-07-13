@@ -1,18 +1,17 @@
 # Burn list
-* Notes, Cooking Time, Prep Time
-* If not the owner of a recipe, send to Denied page if trying to view and not public or trying to edit
-* List/View should show source name not source id
+* Scrape button more visible
+* Improved layout of View
+* Move dataProvider logic to enhancedFetch?
 * Image upload
-* when to reverse compose function
-
-* Input adornment for cooking time
+* When to reverse compose function?
+* Book field
 * Tags
-
-
-* Search and filter
+* Search and filter: debounced, search ingredients, tags, sites
 * More scrape sites
-* Tags
-* Tidy Recipe List and Recipe View
 * Tests
 * Grocery Items
 * Like/Fork feature
+
+# Other
+* supertab
+* no fold while typing

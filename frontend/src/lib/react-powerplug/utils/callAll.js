@@ -11,7 +11,7 @@ export default function callAll(...fns) {
       fn && fn(event, ...args);
       return (
         isObject(event) &&
-        (event.nativeEvent.preventPowerplugDefault ||
+        ((event.nativeEvent && event.nativeEvent.preventPowerplugDefault) ||
           event.preventPowerplugDefault)
       );
     });

@@ -2,30 +2,67 @@ import React from 'react';
 import ArrowDown from '@material-ui/icons/ArrowDropDown';
 import ArrowUp from '@material-ui/icons/ArrowDropUp';
 import Close from '@material-ui/icons/Close';
-import { InputAdornment } from '@material-ui/core';
+import { InputAdornment, ButtonBase } from '@material-ui/core';
 
 function Button(props) {
   const {
     disabled,
     downshiftProps: { clearSelection, inputValue, isOpen, toggleMenu },
     multiple,
+    isControlledOpen,
   } = props;
 
-  const Icon = isOpen ? ArrowUp : inputValue && !multiple ? Close : ArrowDown;
+  const Dummy = () => <div style={{width: '24px', height: '32px'}}/>
+
+  const getIcon = () => {
+    if (disabled) {
+      return Dummy
+    }
+
+    if (isOpen && !isControlledOpen) {
+      return ArrowUp
+    }
+
+    if (inputValue && !multiple) {
+      return Close;
+    }
+
+    if (isControlledOpen) {
+      return Dummy
+    }
+
+    return ArrowDown
+  }
+
 
   const handleClick = () => {
-    if (!isOpen && !!inputValue) {
-      clearSelection();
-    } else {
-      toggleMenu();
+    if (disabled) {
+      return;
     }
+
+    if (isOpen && !isControlledOpen) {
+      return toggleMenu()
+    }
+
+    if (inputValue && !multiple) {
+      return clearSelection();
+    }
+
+    if (isControlledOpen) {
+      return;
+    }
+
+    return toggleMenu();
   };
 
-  return disabled ? null : (
-    <InputAdornment poisition="end" onClick={handleClick}>
-      <Icon />
-    </InputAdornment>
-  );
+
+  return (
+    <ButtonBase onClick={handleClick}>
+      <InputAdornment poisition="end">
+        {React.createElement(getIcon())}
+      </InputAdornment>
+    </ButtonBase>
+  )
 }
 
 export default Button;

@@ -11,8 +11,12 @@ function getValue(eventOrValue) {
   }
 }
 
+function isObject(obj) {
+  return obj !== null && typeof obj === 'object';
+}
+
 function isEvent(candidate) {
-  return !!(candidate && candidate.stopPropagation && candidate.preventDefault);
+  return !!(isObject(candidate) && candidate.stopPropagation && candidate.preventDefault);
 }
 
 class Form extends Component {
@@ -78,7 +82,7 @@ class Form extends Component {
       this.setState(prevState => {
         const validationErrors = this.props.validate(prevState.values);
         const isValid =
-          Object.keys(validationErrors).lengh === 0 &&
+          Object.keys(validationErrors).length === 0 &&
           Object.keys(prevState.apiErrors).length === 0;
         return { validationErrors, isValid };
       }, resolve);
@@ -103,6 +107,11 @@ class Form extends Component {
     this.setState({ isPristine: false });
     this.props.validateOnBlur && this.runValidation();
   };
+
+  // We know all the fields, so we changed touched to true
+  setTouchedAll = () => {
+    this.setState({ touched: true })
+  }
 
   resetTouched = () => {
     this._resetState('touched');
@@ -150,6 +159,7 @@ class Form extends Component {
       resetForm: this.resetForm,
       setApiErrors: this.setApiErrors,
       setTouched: this.setTouched,
+      setTouchedAll: this.setTouchedAll,
       setValues: this.setValues,
       touched,
       validate: this.runValidation,
@@ -164,7 +174,7 @@ class Form extends Component {
         return {
           error: apiErrors[name] || validationErrors[name],
           value: values[name] || '',
-          touched: touched[name],
+          touched: touched === true ? true : touched[name],
           ...ownProps,
           onChange: callAll(onChange, this.handleChange(name)),
           onBlur: callAll(onBlur, this.handleBlur(name)),

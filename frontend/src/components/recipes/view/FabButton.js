@@ -8,7 +8,7 @@ function FabButton(props) {
 
   const renderFunc = ({ isLoggedIn }) => {
     return (
-      <FabButtonPres {...{isLoggedIn, props}} />
+      <FabButtonPres {...{isLoggedIn, ...props}} />
     );
   };
 

@@ -9,6 +9,9 @@ const styles = theme => ({
   highlighted: {
     backgroundColor: theme.palette.action.hover,
   },
+  selected: {
+    backgroundColor: theme.palette.action.selected,
+  },
 });
 
 MenuItem.defaultProps = {
@@ -31,6 +34,7 @@ function MenuItem(props) {
   const className = classnames(
     classes.menuItem,
     { [classes.highlighted]: highlightedIndex === index },
+    { [classes.selected]: selectedItems.includes(item)},
     classNameProp
   );
 

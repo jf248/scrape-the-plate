@@ -1,6 +1,6 @@
 import validateField from './validateField';
 
-const testLength = (string, length) => {
+const testLength = length => (string) => {
   if (!string) {
     return true;
   }
@@ -8,4 +8,4 @@ const testLength = (string, length) => {
 };
 
 export default (field, length, error) =>
-  validateField(field, testLength, error);
+  validateField(field, testLength(length), error);

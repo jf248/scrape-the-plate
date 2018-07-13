@@ -16,10 +16,11 @@ function DetailsSection(props) {
     cookTimeInputProps,
     prepTimeInputProps,
     servesInputProps,
+    ...rest
   } = props;
 
   return (
-    <Section title={'Details'}>
+    <Section title={'Details'} {...rest}>
       <TextField
         {...servesInputProps}
         className={classes.marginRight}

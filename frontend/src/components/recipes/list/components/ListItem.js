@@ -1,92 +1,43 @@
 import React from 'react';
-import {
-  ButtonBase,
-  Card,
-  CardHeader,
-  CardContent,
-  IconButton,
-  Typography,
-  withStyles,
-} from '@material-ui/core';
-import { MoreVert as MoreVertIcon } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
 
-const styles = theme => ({
-  root: {},
-  card: {
-    width: '200px',
-    margin: theme.spacing.unit,
-  },
-  content: {
-    height: '80px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-  title: {
-    ...theme.typography.body2,
-    height: '48px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-  subheader: {
-    height: '20px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-  },
-});
+import { Compose } from 'lib/react-powerplug';
+import { Record } from 'lib/crud'
+
+import RoutePush from 'controllers/RoutePush'
+import ListItemPres from './ListItemPres';
 
 ListItem.defaultProps = {
   item: {},
 };
 
 function ListItem(props) {
-  const { classes, item } = props;
+  const { item: itemProp } = props;
 
-  const { id, title, description, preparation, source } = item;
+  const { source: sourceId } = itemProp;
 
-  const renderContent = () => {
-    if (description) {
-      return (
-        <CardContent className={classes.content}>
-          <Typography component={'p'}>{description}</Typography>
-        </CardContent>
-      );
-    } else {
-      return (
-        <CardContent className={classes.content}>
-          {preparation &&
-            preparation.map((step, index) => (
-              <Typography component={'p'} key={index}>
-                {step.text}
-              </Typography>
-            ))}
-        </CardContent>
-      );
-    }
+  const renderFunc = ({ push }, {record: sourceRecord}) => {
+
+    // Make a copy of item and mutate the copy
+  const item = { ...itemProp };
+
+    item.source = sourceRecord;
+
+    return (
+      <ListItemPres {...{ item, push }} />
+    );
   };
 
-  const renderLink = props => <Link to={`/recipes/${id}`} {...props} />;
-
   return (
-    <ButtonBase focusRipple component={renderLink} className={classes.root}>
-      <Card className={classes.card}>
-        <CardHeader
-          action={
-            <IconButton>
-              <MoreVertIcon />
-            </IconButton>
-          }
-          classes={{
-            title: classes.title,
-            subheader: classes.subheader,
-          }}
-          title={title}
-          subheader={source || 'by me'}
-        />
-        {renderContent()}
-      </Card>
-    </ButtonBase>
+    /* eslint-disable react/jsx-key */
+  <Compose
+    components={[
+      <RoutePush/>,
+      <Record resource={'sources'} id={sourceId}/>
+    ]}
+    render={renderFunc}
+    />
+    /* eslint-enable react/jsx-key */
   );
 }
 
-export default withStyles(styles)(ListItem);
+export default ListItem;

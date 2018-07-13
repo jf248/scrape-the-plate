@@ -3,22 +3,14 @@ import { push } from 'connected-react-router';
 
 import { reset as resetCrud } from 'lib/crud';
 
-import { isLoginSuccess, isLogoutSuccess } from 'lib/auth';
+import { isLogoutSuccess } from 'lib/auth';
 
-function* reset(action) {
-  // Reset crud redux state on either login or logout
+function* reset() {
   yield put(resetCrud());
-
-  // Navigate home on logout
-  if (isLogoutSuccess(action)) {
-    yield put(push('/'));
-  }
+  yield put(push('/'));
 }
 
-const isLogInOrOut = action => {
-  return isLoginSuccess(action) || isLogoutSuccess(action);
-};
 
-export default function* watchLogInOrOut() {
-  yield takeLatest(isLogInOrOut, reset);
+export default function* watchLogOut() {
+  yield takeLatest(isLogoutSuccess, reset);
 }

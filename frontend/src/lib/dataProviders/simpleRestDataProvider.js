@@ -147,7 +147,7 @@ const makeSimpleRestDataProvider = (
           if (response) {
             const accData = response.data;
             accumulator[resource].forEach(({ id, resolve }) => {
-              let data = accData.find(x => x['id'].toString() === id);
+              let data = accData.find(x => x['id'] === id);
               if (data) {
                 resolve({ response: { data } });
               } else {
@@ -179,7 +179,7 @@ const makeSimpleRestDataProvider = (
     // Return a Promise whose resolve callback is stored for later
     // in the accumulator.
     return new Promise(resolve =>
-      accumulator[resource].push({ id: params.id, type, resolve })
+      accumulator[resource].push({ id: parseInt(params.id, 10), type, resolve })
     );
   };
 

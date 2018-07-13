@@ -9,7 +9,6 @@ import {
 import { LOGIN, SIGNUP } from './names';
 
 function* submit(action) {
-  console.log('submit LoginForm', action);
   const { meta, payload: data } = action;
   const { isLogin, name } = meta;
 

@@ -16,10 +16,17 @@ function Form(props) {
     return renderProps(props, { ...basicForm, isSubmitting, submit, response });
   };
 
+  const handleSubmit = submit => (values, { isValid, setTouchedAll }) => {
+    if (!isValid) {
+      return setTouchedAll();
+    }
+    onSubmit(values, submit)
+  }
+
   const makeBasicForm = (render, { submit, error }) => {
     return (
       <BasicForm
-        onSubmit={values => onSubmit(values, submit)}
+        onSubmit={handleSubmit(submit)}
         apiErrors={error}
         {...rest}
         render={render}

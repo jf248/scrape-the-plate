@@ -71,20 +71,24 @@ function Step2Pres(props) {
             </FlexRight>
           </FlexContainer>
           <IngredientsSection
-            defaultExpanded
+            defaultExpanded={false}
             inputProps={getInputProps({ name: 'ingredients' })}
           />
           <PreparationSection
-            defaultExpanded
+            defaultExpanded={false}
             inputProps={getInputProps({ name: 'preparation' })}
           />
-          <NotesSection inputProps={getInputProps({ name: 'notes' })} />
+          <NotesSection
+            defaultExpanded={false}
+            inputProps={getInputProps({ name: 'notes' })} />
           <DetailsSection
+            defaultExpanded={false}
             prepTimeInputProps={getInputProps({ name: 'prep_time' })}
             cookTimeInputProps={getInputProps({ name: 'cook_time' })}
             servesInputProps={getInputProps({ name: 'serves' })}
           />
           <SourceSection
+            defaultExpanded={true}
             sourceInputProps={getInputProps({ name: 'source' })}
             urlInputProps={getInputProps({ name: 'url' })}
             bookInputProps={getInputProps({ name: 'book' })}

@@ -21,10 +21,11 @@ function SourceSection(props) {
     type,
     types,
     urlInputProps,
+    ...rest
   } = props;
 
   return (
-    <Section title={'Source'}>
+    <Section title={'Source'} {...rest}>
       {!isScraped && (
         <Select
           className={classes.marginRight}
@@ -40,8 +41,8 @@ function SourceSection(props) {
           ))}
         </Select>
       )}
-      {(isScraped || type === 'website') && (
-        <TextField disabled={isScraped} {...urlInputProps} label={'URL'} />
+      {type === 'website'&& (
+        <TextField fullWidth disabled={isScraped} {...urlInputProps} label={'URL'} />
       )}
       {type === 'book' && (
         <React.Fragment>
