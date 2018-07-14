@@ -3,17 +3,18 @@ import { connect } from 'react-redux';
 import { renderProps } from 'lib/react-powerplug';
 
 import { login, logout, signup } from './actions';
-import { isLoggedIn, isLoggingIn } from './selectors';
+import { isLoggedIn, isLoggingIn, user } from './selectors';
 
 function Auth(props) {
-  const { isLoggedIn, isLoggingIn, login, signup, logout } = props;
-  return renderProps(props, { isLoggedIn, isLoggingIn, login, signup, logout });
+  const { isLoggedIn, isLoggingIn, login, signup, logout, user } = props;
+  return renderProps(props, { isLoggedIn, isLoggingIn, login, signup, logout, user });
 }
 
 const mapStateToProps = state => {
   return {
     isLoggedIn: isLoggedIn(state),
     isLoggingIn: isLoggingIn(state),
+    user: user(state),
   };
 };
 

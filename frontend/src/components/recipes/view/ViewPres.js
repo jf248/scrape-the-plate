@@ -1,12 +1,10 @@
 import React from 'react';
 import {
-  IconButton,
   Divider,
   Grid,
   Typography,
   withStyles,
 } from '@material-ui/core';
-import { MoreVert } from '@material-ui/icons';
 
 import { AppContent } from 'lib/mui-app';
 import { Link } from 'lib/mui-components';
@@ -14,6 +12,7 @@ import { Link } from 'lib/mui-components';
 import { formatMins } from 'utils';
 import FabButton from './FabButton';
 import SubheadingLabel from './SubheadingLabel';
+import MoreButton from './MoreButton'
 
 const styles = theme => ({
   source: {},
@@ -45,7 +44,7 @@ ViewPres.default = {
 };
 
 function ViewPres(props) {
-  const { classes, record } = props;
+  const { classes, record} = props;
   const {
     id,
     title,
@@ -55,6 +54,7 @@ function ViewPres(props) {
     url,
     prep_time,
     cook_time,
+    user,
   } = record;
   const ingredientItems =
     ingredients &&
@@ -72,15 +72,14 @@ function ViewPres(props) {
         <Typography variant={'subheading'}>{step}</Typography>
       </div>
     ));
+
   return (
     <AppContent>
       <div className={classes.titleWrapper}>
         <Typography className={classes.title} variant={'display1'}>
           {title}
         </Typography>
-        <IconButton className={classes.icon}>
-          <MoreVert />
-        </IconButton>
+        <MoreButton ids={id} user={user}/>
       </div>
       <Typography
         className={classes.subheading}

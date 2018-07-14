@@ -12,7 +12,9 @@ function View(props) {
       params: { id },
     },
   } = props;
-  const renderFunc = ({ record: recipeRecord }, { record: sourceRecord }) => {
+  const renderFunc = (recipe, source) => {
+    const { record: recipeRecord } = recipe;
+    const { record: sourceRecord } = source;
     const record = { ...recipeRecord };
     record.source = sourceRecord;
 
