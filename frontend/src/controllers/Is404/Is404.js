@@ -7,9 +7,8 @@ import { off } from './actions';
 
 class Is404 extends React.Component {
   componentWillUnmount() {
-    this.props.off()
+    this.props.off();
   }
-
 
   render() {
     const { is404 } = this.props;
@@ -17,13 +16,13 @@ class Is404 extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     is404: state.is404,
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     off: () => dispatch(off()),
   };

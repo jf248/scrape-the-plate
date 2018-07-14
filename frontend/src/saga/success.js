@@ -6,7 +6,7 @@ import { SUCCESS as SCRAPER_SUCCESS } from 'controllers/Scraper/actions';
 import { SUCCESS as RECORD_FORM_SUCCESS } from 'controllers/RecordForm/actions';
 import { isLoginSuccess } from 'controllers/LoginForm/actions';
 import { close as closeLogin } from 'controllers/LoginModal/actions';
-import { toTitleCase } from 'utils'
+import { toTitleCase } from 'utils';
 
 function* scraperSuccess() {
   yield put(openSnackbar({ message: 'Scraped! Make edits and save.' }));
@@ -28,7 +28,9 @@ function* recordFormSuccess(action) {
 
   if (snackbar) {
     const defaultProps = {
-      message: `${toTitleCase(resource.slice(0, -1))} ${metaId ? 'updated' : 'created'}`,
+      message: `${toTitleCase(resource.slice(0, -1))} ${
+        metaId ? 'updated' : 'created'
+      }`,
     };
     yield put(openSnackbar({ ...defaultProps, ...snackbar }));
   }

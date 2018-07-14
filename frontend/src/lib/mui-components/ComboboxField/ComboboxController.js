@@ -136,7 +136,7 @@ function ComboboxController(props) {
     }
   };
 
-  const handleChange = (state) => {
+  const handleChange = state => {
     // We only want to expose changes to selectedItem, not the full state object
     // that includes typeAhead.
     if (state.hasOwnProperty('selectedItem')) {

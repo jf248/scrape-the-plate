@@ -34,19 +34,23 @@ function SourceSection(props) {
           urlInputProps,
           bookInputProps,
           pageInputProps,
-          ...rest
+          ...rest,
         }}
       />
     );
   };
-
 
   // TODO: initial type should be based on initialValues, i.e. if scraped -> url
   // and disabled
   return (
     /* eslint-disable react/jsx-key */
     <Compose
-      components={[<State enableReinitialize initial={{ type: isScraped ? 'website' : 'user' }} />]}
+      components={[
+        <State
+          enableReinitialize
+          initial={{ type: isScraped ? 'website' : 'user' }}
+        />,
+      ]}
       render={renderFunc}
     />
     /* eslint-enable react/jsx-key */

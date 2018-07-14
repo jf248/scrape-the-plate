@@ -1,6 +1,14 @@
 import React from 'react';
 import classnames from 'classnames';
-import { IconButton, ListItem, ListItemSecondaryAction, ListItemText, withStyles, Menu, MenuItem as SubMenuItem } from '@material-ui/core';
+import {
+  IconButton,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  withStyles,
+  Menu,
+  MenuItem as SubMenuItem,
+} from '@material-ui/core';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const styles = theme => ({
@@ -11,7 +19,6 @@ const styles = theme => ({
     backgroundColor: theme.palette.action.selected,
   },
 });
-
 
 class MenuItem extends React.Component {
   state = {
@@ -27,7 +34,6 @@ class MenuItem extends React.Component {
   };
 
   render() {
-
     const { anchorEl } = this.state;
     const {
       classes,
@@ -43,7 +49,7 @@ class MenuItem extends React.Component {
 
     const className = classnames(
       { [classes.highlighted]: highlightedIndex === index },
-      { [classes.selected]: selectedItems.includes(item)},
+      { [classes.selected]: selectedItems.includes(item) },
       classNameProp
     );
 
@@ -58,9 +64,7 @@ class MenuItem extends React.Component {
             ...rest,
           })}
         >
-          <ListItemText>
-            {itemToString(item)}
-          </ListItemText>
+          <ListItemText>{itemToString(item)}</ListItemText>
           <ListItemSecondaryAction onClick={this.handleClick}>
             <IconButton aria-label="Comments">
               <MoreVertIcon />

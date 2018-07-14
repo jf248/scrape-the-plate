@@ -84,7 +84,10 @@ export const thenFormatResponse = formatter => fetchFunc => {
 
 export const thenLogResponse = fetchFunc => {
   const next = (url, init = {}) => {
-    return fetchFunc(url, init).then(response => { console.log('Response:', response); return response; });
+    return fetchFunc(url, init).then(response => {
+      console.log('Response:', response);
+      return response;
+    });
   };
   return next;
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Compose } from 'lib/react-powerplug';
-import { Record } from 'lib/crud'
+import { Record } from 'lib/crud';
 
 import ListItemPres from './ListItemPres';
 
@@ -14,25 +14,20 @@ function ListItem(props) {
 
   const { source: sourceId } = itemProp;
 
-  const renderFunc = ({record: sourceRecord}) => {
-
+  const renderFunc = ({ record: sourceRecord }) => {
     // Make a copy of item and mutate the copy
-  const item = { ...itemProp };
+    const item = { ...itemProp };
 
     item.source = sourceRecord;
 
-    return (
-      <ListItemPres {...{ item, push }} />
-    );
+    return <ListItemPres {...{ item, push }} />;
   };
 
   return (
     /* eslint-disable react/jsx-key */
-  <Compose
-    components={[
-      <Record resource={'sources'} id={sourceId}/>
-    ]}
-    render={renderFunc}
+    <Compose
+      components={[<Record resource={'sources'} id={sourceId} />]}
+      render={renderFunc}
     />
     /* eslint-enable react/jsx-key */
   );

@@ -1,6 +1,6 @@
 import validateField from './validateField';
 
-const testLength = length => (string) => {
+const testLength = length => string => {
   if (!string) {
     return true;
   }

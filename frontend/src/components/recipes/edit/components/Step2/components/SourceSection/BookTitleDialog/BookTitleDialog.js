@@ -5,8 +5,6 @@ import { ComboboxController } from 'lib/mui-components/ComboboxField';
 
 import BookTitleDialogPres from './BookTitleDialogPres';
 
-
-
 BookTitleDialog.defaultProps = {
   data: {},
   ids: [],
@@ -18,7 +16,7 @@ function BookTitleDialog(props) {
   const selectedItem = data[value] || null;
   const onChange = selectedItem => {
     onChangeProp(selectedItem && selectedItem.id);
-  }
+  };
 
   const itemToString = item => (item === null ? '' : item.title);
 

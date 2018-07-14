@@ -1,11 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import {
-  Typography,
-  List,
-  ListSubheader,
-  withStyles,
-} from '@material-ui/core';
+import { Typography, List, ListSubheader, withStyles } from '@material-ui/core';
 
 import MenuItem from './MenuItem';
 
@@ -37,12 +32,12 @@ function Menu(props) {
     classes,
     downshiftProps,
     groupedItems,
-    menuBottomElement,  // eslint-disable-line no-unused-vars
-    menuBottomFixed,  // eslint-disable-line no-unused-vars
+    menuBottomElement, // eslint-disable-line no-unused-vars
+    menuBottomFixed, // eslint-disable-line no-unused-vars
     MenuProps: { className: MenuClassName, ...MenuPropsProp },
     noMatchProps: { className: noMatchClassName, ...noMatchPropsProp },
     noMatchText,
-    renderMenuItem,  // eslint-disable-line no-unused-vars
+    renderMenuItem, // eslint-disable-line no-unused-vars
     selectedItems,
     SubheaderProps,
   } = props;
@@ -60,15 +55,22 @@ function Menu(props) {
         </div>
       );
     } else {
-      return groupedItems.map((sublist) => {
+      return groupedItems.map(sublist => {
         const group = sublist.group;
         return (
           <li key={group || 'single-sublist'} className={classes.listSection}>
             <ul className={classes.ul}>
-              {group && <ListSubheader {...SubheaderProps}>{group}</ListSubheader>}
+              {group && (
+                <ListSubheader {...SubheaderProps}>{group}</ListSubheader>
+              )}
               {sublist.items.map((item, indexOfSublist) => {
                 const index = sublist.firstIndex + indexOfSublist;
-                return <MenuItem key={itemToString(item)} {...{downshiftProps, index, item, selectedItems}} />
+                return (
+                  <MenuItem
+                    key={itemToString(item)}
+                    {...{ downshiftProps, index, item, selectedItems }}
+                  />
+                );
               })}
             </ul>
           </li>

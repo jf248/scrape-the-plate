@@ -10,7 +10,6 @@ function* reset() {
   yield put(push('/'));
 }
 
-
 export default function* watchLogOut() {
   yield takeLatest(isLogoutSuccess, reset);
 }

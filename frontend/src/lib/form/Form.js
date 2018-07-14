@@ -16,7 +16,11 @@ function isObject(obj) {
 }
 
 function isEvent(candidate) {
-  return !!(isObject(candidate) && candidate.stopPropagation && candidate.preventDefault);
+  return !!(
+    isObject(candidate) &&
+    candidate.stopPropagation &&
+    candidate.preventDefault
+  );
 }
 
 class Form extends Component {
@@ -110,8 +114,8 @@ class Form extends Component {
 
   // We know all the fields, so we changed touched to true
   setTouchedAll = () => {
-    this.setState({ touched: true })
-  }
+    this.setState({ touched: true });
+  };
 
   resetTouched = () => {
     this._resetState('touched');

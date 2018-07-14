@@ -1,1 +1,1 @@
-export { default } from './BookTitleDialog'
+export { default } from './BookTitleDialog';

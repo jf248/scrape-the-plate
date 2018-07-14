@@ -31,7 +31,6 @@ const formatResponse = ({ response, error }) => {
   return { response, error };
 };
 
-
 /**
  * To add logs for development:
  *
@@ -53,7 +52,7 @@ const enhancedFetch = compose(
   addCsrfToken(getCsrfToken),
   thenCombineResponse,
   thenJson,
-  thenFormatResponse(formatResponse),
+  thenFormatResponse(formatResponse)
 )(fetch);
 
 export default enhancedFetch;

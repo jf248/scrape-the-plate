@@ -16,7 +16,14 @@ function LoginContent() {
     /* eslint-disable react/jsx-key */
     <Compose
       components={[
-        <LoginForm initialValues={{username: 'jf248@outlook.com', password: 'password'}} isLogin validate={isRequired(['username', 'password'])} />,
+        <LoginForm
+          initialValues={{
+            username: 'jf248@outlook.com',
+            password: 'password',
+          }}
+          isLogin
+          validate={isRequired(['username', 'password'])}
+        />,
         <LoginModal />,
       ]}
       render={renderFunc}

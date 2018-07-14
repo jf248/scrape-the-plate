@@ -14,12 +14,7 @@ import {
   ToggleField,
 } from 'lib/mui-components';
 
-import {
-
-  FlexContainer,
-  FlexLeft,
-  FlexRight,
-} from 'components/utils'
+import { FlexContainer, FlexLeft, FlexRight } from 'components/utils';
 import {
   IngredientsSection,
   NotesSection,
@@ -83,7 +78,8 @@ function Step2Pres(props) {
           />
           <NotesSection
             defaultExpanded={false}
-            inputProps={getInputProps({ name: 'notes' })} />
+            inputProps={getInputProps({ name: 'notes' })}
+          />
           <DetailsSection
             defaultExpanded={false}
             prepTimeInputProps={getInputProps({ name: 'prep_time' })}

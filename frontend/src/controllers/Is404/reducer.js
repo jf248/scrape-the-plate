@@ -1,13 +1,13 @@
-import { ON, OFF } from './actions'
+import { ON, OFF } from './actions';
 
-export default (state=false, action) => {
+export default (state = false, action) => {
   const { type } = action;
   switch (type) {
     case ON:
-      return true
+      return true;
     case OFF:
-      return false
+      return false;
     default:
-      return state
+      return state;
   }
-}
+};

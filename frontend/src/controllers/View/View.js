@@ -7,7 +7,6 @@ import { Record } from 'lib/crud';
 import { mount } from './actions';
 
 class View extends React.Component {
-
   componentDidMount() {
     const { dispatch, resource, id } = this.props;
     dispatch(mount(resource, id));
@@ -23,7 +22,7 @@ class View extends React.Component {
       /* eslint-disable react/jsx-key */
       <Compose
         components={[
-          <Record lazy resource={resource} id={id} render={renderFunc} />
+          <Record lazy resource={resource} id={id} render={renderFunc} />,
         ]}
         render={renderFunc}
       />

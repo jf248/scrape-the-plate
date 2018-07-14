@@ -25,8 +25,6 @@ function About(props) {
       <Typography variant={'body1'} paragraph>
         by <Link href={'https://www.github.com/jf248'}>Josh Freedman</Link>
       </Typography>
-
-
     </AppContent>
   );
 }

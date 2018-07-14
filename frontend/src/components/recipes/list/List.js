@@ -4,7 +4,7 @@ import { Compose, renderProps } from 'lib/react-powerplug';
 import { RecordsMany } from 'lib/crud';
 import { Auth } from 'lib/auth';
 
-import RoutePush from 'controllers/RoutePush'
+import RoutePush from 'controllers/RoutePush';
 import ListPres from './ListPres';
 
 // TODO: This is an ugly hack to force a goFetch call to referesh the
@@ -26,14 +26,16 @@ function List() {
     const { ids, data, total, params, goFetch } = recordsMany;
     const setPage = page => goFetch({ page });
     const setFilter = filter => goFetch({ filter });
-    return <ListPres {...{ push, setPage, setFilter, ids, data, total, params }} />;
+    return (
+      <ListPres {...{ push, setPage, setFilter, ids, data, total, params }} />
+    );
   };
 
   return (
     /* eslint-disable react/jsx-key */
     <Compose
       components={[
-        <RoutePush/>,
+        <RoutePush />,
         <RecordsMany resource={'recipes'} />,
         <Auth />,
         (render, { goFetch }, { isLoggedIn }) => (

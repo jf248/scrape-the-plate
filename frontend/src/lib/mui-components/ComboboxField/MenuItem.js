@@ -34,7 +34,7 @@ function MenuItem(props) {
   const className = classnames(
     classes.menuItem,
     { [classes.highlighted]: highlightedIndex === index },
-    { [classes.selected]: selectedItems.includes(item)},
+    { [classes.selected]: selectedItems.includes(item) },
     classNameProp
   );
 

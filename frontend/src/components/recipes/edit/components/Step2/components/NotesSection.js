@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  withStyles,
-} from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
 
 import { TextField } from 'components/utils';
 
@@ -11,12 +9,10 @@ const styles = () => ({
   root: {},
 });
 
-
 function NotesSection(props) {
-  const { classes, inputProps, ...rest } = props;  // eslint-disable-line no-unused-vars
+  const { classes, inputProps, ...rest } = props; // eslint-disable-line no-unused-vars
 
   return (
-
     <Section title={'Notes'} {...rest}>
       <TextField
         {...inputProps}

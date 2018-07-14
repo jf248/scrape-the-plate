@@ -41,8 +41,13 @@ function SourceSection(props) {
           ))}
         </Select>
       )}
-      {type === 'website'&& (
-        <TextField fullWidth disabled={isScraped} {...urlInputProps} label={'URL'} />
+      {type === 'website' && (
+        <TextField
+          fullWidth
+          disabled={isScraped}
+          {...urlInputProps}
+          label={'URL'}
+        />
       )}
       {type === 'book' && (
         <React.Fragment>

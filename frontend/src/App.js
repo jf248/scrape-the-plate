@@ -14,7 +14,7 @@ import {
 } from 'lib/auth';
 import { reducer as queueReducer } from 'lib/redux-queue';
 import { reducer as formReducer } from 'lib/redux-form-lite';
-import is404Reducer from 'controllers/Is404/reducer'
+import is404Reducer from 'controllers/Is404/reducer';
 
 import { Route } from 'components/frame';
 import { routes, resources, authProvider, dataProvider } from 'config';

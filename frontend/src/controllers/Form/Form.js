@@ -20,8 +20,8 @@ function Form(props) {
     if (!isValid) {
       return setTouchedAll();
     }
-    onSubmit(values, submit)
-  }
+    onSubmit(values, submit);
+  };
 
   const makeBasicForm = (render, { submit, error }) => {
     return (

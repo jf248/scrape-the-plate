@@ -8,12 +8,11 @@ import {
   Button,
   RootRef,
   Divider,
-  withStyles
+  withStyles,
 } from '@material-ui/core';
 
-import Input from 'lib/mui-components/ComboboxField/Input'
-import Menu from 'components/utils/ComboboxField/Menu'
-
+import Input from 'lib/mui-components/ComboboxField/Input';
+import Menu from 'components/utils/ComboboxField/Menu';
 
 const styles = () => ({
   root: {},
@@ -25,12 +24,11 @@ const styles = () => ({
   },
   menu: {
     padding: '0px',
-  }
+  },
 });
 
 class BookTitleDialogPres extends React.Component {
   render() {
-
     const {
       classes,
       open,
@@ -52,13 +50,10 @@ class BookTitleDialogPres extends React.Component {
       ...rest
     } = this.props;
 
-
     return (
       <React.Fragment>
         <RootRef rootRef={downshiftRef}>
-          <Dialog
-            {...{ open, onClose, ...rest}}
-          >
+          <Dialog {...{ open, onClose, ...rest }}>
             <DialogTitle>{'Choose a book title'}</DialogTitle>
             <DialogContent className={classes.contentFixed}>
               <Input
@@ -72,7 +67,7 @@ class BookTitleDialogPres extends React.Component {
                 placeholder={'Search...'}
               />
             </DialogContent>
-            <Divider/>
+            <Divider />
 
             <DialogContent className={classes.menu}>
               <Menu
@@ -81,12 +76,14 @@ class BookTitleDialogPres extends React.Component {
                 selectedItems={selectedItems}
               />
             </DialogContent>
-            <DialogActions className={classNames(classes.editAction, classes.contentFixed)}>
+            <DialogActions
+              className={classNames(classes.editAction, classes.contentFixed)}
+            >
               <Button onClick={onOpenEdit} color="primary">
                 {'Edit books'}
               </Button>
             </DialogActions>
-            <Divider/>
+            <Divider />
             <DialogActions>
               <Button onClick={onClose} color="primary">
                 Ok
@@ -94,13 +91,14 @@ class BookTitleDialogPres extends React.Component {
             </DialogActions>
           </Dialog>
         </RootRef>
-        <Dialog {...{id: 'Edit', open: isEditOpen, onClose: onCloseEdit}}><DialogTitle>Edit</DialogTitle></Dialog>
+        <Dialog {...{ id: 'Edit', open: isEditOpen, onClose: onCloseEdit }}>
+          <DialogTitle>Edit</DialogTitle>
+        </Dialog>
       </React.Fragment>
     );
   }
 }
 
-BookTitleDialogPres.defaultProps = {
-};
+BookTitleDialogPres.defaultProps = {};
 
 export default withStyles(styles)(BookTitleDialogPres);

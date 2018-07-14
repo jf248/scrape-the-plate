@@ -47,14 +47,16 @@ function BookTitleFieldPres(props) {
           ...rest,
         }}
       />
-      <BookTitleDialog {...{
-        onChange,
-        open: isModalOpen,
-        onClose: onCloseModal,
-        ids,
-        data,
-        value,
-      }}/>
+      <BookTitleDialog
+        {...{
+          onChange,
+          open: isModalOpen,
+          onClose: onCloseModal,
+          ids,
+          data,
+          value,
+        }}
+      />
     </React.Fragment>
   );
 }

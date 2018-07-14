@@ -12,15 +12,15 @@ function Button(props) {
     isControlledOpen,
   } = props;
 
-  const Dummy = () => <div style={{width: '24px', height: '32px'}}/>
+  const Dummy = () => <div style={{ width: '24px', height: '32px' }} />;
 
   const getIcon = () => {
     if (disabled) {
-      return Dummy
+      return Dummy;
     }
 
     if (isOpen && !isControlledOpen) {
-      return ArrowUp
+      return ArrowUp;
     }
 
     if (inputValue && !multiple) {
@@ -28,12 +28,11 @@ function Button(props) {
     }
 
     if (isControlledOpen) {
-      return Dummy
+      return Dummy;
     }
 
-    return ArrowDown
-  }
-
+    return ArrowDown;
+  };
 
   const handleClick = () => {
     if (disabled) {
@@ -41,7 +40,7 @@ function Button(props) {
     }
 
     if (isOpen && !isControlledOpen) {
-      return toggleMenu()
+      return toggleMenu();
     }
 
     if (inputValue && !multiple) {
@@ -55,14 +54,13 @@ function Button(props) {
     return toggleMenu();
   };
 
-
   return (
     <ButtonBase onClick={handleClick}>
       <InputAdornment poisition="end">
         {React.createElement(getIcon())}
       </InputAdornment>
     </ButtonBase>
-  )
+  );
 }
 
 export default Button;
