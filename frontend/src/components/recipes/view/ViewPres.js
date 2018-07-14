@@ -6,12 +6,14 @@ import {
   Typography,
   withStyles,
 } from '@material-ui/core';
-import { MoreVert, Restaurant } from '@material-ui/icons';
+import { MoreVert } from '@material-ui/icons';
 
 import { AppContent } from 'lib/mui-app';
 import { Link } from 'lib/mui-components';
 
+import { formatMins } from 'utils';
 import FabButton from './FabButton';
+import SubheadingLabel from './SubheadingLabel';
 
 const styles = theme => ({
   source: {},
@@ -35,11 +37,25 @@ const styles = theme => ({
   divider: {
     marginBottom: theme.spacing.unit * 4,
   },
+  subheading: {},
 });
 
+ViewPres.default = {
+  record: {},
+};
+
 function ViewPres(props) {
-  const { classes, record = {} } = props;
-  const { id, title, ingredients, preparation, source, url } = record;
+  const { classes, record } = props;
+  const {
+    id,
+    title,
+    ingredients,
+    preparation,
+    source,
+    url,
+    prep_time,
+    cook_time,
+  } = record;
   const ingredientItems =
     ingredients &&
     ingredients.map((ingredient, index) => (
@@ -66,23 +82,38 @@ function ViewPres(props) {
           <MoreVert />
         </IconButton>
       </div>
-      <div>
+      <Typography
+        className={classes.subheading}
+        variant={'subheading'}
+        color={'textSecondary'}
+      >
         {source && (
-          <span style={{ display: 'flex', alignItems: 'center' }}>
-            <Restaurant color={'disabled'} />
-            <Typography variant={'subheading'}>
+          <SubheadingLabel
+            label={'Source'}
+            content={
               <Link
-                className={classes.source}
                 target={'_blank'}
                 onClick={event => event.stopPropagation()}
                 href={url}
               >
-                {source && source.name}
+                {source.name}
               </Link>
-            </Typography>
-          </span>
+            }
+          />
         )}
-      </div>
+        {prep_time && (
+          <SubheadingLabel
+            label={'Prep time'}
+            content={`${formatMins(prep_time)}`}
+          />
+        )}
+        {cook_time && (
+          <SubheadingLabel
+            label={'Cook time'}
+            content={`${formatMins(cook_time)}`}
+          />
+        )}
+      </Typography>
 
       <Divider className={classes.divider} />
       <Grid container spacing={32}>
