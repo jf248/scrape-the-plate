@@ -1,5 +1,7 @@
 import React from 'react';
-import { TextField, withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
+
+import { TextField } from 'components/utils';
 
 const styles = theme => ({
   root: {
@@ -8,20 +10,15 @@ const styles = theme => ({
 });
 
 function TitleField(props) {
-  const { classes, value, error, touched, ...rest } = props;
+  const { classes, ...rest } = props;
 
   return (
     <TextField
       inputProps={{
         className: classes.root,
       }}
-      fullWidth
-      id={'title'}
-      margin={'normal'}
       label={'Title'}
-      value={value || ''}
-      error={touched && !!error}
-      helperText={touched && error}
+      fullWidth
       {...rest}
     />
   );

@@ -9,3 +9,4 @@ export { default as Modals } from './Modals';
 export { default as ToggleField } from './ToggleField';
 export { default as ComboboxField } from './ComboboxField';
 export { default as InputWithTypeahead } from './InputWithTypeahead';
+export { default as TextField } from './TextField';

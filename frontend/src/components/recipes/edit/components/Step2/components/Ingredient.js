@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { IconButton, TextField, Paper, withStyles } from '@material-ui/core';
+import { IconButton, Paper, withStyles } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 
+import { TextField } from 'lib/mui-components';
 import { splitLines } from 'utils';
 
 const styles = theme => {

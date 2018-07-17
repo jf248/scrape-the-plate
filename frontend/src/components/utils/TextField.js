@@ -1,5 +1,6 @@
 import React from 'react';
-import { TextField as MuiTextField } from '@material-ui/core';
+
+import { TextField as MuiTextField } from 'lib/mui-components';
 
 function TextField({ error, touched, ...rest }) {
   return (

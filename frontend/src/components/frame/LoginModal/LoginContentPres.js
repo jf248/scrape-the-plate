@@ -27,7 +27,6 @@ function LoginContentPres(props) {
             className: classes.field,
             label: 'Email',
             name: 'username',
-            margin: 'normal',
           })}
         />
         <TextField
@@ -36,7 +35,6 @@ function LoginContentPres(props) {
             name: 'password',
             label: 'Password',
             type: 'password',
-            margin: 'normal',
           })}
         />
       </DialogContent>

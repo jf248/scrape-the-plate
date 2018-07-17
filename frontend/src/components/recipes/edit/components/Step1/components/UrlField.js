@@ -1,12 +1,11 @@
 import React from 'react';
-import { TextField } from '@material-ui/core';
 
-import { Link } from 'lib/mui-components';
+import { Link, TextField } from 'lib/mui-components';
 
 import { cursorToEnd } from 'utils';
 
 const UrlField = props => {
-  const { openSitesModal, value, error, focus, touched, ...rest } = props;
+  const { openSitesModal, error, focus, touched, ...rest } = props;
 
   return (
     <TextField
@@ -15,11 +14,9 @@ const UrlField = props => {
         onFocus: cursorToEnd,
       }}
       fullWidth
-      id={'title'}
-      margin={'normal'}
       placeholder={'Enter a recipe URL'}
-      value={value}
       error={touched && !!error}
+      margin={'normal'}
       helperText={[
         touched && error && `${error} `,
         <Link

@@ -1,7 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-import { withStyles, TextField } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
 
+import { TextField } from 'lib/mui-components';
 import { noop } from 'utils';
 
 const styles = () => ({

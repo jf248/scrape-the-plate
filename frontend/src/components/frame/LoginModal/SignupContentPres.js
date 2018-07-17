@@ -62,7 +62,7 @@ function SignupContentPres(props) {
           Cancel
         </Button>
         <Button {...getSubmitProps()} size={'small'} color={'primary'}>
-          Log in
+          Sign up
         </Button>
       </DialogActions>
     </React.Fragment>

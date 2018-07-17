@@ -2,6 +2,8 @@ import React from 'react';
 import classnames from 'classnames';
 import { withStyles } from '@material-ui/core';
 
+import InputCursorCorrect from './InputCursorCorrect';
+
 const styles = theme => ({
   inputAndEndWrapper: {
     display: 'flex',
@@ -64,8 +66,8 @@ function InputComponent(props) {
               {typeAheadText}
             </div>
           )}
-          <input
-            ref={inputRef}
+          <InputCursorCorrect
+            inputRef={inputRef}
             className={classnames(className, classes.input)}
             style={{ minWidth: minInputWidth }}
             {...rest}
