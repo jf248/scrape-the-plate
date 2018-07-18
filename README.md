@@ -1,12 +1,10 @@
 # scrape-the-plate
-A work in progress...
+A demonstration project I built to learn web development.
 
-Building a web app for scraping and saving recipes.
+A web app for scraping recipes from cooking sites. Users can edit and share their recipes.
 
-Using a React/Redux/Saga frontend and Django-REST-Framework backend.
+* Front-end: React, Redux, Redux-Saga
+* Back-end Django exposing a REST API
 
-Currently working on building re-usable form components like comboboxes/
-dropdowns/autofill using the `material-ui` and `dropdown` libraries.
-
-Demo of my 'Combobox' is here:
+Deployed to Heroku:
 https://scrape-the-plate.herokuapp.com
