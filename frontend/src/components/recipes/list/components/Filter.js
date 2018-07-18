@@ -1,8 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-import { withStyles } from '@material-ui/core';
+import { TextField, withStyles } from '@material-ui/core';
 
-import { TextField } from 'lib/mui-components';
 import { noop } from 'utils';
 
 const styles = () => ({
@@ -36,7 +35,7 @@ function Filter(props) {
   return (
     <Component className={className} {...rest}>
       <TextField
-        placeholder={'Search'}
+        placeholder={'Search...'}
         inputProps={{
           onKeyPress: handleKeyPress,
         }}
