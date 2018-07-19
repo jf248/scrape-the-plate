@@ -1,11 +1,10 @@
 # Burn list
-* Scrape button more visible
-* Improved layout of View
+* Edit and Delete button
 * Move dataProvider logic to enhancedFetch?
-* Image upload
-* When to reverse compose function?
 * Book field
 * Tags
+* Image upload
+* When to reverse compose function?
 * Search and filter: debounced, search ingredients, tags, sites
 * More scrape sites
 * Tests
