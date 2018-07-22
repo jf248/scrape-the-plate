@@ -55,9 +55,10 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { resource, key } = ownProps;
+  const { resource, authorize, meta } = ownProps;
   return {
-    goFetch: params => dispatch(getList(resource)(params, { key })),
+    goFetch: params =>
+      dispatch(getList(resource)(params, { authorize, ...meta })),
   };
 };
 

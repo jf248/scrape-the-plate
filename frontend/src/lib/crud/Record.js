@@ -44,13 +44,15 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { resource, id, key } = ownProps;
+  const { resource, id, authorize, meta } = ownProps;
   return {
-    goFetch: () => dispatch(getOne(resource)({ id }, { key })),
+    goFetch: () => dispatch(getOne(resource)({ id }, { authorize, ...meta })),
     update: (data, previousData) =>
-      dispatch(update(resource)({ id, data, previousData }, { key })),
+      dispatch(
+        update(resource)({ id, data, previousData }, { authorize, ...meta })
+      ),
     destroy: previousData =>
-      dispatch(destroy(resource)({ id, previousData }, { key })),
+      dispatch(destroy(resource)({ id, previousData }, { authorize, ...meta })),
   };
 };
 

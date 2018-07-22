@@ -22,9 +22,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { resource, key } = ownProps;
+  const { resource, authorize, meta } = ownProps;
   return {
-    create: data => dispatch(create(resource)({ data }, { key })),
+    create: data =>
+      dispatch(create(resource)({ data }, { authorize, ...meta })),
   };
 };
 

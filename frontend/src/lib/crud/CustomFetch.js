@@ -38,9 +38,10 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
-  const { path, query, options, key } = ownProps;
+  const { path, query, options, authorize, meta } = ownProps;
   return {
-    goFetch: () => dispatch(custom({ path, query, options, key })),
+    goFetch: data =>
+      dispatch(custom({ path, query, options, data }, { authorize, ...meta })),
   };
 };
 
