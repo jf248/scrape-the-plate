@@ -6,7 +6,7 @@ import WithStore from 'lib/with-store';
 import { Compose, renderProps } from 'lib/react-powerplug';
 
 import Form from 'controllers/Form';
-import { goBack, skip } from './actions';
+import { goBack, skip, copy } from './actions';
 import { SCRAPER } from './names';
 import validate from './validate';
 import normalize from './normalize';
@@ -21,7 +21,7 @@ function Scraper(props) {
       isSubmitting,
     } = form;
     const { queue } = stepper;
-    const { goBack, skip } = store;
+    const { goBack, skip, copy } = store;
 
     const selectDomain = domainName => () => {
       setValues({ url: `http://${domainName}/` });
@@ -40,6 +40,7 @@ function Scraper(props) {
       getSubmitProps,
       selectDomain,
       isSubmitting,
+      copy,
     });
   };
 
@@ -57,7 +58,7 @@ function Scraper(props) {
           />
         ),
         <Queue name={SCRAPER} />,
-        <WithStore actionCreators={{ goBack, skip }} />,
+        <WithStore actionCreators={{ goBack, skip, copy }} />,
       ]}
       render={renderFunc}
     />
