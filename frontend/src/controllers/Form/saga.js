@@ -4,7 +4,7 @@ import {
   open as openSnackbar,
   close as closeSnackbar,
 } from 'controllers/Snackbar/actions';
-import { FAILURE as FORM_FAILURE, setError } from 'controllers/Form/actions';
+import { FAILURE as FORM_FAILURE, setError } from './actions';
 
 function* formFailure(action) {
   const { error = {}, meta = {} } = action;

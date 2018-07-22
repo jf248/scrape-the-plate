@@ -5,6 +5,7 @@ import {
   isSubmit as isFormSubmit,
   failure as formFailure,
 } from 'controllers/Form/actions';
+import { close as closeLogin } from 'controllers/LoginModal/actions';
 
 import { LOGIN, SIGNUP } from './names';
 
@@ -25,9 +26,15 @@ function* submit(action) {
 
   if (auth.failure) {
     yield put(formFailure(name, auth.failure.error));
+  } else {
+    yield success();
   }
 }
 
-export default function* watchSubmit() {
+function* success() {
+  yield put(closeLogin());
+}
+
+export default function* watchLoginForm() {
   yield all([takeLatest([isFormSubmit(LOGIN), isFormSubmit(SIGNUP)], submit)]);
 }

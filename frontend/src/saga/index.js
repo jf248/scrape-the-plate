@@ -1,27 +1,27 @@
 import { all } from 'redux-saga/effects';
 
 import authorize from './authorize';
-import failure from './failure';
-import success from './success';
-import logInOrOut from './logInOrOut';
+import logOut from './logOut';
 
-import scrape from 'controllers/Scraper/saga';
-import recordForm from 'controllers/RecordForm/saga';
+import form from 'controllers/Form/saga';
 import loginForm from 'controllers/LoginForm/saga';
+import recordDestroy from 'controllers/RecordDestroy/saga';
+import recordForm from 'controllers/RecordForm/saga';
+import scrape from 'controllers/Scraper/saga';
 import view from 'controllers/View/saga';
 
 export default function*() {
   yield all([
     // Sagas from component controllers
-    scrape(),
-    recordForm(),
+    form(),
     loginForm(),
+    recordDestroy(),
+    recordForm(),
+    scrape(),
     view(),
 
-    // These sagas combine actions from differenct controller components:
+    // Additional sagas
     authorize(),
-    failure(),
-    success(),
-    logInOrOut(),
+    logOut(),
   ]);
 }

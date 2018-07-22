@@ -1,4 +1,5 @@
 import { all, put, race, takeLatest, take } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 
 import {
   isSuccess as isCrudSuccess,
@@ -6,15 +7,38 @@ import {
   create,
   update,
 } from 'lib/crud';
+
 import {
   isSubmit as isFormSubmit,
   setResponse as setFormResponse,
   failure as formFailure,
 } from 'controllers/Form/actions';
-
-import { success } from './actions';
-
+import { open as openSnackbar } from 'controllers/Snackbar/actions';
+import { toTitleCase } from 'utils';
 import { RECORD_FORM } from './names';
+
+function* success(payload = {}, meta = {}) {
+  const {
+    data: { id },
+  } = payload;
+  const { onSuccess = {}, resource, id: metaId } = meta;
+  const { snackbar, redirect } = onSuccess;
+
+  if (redirect) {
+    const { to } = redirect;
+    const defaultTo = `/${resource}/${id}`;
+    yield put(push(to || defaultTo));
+  }
+
+  if (snackbar) {
+    const defaultProps = {
+      message: `${toTitleCase(resource.slice(0, -1))} ${
+        metaId ? 'updated' : 'created'
+      }`,
+    };
+    yield put(openSnackbar({ ...defaultProps, ...snackbar }));
+  }
+}
 
 function* submit(action) {
   const { meta, payload: data } = action;
@@ -33,7 +57,7 @@ function* submit(action) {
 
   if (crud.success) {
     yield put(setFormResponse(RECORD_FORM, crud.success.payload));
-    yield put(success(crud.success.payload, meta));
+    yield* success(crud.success.payload, meta);
   } else {
     yield put(formFailure(RECORD_FORM, crud.failure.error, meta));
   }
