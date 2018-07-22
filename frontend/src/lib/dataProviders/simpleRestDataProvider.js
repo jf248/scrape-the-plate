@@ -30,8 +30,11 @@ const makeSimpleRestDataProvider = (
     let options = {};
     switch (type) {
       case CUSTOM: {
-        const { path, query = {}, options: optionsParam = {} } = params;
-        options = optionsParam;
+        const { path, query = {}, options: optionsParam, data } = params;
+        options = { method: 'GET', ...optionsParam };
+        if (data) {
+          options.body = JSON.stringify(params.data);
+        }
         url = `${apiUrl}/${path}/?${stringify(query)}`;
         break;
       }
