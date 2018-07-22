@@ -80,7 +80,7 @@ class Recipe(AbstractModel):
         get_user_model(), on_delete=models.CASCADE, blank=True, null=True
     )
     title = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True, editable=False, max_length=255)
+    slug = models.SlugField(editable=False, max_length=255)
     ingredients = models.ManyToManyField(Ingredient, blank=True)
     preparation = models.TextField(blank=True)
     notes = models.TextField(blank=True)
@@ -120,7 +120,7 @@ class Recipe(AbstractModel):
             d['slug'] = slugify(self.title)
 
     def _slug_exists(self):
-        qs = Recipe.objects.filter(slug=self.slug)
+        qs = Recipe.objects.filter(slug=self.slug, user=self.user)
         if self.pk:
             qs = qs.exclude(pk=self.pk)
         return qs.exists()

@@ -95,7 +95,7 @@ class RecipeTests(SavePatcherMixin, ModelTesterMixin, TestCase):
         self.assertMeta(
             model_cls=self.model_cls,
             required_fields=['title', 'slug'],
-            unique_fields=['slug'],
+            unique_fields=[],
             ordering=['slug']
         )
 

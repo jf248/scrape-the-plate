@@ -143,7 +143,6 @@ class ModelValidateMixin(object):
             raise serializers.ValidationError(e.args[0])
 
         attrs = super().validate(attrs)
-        print('returning attrs', attrs)
         return attrs
 
 
