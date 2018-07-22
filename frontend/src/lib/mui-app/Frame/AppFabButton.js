@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { Button, Tooltip, withStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { ModeEdit as EditIcon, Add as AddIcon } from '@material-ui/icons';
+import { ModeEdit, Add, InsertDriveFile } from '@material-ui/icons';
 
 const styles = theme => ({
   wrapper: {
@@ -14,28 +14,33 @@ const styles = theme => ({
 });
 
 AppFabButton.defaultProps = {
-  variant: 'edit',
   buttonProps: {},
   tooltipProps: {},
+  variant: 'edit',
 };
 
 function AppFabButton(props) {
   const {
-    classes,
-    tooltipProps: tooltipPropsProp,
     buttonProps: buttonPropsProp,
-    variant: variantProp,
+    classes,
+    onClick,
     to,
+    tooltipProps: tooltipPropsProp,
+    variant: variantProp,
   } = props;
 
   const variants = {
     edit: {
       title: 'Edit',
-      icon: <EditIcon />,
+      icon: <ModeEdit />,
     },
     add: {
       title: 'New',
-      icon: <AddIcon />,
+      icon: <Add />,
+    },
+    copy: {
+      title: 'Copy',
+      icon: <InsertDriveFile />,
     },
   };
 
@@ -54,6 +59,7 @@ function AppFabButton(props) {
     variant: 'fab',
     color: 'secondary',
     component,
+    onClick,
     ...buttonPropsProp,
     className: classNames(classes.fab, buttonPropsProp.className),
   };

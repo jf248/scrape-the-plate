@@ -7,6 +7,7 @@ const styles = theme => ({
     color: theme.typography.subheading.color,
   },
   root: {
+    whiteSpace: 'nowrap',
     '&:after': {
       content: '"\u00b7"',
       fontWeight: 'bold',

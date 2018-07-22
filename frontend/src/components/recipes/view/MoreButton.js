@@ -1,40 +1,88 @@
 import React from 'react';
+import { IconButton, Menu, MenuItem, withStyles } from '@material-ui/core';
+import { MoreVert } from '@material-ui/icons';
 
-import { Compose } from 'lib/react-powerplug';
-import { Auth } from 'lib/auth';
+import DeleteDialog from './DeleteDialog';
 
-import LoginModal from 'controllers/LoginModal';
-import RoutePush from 'controllers/RoutePush';
-import MoreButtonPres from './MoreButtonPres';
+const styles = () => ({
+  root: {},
+});
 
-function MoreButton(props) {
-  const { recipe } = props;
-
-  const renderFunc = (auth, loginModal, routePush) => {
-    const { user: { id: currentUserId } = {} } = auth;
-    const { open: openLoginModal } = loginModal;
-    const { push } = routePush;
-    const isOwner = currentUserId && recipeUserId === currentUserId;
-    const onEdit = () => push(`/recipes/${id}/edit`)
-    const onDelete = () => destroy({resource: 'recipe', id})
-    const onCopy = () => copy(recipe)
-    return (
-      <MoreButtonPres {...{id, isOwner, openLoginModal}} />
-    );
+class MoreButtonPres extends React.Component {
+  state = {
+    anchorEl: null,
+    isDialogOpen: false,
   };
 
-  return (
-    /* eslint-disable react/jsx-key */
-  <Compose
-    components={[
-        <Auth/>,
-        <LoginModal/>,
-        <RoutePush/>,
-    ]}
-    render={renderFunc}
-    />
-    /* eslint-enable react/jsx-key */
-  );
+  handleClickMenuButton = event => {
+    const { isLoggedIn, openLoginModal } = this.props;
+    if (!isLoggedIn) {
+      openLoginModal();
+    }
+    return this.setState({ anchorEl: event.currentTarget });
+  };
+
+  handleCloseMenu = () => {
+    this.setState({ anchorEl: null });
+  };
+
+  handleCloseDialog = () => {
+    this.setState({ isDialogOpen: false });
+  };
+
+  handleOpenDialog = () => {
+    this.setState({ isDialogOpen: true });
+  };
+
+  render() {
+    const { anchorEl } = this.state;
+    const {
+      classes,
+      isLoggedIn,
+      isOwner,
+      onEdit,
+      onDelete,
+      onCopy,
+    } = this.props;
+
+    return (
+      <div>
+        <IconButton
+          aria-label="More"
+          aria-owns={anchorEl ? 'long-menu' : null}
+          aria-haspopup="true"
+          onClick={this.handleClickMenuButton}
+          className={classes.icon}
+        >
+          <MoreVert />
+        </IconButton>
+        {isLoggedIn && (
+          <Menu
+            id="long-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClose={this.handleCloseMenu}
+          >
+            {isOwner && <MenuItem onClick={onEdit}>Edit</MenuItem>}
+            {isOwner && (
+              <MenuItem onClick={this.handleOpenDialog}>Delete</MenuItem>
+            )}
+            {!isOwner && <MenuItem onClick={onCopy}>Copy</MenuItem>}
+          </Menu>
+        )}
+        <DeleteDialog
+          onDelete={() => {
+            onDelete();
+            this.handleCloseDialog();
+          }}
+          open={this.state.isDialogOpen}
+          onClose={this.handleCloseDialog}
+        />
+      </div>
+    );
+  }
 }
 
-export default MoreButton;
+MoreButtonPres.defaultProps = {};
+
+export default withStyles(styles)(MoreButtonPres);

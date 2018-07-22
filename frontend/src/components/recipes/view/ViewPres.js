@@ -1,18 +1,13 @@
 import React from 'react';
-import {
-  Divider,
-  Grid,
-  Typography,
-  withStyles,
-} from '@material-ui/core';
+import { Divider, Grid, Typography, withStyles } from '@material-ui/core';
 
 import { AppContent } from 'lib/mui-app';
 import { Link } from 'lib/mui-components';
 
 import { formatMins } from 'utils';
 import FabButton from './FabButton';
-import SubheadingLabel from './SubheadingLabel';
-import MoreButton from './MoreButton'
+import { SubheadingLabel } from 'components/utils';
+import MoreButton from './MoreButton';
 
 const styles = theme => ({
   source: {},
@@ -44,9 +39,17 @@ ViewPres.default = {
 };
 
 function ViewPres(props) {
-  const { classes, record} = props;
   const {
-    id,
+    classes,
+    isLoggedIn,
+    isOwner,
+    onCopy,
+    onDelete,
+    onEdit,
+    openLoginModal,
+    record,
+  } = props;
+  const {
     title,
     ingredients,
     preparation,
@@ -54,7 +57,6 @@ function ViewPres(props) {
     url,
     prep_time,
     cook_time,
-    user,
   } = record;
   const ingredientItems =
     ingredients &&
@@ -79,7 +81,9 @@ function ViewPres(props) {
         <Typography className={classes.title} variant={'display1'}>
           {title}
         </Typography>
-        <MoreButton ids={id} user={user}/>
+        <MoreButton
+          {...{ isLoggedIn, isOwner, openLoginModal, onEdit, onDelete, onCopy }}
+        />
       </div>
       <Typography
         className={classes.subheading}
@@ -129,7 +133,7 @@ function ViewPres(props) {
           {preparationSteps}
         </Grid>
       </Grid>
-      <FabButton variant={'edit'} to={`/recipes/${id}/edit`} />
+      <FabButton {...{ isLoggedIn, onEdit, onCopy }} />
     </AppContent>
   );
 }

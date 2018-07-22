@@ -20,7 +20,8 @@ function ListItem(props) {
 
     item.source = sourceRecord;
 
-    return <ListItemPres {...{ item, push }} />;
+    const onClick = () => push(`/recipes/${item.id}`);
+    return <ListItemPres {...{ item, onClick }} />;
   };
 
   return (

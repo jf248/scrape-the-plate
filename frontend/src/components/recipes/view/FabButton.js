@@ -1,15 +1,20 @@
 import React from 'react';
 
-import { Auth } from 'lib/auth';
+import { AppFabButton } from 'lib/mui-app';
 
-import FabButtonPres from './FabButtonPres';
+function FabButtonPres(props) {
+  const { isLoggedIn, isOwner, onEdit, onCopy } = props;
 
-function FabButton(props) {
-  const renderFunc = ({ isLoggedIn }) => {
-    return <FabButtonPres {...{ isLoggedIn, ...props }} />;
-  };
-
-  return <Auth render={renderFunc} />;
+  return (
+    isLoggedIn && (
+      <AppFabButton
+        {...{
+          variant: isOwner ? 'edit' : 'copy',
+          onClick: isOwner ? onEdit : onCopy,
+        }}
+      />
+    )
+  );
 }
 
-export default FabButton;
+export default FabButtonPres;
