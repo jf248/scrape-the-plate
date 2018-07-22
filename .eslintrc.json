@@ -28,7 +28,8 @@
         "no-console": "off",
         "react/prop-types": "off",
         "react/display-name": "off",
-        "no-restricted-globals": "error"
+        "no-restricted-globals": "error",
+        "no-sequences": "error"
     },
     "settings": {
         "import/resolver": {
