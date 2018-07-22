@@ -52,16 +52,9 @@ export const thenJson = fetchFunc => {
   const next = (url, init) => {
     return fetchFunc(url, init).then(({ response, error }) => {
       if (response) {
-        try {
-          return response.json().then(
-            json => ({ response: json }),
-            () => {
-              throw new Error({ message: 'No JSON in response', response });
-            }
-          );
-        } catch (error) {
-          throw new Error({ message: 'No JSON in response', response });
-        }
+        return response
+          .json()
+          .then(json => ({ response: json }), () => ({ response }));
       }
       if (error && error.fetchResponse) {
         return error.fetchResponse
