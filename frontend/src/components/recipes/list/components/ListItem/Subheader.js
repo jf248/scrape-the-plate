@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core';
+import { Typography, withStyles } from '@material-ui/core';
 
 import { Link } from 'lib/mui-components';
 
@@ -7,9 +7,7 @@ import { formatMins } from 'utils';
 import { SubheadingLabel } from 'components/utils';
 
 const styles = () => ({
-  label: {
-    fontSize: '12px',
-  },
+  label: {},
   link: {
     display: 'block',
   },
@@ -34,20 +32,14 @@ function Subheader(props) {
           {source.name}
         </Link>
       )}
-      {prep_time && (
-        <SubheadingLabel
-          className={classes.label}
-          label={'Prep'}
-          content={`${formatMins(prep_time)}`}
-        />
-      )}
-      {cook_time && (
-        <SubheadingLabel
-          className={classes.label}
-          label={'Cook'}
-          content={`${formatMins(cook_time)}`}
-        />
-      )}
+      <Typography variant={'caption'}>
+        {prep_time && (
+          <SubheadingLabel>{`Prep ${formatMins(prep_time)}`}</SubheadingLabel>
+        )}
+        {cook_time && (
+          <SubheadingLabel>{`Cook ${formatMins(cook_time)}`}</SubheadingLabel>
+        )}
+      </Typography>
     </React.Fragment>
   );
 }

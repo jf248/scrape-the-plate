@@ -3,9 +3,6 @@ import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 
 const styles = theme => ({
-  label: {
-    color: theme.typography.subheading.color,
-  },
   root: {
     whiteSpace: 'nowrap',
     '&:after': {
@@ -20,18 +17,25 @@ const styles = theme => ({
   },
 });
 
-SubheadingLabel.defaultProps = {};
+SubheadingLabel.defaultProps = {
+  component: 'span',
+};
 
 function SubheadingLabel(props) {
-  const { classes, className: classNameProp, label, content, ...rest } = props;
+  const {
+    children,
+    classes,
+    className: classNameProp,
+    component: Component,
+    ...rest
+  } = props;
 
   const className = classNames(classes.root, classNameProp);
 
   return (
-    <span className={className} {...rest}>
-      <span className={classes.label}>{`${label}: `}</span>
-      <span>{content}</span>
-    </span>
+    <Component className={className} {...rest}>
+      {children}
+    </Component>
   );
 }
 

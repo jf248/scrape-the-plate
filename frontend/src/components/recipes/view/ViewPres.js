@@ -91,30 +91,22 @@ function ViewPres(props) {
         color={'textSecondary'}
       >
         {source && (
-          <SubheadingLabel
-            label={'Source'}
-            content={
-              <Link
-                target={'_blank'}
-                onClick={event => event.stopPropagation()}
-                href={url}
-              >
-                {source.name}
-              </Link>
-            }
-          />
+          <SubheadingLabel>
+            {'Source: '}
+            <Link
+              target={'_blank'}
+              onClick={event => event.stopPropagation()}
+              href={url}
+            >
+              {source.name}
+            </Link>
+          </SubheadingLabel>
         )}
         {prep_time && (
-          <SubheadingLabel
-            label={'Prep time'}
-            content={`${formatMins(prep_time)}`}
-          />
+          <SubheadingLabel>{`Prep: ${formatMins(prep_time)}`}</SubheadingLabel>
         )}
         {cook_time && (
-          <SubheadingLabel
-            label={'Cook time'}
-            content={`${formatMins(cook_time)}`}
-          />
+          <SubheadingLabel>{`Cook: ${formatMins(cook_time)}`}</SubheadingLabel>
         )}
       </Typography>
 
