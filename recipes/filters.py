@@ -9,14 +9,12 @@ class SearchFilter(SearchFilter):
     """
     A Filter backend
     """
-    pass
 
 
 class DjangoFilterBackend(filters.DjangoFilterBackend):
     """
     A Filter backend
     """
-    pass
 
 
 class ListFilter(filters.Filter):

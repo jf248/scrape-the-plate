@@ -9,8 +9,9 @@ import {
   hasLength,
 } from 'lib/form/validators';
 
-import LoginModal from 'controllers/LoginModal';
+import Modal from 'controllers/Modal';
 import LoginForm from 'controllers/LoginForm';
+import { LOGIN_MODAL } from 'names';
 import SignupContentPres from './SignupContentPres';
 
 const validate = compose(
@@ -21,10 +22,12 @@ const validate = compose(
 );
 
 function SignupContent() {
-  const renderFunc = (form, loginControl) => {
+  const renderFunc = (form, modal) => {
     const { getInputProps, getSubmitProps } = form;
-    const { close } = loginControl;
-    return <SignupContentPres {...{ getInputProps, getSubmitProps, close }} />;
+    const { onClose } = modal;
+    return (
+      <SignupContentPres {...{ getInputProps, getSubmitProps, onClose }} />
+    );
   };
 
   return (
@@ -32,7 +35,7 @@ function SignupContent() {
     <Compose
       components={[
         <LoginForm isLogin={false} validate={validate} />,
-        <LoginModal />,
+        <Modal name={LOGIN_MODAL} />,
       ]}
       render={renderFunc}
     />

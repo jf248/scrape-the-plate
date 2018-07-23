@@ -15,9 +15,9 @@ class MoreButtonPres extends React.Component {
   };
 
   handleClickMenuButton = event => {
-    const { isLoggedIn, openLoginModal } = this.props;
+    const { isLoggedIn, onOpenLoginModal } = this.props;
     if (!isLoggedIn) {
-      openLoginModal();
+      onOpenLoginModal();
     }
     return this.setState({ anchorEl: event.currentTarget });
   };

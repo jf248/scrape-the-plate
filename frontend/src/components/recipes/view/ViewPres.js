@@ -47,7 +47,7 @@ function ViewPres(props) {
     onCopy,
     onDelete,
     onEdit,
-    openLoginModal,
+    onOpenLoginModal,
     record,
   } = props;
   const {
@@ -82,11 +82,18 @@ function ViewPres(props) {
   return (
     <AppContent>
       <div className={classes.titleWrapper}>
-        <Typography className={classes.title} variant={'display1'}>
+        <Typography className={classes.title} variant={'display1'} paragraph>
           {title}
         </Typography>
         <MoreButton
-          {...{ isLoggedIn, isOwner, openLoginModal, onEdit, onDelete, onCopy }}
+          {...{
+            isLoggedIn,
+            isOwner,
+            onOpenLoginModal,
+            onEdit,
+            onDelete,
+            onCopy,
+          }}
         />
       </div>
       <Typography

@@ -2,8 +2,9 @@ import React from 'react';
 
 import { Compose, State } from 'lib/react-powerplug';
 
+import Modal from 'controllers/Modal';
+import { LOGIN_MODAL } from 'names';
 import LoginModalPres from './LoginModalPres';
-import LoginModalController from 'controllers/LoginModal';
 
 function LoginModal() {
   const renderFunc = (loginControl, tabs) => {
@@ -28,7 +29,7 @@ function LoginModal() {
   return (
     <Compose
       components={[
-        <LoginModalController provider />,
+        <Modal provider name={LOGIN_MODAL} />,
         <State initial={{ tabsValue: 0 }} />,
       ]}
       render={renderFunc}

@@ -1,5 +1,10 @@
 # Burn list
-* Edit and Delete button
+* onKeyDown for TitleField as well as onClick
+* Website and Url on same line in Step2
+* Hot Reload (create-react-app connected-router)
+* Fill in buttons
+* Submit on Enter
+* Edit and Delete buttons on BookField menu
 * Move dataProvider logic to enhancedFetch?
 * Book field
 * Tags
@@ -9,7 +14,8 @@
 * More scrape sites
 * Tests
 * Grocery Items
-* Like/Fork feature
+* Meal plan, Shopping list
+* Like feature
 
 # Other
 * supertab

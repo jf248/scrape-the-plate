@@ -8,6 +8,7 @@ import { RECORD_FORM } from './names';
 
 RecordForm.defaultProps = {
   authorize: true,
+  enableReinitialize: true,
 };
 
 function RecordForm(props) {
@@ -24,6 +25,7 @@ function RecordForm(props) {
     validate,
     normalize,
     initialValues,
+    enableReinitialize,
   } = props;
 
   const renderFunc = (recordProps, formProps) => {
@@ -36,6 +38,7 @@ function RecordForm(props) {
   };
 
   const handleSubmit = (values, submit) => {
+    console.log('values', values);
     submit(values, { resource, id, authorize, ...meta });
   };
 
@@ -46,6 +49,7 @@ function RecordForm(props) {
         <Record {...{ lazy: lazy || !id, resource, id }} />,
         (render, { record }) => (
           <Form
+            enableReinitialize={enableReinitialize}
             onSubmit={handleSubmit}
             name={RECORD_FORM}
             initialValues={initialValues || record}

@@ -3,18 +3,25 @@ import React from 'react';
 import { Compose } from 'lib/react-powerplug';
 import { Auth } from 'lib/auth';
 
-import LoginModal from 'controllers/LoginModal';
+import Modal from 'controllers/Modal';
+import { LOGIN_MODAL } from 'names';
 import LoginButtonPres from './LoginButtonPres';
 
 function LoginButton() {
   return (
     /* eslint-disable react/jsx-key */
     <Compose
-      components={[<Auth />, <LoginModal />]}
+      components={[<Auth />, <Modal name={LOGIN_MODAL} />]}
       render={(auth, login) => {
         const { isLoggedIn, logout } = auth;
-        const { open: openModal } = login;
-        return <LoginButtonPres {...{ isLoggedIn, openModal, logout }} />;
+        const { onOpen: onOpenModal } = login;
+        const handleClick = () => {
+          if (isLoggedIn) {
+            return logout();
+          }
+          return onOpenModal();
+        };
+        return <LoginButtonPres {...{ isLoggedIn, onClick: handleClick }} />;
       }}
     />
     /* eslint-enable react/jsx-key */

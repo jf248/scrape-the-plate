@@ -2,9 +2,9 @@ import React from 'react';
 import { Button } from '@material-ui/core';
 
 function LoginButton(props) {
-  const { isLoggedIn, openModal, logout } = props;
+  const { isLoggedIn, onClick } = props;
   return (
-    <Button color={'inherit'} onClick={isLoggedIn ? logout : openModal}>
+    <Button color={'inherit'} onClick={onClick}>
       {isLoggedIn ? 'Log out' : 'Log in / Sign up'}
     </Button>
   );

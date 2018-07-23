@@ -4,11 +4,12 @@ import { Compose } from 'lib/react-powerplug';
 import { Record } from 'lib/crud';
 import { Auth } from 'lib/auth';
 
-import LoginModal from 'controllers/LoginModal';
+import Modal from 'controllers/Modal';
 import RoutePush from 'controllers/RoutePush';
 import Scraper from 'controllers/Scraper';
 import ViewController from 'controllers/View';
 import RecordDestroy from 'controllers/RecordDestroy';
+import { LOGIN_MODAL } from 'names';
 import ViewPres from './ViewPres';
 
 function View(props) {
@@ -31,7 +32,7 @@ function View(props) {
     const { record: recipeRecord } = recipe;
     const { user: recipeUserId } = recipeRecord || {};
     const { user: { id: currentUserId } = {}, isLoggedIn } = auth;
-    const { open: openLoginModal } = loginModal;
+    const { onOpen: onOpenLoginModal } = loginModal;
     const { push } = routePush;
     const { copy } = scraper;
     const { destroy } = recordDestroy;
@@ -54,7 +55,7 @@ function View(props) {
           onCopy,
           onDelete,
           onEdit,
-          openLoginModal,
+          onOpenLoginModal,
           record,
         }}
       />
@@ -76,7 +77,7 @@ function View(props) {
           <Record resource={'users'} id={user} render={render} />
         ),
         <Auth />,
-        <LoginModal />,
+        <Modal name={LOGIN_MODAL} />,
         <RoutePush />,
         <Scraper />,
         <RecordDestroy

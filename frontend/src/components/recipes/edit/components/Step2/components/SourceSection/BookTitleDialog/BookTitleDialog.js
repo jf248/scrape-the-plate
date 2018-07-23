@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { Compose, Toggle } from 'lib/react-powerplug';
+import { Compose } from 'lib/react-powerplug';
 import { ComboboxController } from 'lib/mui-components/ComboboxField';
 
+import Modal from 'controllers/Modal';
+import { EDIT_BOOK_DIALOG } from 'components/books';
 import BookTitleDialogPres from './BookTitleDialogPres';
 
 BookTitleDialog.defaultProps = {
@@ -22,12 +24,8 @@ function BookTitleDialog(props) {
 
   const items = ids.map(id => data[id]);
 
-  const renderFunc = (toggle, combobox) => {
-    const {
-      on: isEditOpen,
-      switchOn: onOpenEdit,
-      switchOff: onCloseEdit,
-    } = toggle;
+  const renderFunc = (editBookDialog, combobox) => {
+    const { onOpen: onOpenEdit } = editBookDialog;
     const {
       downshiftProps: { getRootProps },
     } = combobox;
@@ -36,9 +34,7 @@ function BookTitleDialog(props) {
         {...{
           open,
           onClose,
-          isEditOpen,
           onOpenEdit,
-          onCloseEdit,
           ...getRootProps({ refKey: 'downshiftRef' }),
           ...combobox,
         }}
@@ -50,7 +46,7 @@ function BookTitleDialog(props) {
     /* eslint-disable react/jsx-key */
     <Compose
       components={[
-        <Toggle />,
+        <Modal name={EDIT_BOOK_DIALOG} />,
         <ComboboxController
           {...{ isOpen: true, selectedItem, onChange, itemToString, items }}
         />,

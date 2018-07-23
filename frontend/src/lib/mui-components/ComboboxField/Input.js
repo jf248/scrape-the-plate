@@ -68,7 +68,11 @@ function Input(props) {
 
   const inputClassName = classnames({ [classes.withMarginBottom]: withMargin });
 
-  const inputProps = { className: inputClassName, ...inputPropsProp };
+  const inputProps = {
+    className: inputClassName,
+    autoComplete: 'off',
+    ...inputPropsProp,
+  };
 
   const InputProps = {
     startAdornment,

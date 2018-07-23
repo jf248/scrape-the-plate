@@ -13,6 +13,7 @@ import {
 
 import Input from 'lib/mui-components/ComboboxField/Input';
 import Menu from 'components/utils/ComboboxField/Menu';
+import { EditBookDialog } from 'components/books';
 
 const styles = () => ({
   root: {},
@@ -33,9 +34,7 @@ class BookTitleDialogPres extends React.Component {
       classes,
       open,
       onClose,
-      isEditOpen,
       onOpenEdit,
-      onCloseEdit,
 
       // from comboboxcontroller
       selectedItems,
@@ -79,8 +78,8 @@ class BookTitleDialogPres extends React.Component {
             <DialogActions
               className={classNames(classes.editAction, classes.contentFixed)}
             >
-              <Button onClick={onOpenEdit} color="primary">
-                {'Edit books'}
+              <Button onClick={() => onOpenEdit()} color="primary">
+                {'+ Add a book'}
               </Button>
             </DialogActions>
             <Divider />
@@ -91,9 +90,7 @@ class BookTitleDialogPres extends React.Component {
             </DialogActions>
           </Dialog>
         </RootRef>
-        <Dialog {...{ id: 'Edit', open: isEditOpen, onClose: onCloseEdit }}>
-          <DialogTitle>Edit</DialogTitle>
-        </Dialog>
+        <EditBookDialog />
       </React.Fragment>
     );
   }

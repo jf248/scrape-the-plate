@@ -14,6 +14,7 @@ import {
   failure as formFailure,
 } from 'controllers/Form/actions';
 import { open as openSnackbar } from 'controllers/Snackbar/actions';
+import { close as closeModalAction } from 'controllers/Modal/actions';
 import { toTitleCase } from 'utils';
 import { RECORD_FORM } from './names';
 
@@ -22,7 +23,7 @@ function* success(payload = {}, meta = {}) {
     data: { id },
   } = payload;
   const { onSuccess = {}, resource, id: metaId } = meta;
-  const { snackbar, redirect } = onSuccess;
+  const { snackbar, redirect, closeModal } = onSuccess;
 
   if (redirect) {
     const { to } = redirect;
@@ -37,6 +38,11 @@ function* success(payload = {}, meta = {}) {
       }`,
     };
     yield put(openSnackbar({ ...defaultProps, ...snackbar }));
+  }
+
+  if (closeModal) {
+    const { name } = closeModal;
+    yield put(closeModalAction(name));
   }
 }
 

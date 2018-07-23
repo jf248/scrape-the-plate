@@ -4,12 +4,13 @@ import { Compose } from 'lib/react-powerplug';
 import { isRequired } from 'lib/form/validators';
 
 import LoginForm from 'controllers/LoginForm';
-import LoginModal from 'controllers/LoginModal';
+import Modal from 'controllers/Modal';
+import { LOGIN_MODAL } from 'names';
 import LoginContentPres from './LoginContentPres';
 
 function LoginContent() {
-  const renderFunc = ({ getInputProps, getSubmitProps }, { close }) => {
-    return <LoginContentPres {...{ getInputProps, getSubmitProps, close }} />;
+  const renderFunc = ({ getInputProps, getSubmitProps }, { onClose }) => {
+    return <LoginContentPres {...{ getInputProps, getSubmitProps, onClose }} />;
   };
 
   return (
@@ -17,7 +18,7 @@ function LoginContent() {
     <Compose
       components={[
         <LoginForm isLogin validate={isRequired(['username', 'password'])} />,
-        <LoginModal />,
+        <Modal name={LOGIN_MODAL} />,
       ]}
       render={renderFunc}
     />

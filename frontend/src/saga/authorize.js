@@ -16,11 +16,12 @@ import {
 import { isLoggedIn } from 'lib/auth';
 
 import {
-  open as openLogin,
-  close as closeLogin,
-  isClose,
-} from 'controllers/LoginModal';
+  open as openModal,
+  close as closeModal,
+} from 'controllers/Modal/actions';
+import { isClose } from 'controllers/Modal/effects';
 import { isLoginSuccess } from 'controllers/LoginForm/actions';
+import { LOGIN_MODAL } from 'names';
 
 function* authorize() {
   try {
@@ -32,10 +33,10 @@ function* authorize() {
 
     // Open the login page. Wait for a successful login or the login page
     // closed.
-    yield put(openLogin());
+    yield put(openModal(LOGIN_MODAL));
     const { success } = yield race({
       success: take(isLoginSuccess),
-      failure: take(isClose),
+      failure: take(isClose(LOGIN_MODAL)),
     });
     if (success) {
       yield put(authorizeSuccess());
@@ -44,7 +45,7 @@ function* authorize() {
     }
   } finally {
     if (yield cancelled()) {
-      yield put(closeLogin());
+      yield put(closeModal(LOGIN_MODAL));
       yield put(authorizeFailure());
     }
   }

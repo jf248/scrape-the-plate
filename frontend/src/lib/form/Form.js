@@ -3,6 +3,8 @@ import { omit } from 'lodash';
 
 import { renderProps, callAll } from 'lib/react-powerplug';
 
+import { shallowEqualObjects } from './utils';
+
 function getValue(eventOrValue) {
   if (isEvent(eventOrValue)) {
     return eventOrValue.target.value;
@@ -28,7 +30,6 @@ class Form extends Component {
     apiErrors: undefined,
     initialValues: {},
     normalize: x => x,
-    shouldReinitialize: (p, c) => p !== c,
     validate: () => ({}),
     validateOnChange: true,
     validateOnBlur: true,
@@ -47,12 +48,22 @@ class Form extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { shouldReinitialize, initialValues, apiErrors } = this.props;
-    // Reinitialize values?
-    if (shouldReinitialize(prevProps.initialValues, initialValues)) {
-      this.resetForm(initialValues);
-      this.runValidation();
-    } else if (apiErrors && prevProps.apiErrors !== apiErrors) {
+    const { enableReinitialize, initialValues, apiErrors } = this.props;
+
+    // Reinitialize?
+    if (enableReinitialize) {
+      const shouldReinitialize =
+        enableReinitialize === true
+          ? !shallowEqualObjects(prevProps.initialValues, initialValues)
+          : enableReinitialize(prevProps.initialValues, initialValues);
+      if (shouldReinitialize) {
+        this.resetForm(initialValues);
+        this.runValidation();
+      }
+    }
+
+    // New apiErrors?
+    if (apiErrors && prevProps.apiErrors !== apiErrors) {
       this.setApiErrors(apiErrors);
     }
   }

@@ -15,7 +15,7 @@ const styles = () => ({
 });
 
 function SignupContentPres(props) {
-  const { classes, getInputProps, getSubmitProps, close } = props;
+  const { classes, getInputProps, getSubmitProps, onClose } = props;
   return (
     <React.Fragment>
       <DialogContent>
@@ -58,7 +58,7 @@ function SignupContentPres(props) {
         />
       </DialogContent>
       <DialogActions>
-        <Button size={'small'} onClick={close}>
+        <Button size={'small'} onClick={onClose}>
           Cancel
         </Button>
         <Button {...getSubmitProps()} size={'small'} color={'primary'}>
