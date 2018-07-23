@@ -1,5 +1,5 @@
-export { default as BaseApp } from './BaseApp';
 export { default as Route } from './Route';
+export { default as Switch } from './Switch';
 export {
   AppFrame,
   AppContent,
