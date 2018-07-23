@@ -227,6 +227,18 @@ class RecipeSerializer(CustomSerializer):
 
 
 class UserSerializer(CustomSerializer):
+    class Meta:
+        model = UserModel
+        fields = ['id', 'first_name', 'last_name']
+
+
+class BookSerializer(CustomSerializer):
+    class Meta:
+        model = models.Book
+        fields = '__all__'
+
+
+class AuthSerializer(CustomSerializer):
     # Write-only password
     password = serializers.CharField(write_only=True)
 

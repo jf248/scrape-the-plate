@@ -2,11 +2,10 @@ import React from 'react';
 import { Divider, Grid, Typography, withStyles } from '@material-ui/core';
 
 import { AppContent } from 'lib/mui-app';
-import { Link } from 'lib/mui-components';
 
 import { formatMins } from 'utils';
 import FabButton from './FabButton';
-import { SubheadingLabel } from 'components/utils';
+import { SubheadingLabel, Source } from 'components/utils';
 import MoreButton from './MoreButton';
 
 const styles = theme => ({
@@ -31,7 +30,9 @@ const styles = theme => ({
   divider: {
     marginBottom: theme.spacing.unit * 4,
   },
-  subheading: {},
+  label: {
+    color: theme.typography.subheading.color,
+  },
 });
 
 ViewPres.default = {
@@ -54,6 +55,9 @@ function ViewPres(props) {
     ingredients,
     preparation,
     source,
+    book,
+    page,
+    user,
     url,
     prep_time,
     cook_time,
@@ -90,23 +94,23 @@ function ViewPres(props) {
         variant={'subheading'}
         color={'textSecondary'}
       >
-        {source && (
+        <SubheadingLabel>
+          <span className={classes.label}>{'Source '}</span>
+          <Source
+            {...{ source, url, book, page, user, isOwner, includePage: true }}
+          />
+        </SubheadingLabel>
+        {prep_time && (
           <SubheadingLabel>
-            {'Source: '}
-            <Link
-              target={'_blank'}
-              onClick={event => event.stopPropagation()}
-              href={url}
-            >
-              {source.name}
-            </Link>
+            <span className={classes.label}>{'Prep '}</span>
+            {`${formatMins(prep_time)}`}
           </SubheadingLabel>
         )}
-        {prep_time && (
-          <SubheadingLabel>{`Prep: ${formatMins(prep_time)}`}</SubheadingLabel>
-        )}
         {cook_time && (
-          <SubheadingLabel>{`Cook: ${formatMins(cook_time)}`}</SubheadingLabel>
+          <SubheadingLabel>
+            <span className={classes.label}>{'Cook '}</span>
+            {`${formatMins(cook_time)}`}
+          </SubheadingLabel>
         )}
       </Typography>
 

@@ -33,7 +33,7 @@ ListItemPres.defaultProps = {
 };
 
 function ListItemPres(props) {
-  const { classes, item, onClick } = props;
+  const { classes, item, isOwner, onClick } = props;
 
   const { title } = item;
 
@@ -45,7 +45,7 @@ function ListItemPres(props) {
             title: classes.title,
           }}
           title={title}
-          subheader={<Subheader {...{ item }} />}
+          subheader={<Subheader {...{ item, isOwner }} />}
         />
         <CardContent {...{ item }} />
       </ButtonBase>

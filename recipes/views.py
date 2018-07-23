@@ -12,7 +12,7 @@ from rest_framework.settings import api_settings
 
 from . import serializers
 from .models import GroceryGroup, GroceryItem, Recipe
-from .models import Source, Tag
+from .models import Source, Tag, Book, User
 from scraper import scrape
 from scraper.exceptions import (
     InvalidURLError, URLError, WebsiteNotImplementedError, RequestException
@@ -77,6 +77,18 @@ class SourceViewSet(viewsets.ModelViewSet):
     pagination_class = CustomPagination
 
 
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = serializers.BookSerializer
+    pagination_class = CustomPagination
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = serializers.UserSerializer
+    pagination_class = CustomPagination
+
+
 class NumberInFilter(filters.BaseInFilter, filters.CharFilter):
     pass
 
@@ -124,7 +136,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
 
 class AuthViewSet(viewsets.ViewSet):
-    serializer_class = serializers.UserSerializer
+    serializer_class = serializers.AuthSerializer
     permission_classes = [
         permissions.AllowAny
     ]

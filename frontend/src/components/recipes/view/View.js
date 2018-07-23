@@ -20,6 +20,8 @@ function View(props) {
   const renderFunc = (
     recipe,
     source,
+    book,
+    user,
     auth,
     loginModal,
     routePush,
@@ -28,7 +30,6 @@ function View(props) {
   ) => {
     const { record: recipeRecord } = recipe;
     const { user: recipeUserId } = recipeRecord || {};
-    const { record: sourceRecord } = source;
     const { user: { id: currentUserId } = {}, isLoggedIn } = auth;
     const { open: openLoginModal } = loginModal;
     const { push } = routePush;
@@ -39,8 +40,11 @@ function View(props) {
     const onEdit = () => push(`/recipes/${id}/edit`);
     const onDelete = () => destroy({ resource: 'recipe', id });
     const onCopy = () => copy(recipe.record);
+
     const record = { ...recipeRecord };
-    record.source = sourceRecord;
+    record.source = source ? source.record : null;
+    record.book = book ? book.record : null;
+    record.user = user ? user.record : null;
 
     return (
       <ViewPres
@@ -62,8 +66,14 @@ function View(props) {
     <Compose
       components={[
         <ViewController resource={'recipes'} id={id} render={renderFunc} />,
-        (render, { record: { source: sourceId } = {} }) => (
-          <Record resource={'sources'} id={sourceId} render={render} />
+        (render, { record: { source } = {} }) => (
+          <Record resource={'sources'} id={source} render={render} />
+        ),
+        (render, { record: { book } = {} }) => (
+          <Record resource={'books'} id={book} render={render} />
+        ),
+        (render, { record: { user } = {} }) => (
+          <Record resource={'users'} id={user} render={render} />
         ),
         <Auth />,
         <LoginModal />,

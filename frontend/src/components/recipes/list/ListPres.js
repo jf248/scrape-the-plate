@@ -25,13 +25,14 @@ class ListPres extends React.PureComponent {
   render() {
     const {
       classes,
-      setFilter,
-      params,
       data,
-      total,
-      setPage,
       ids,
+      loggedInUserId,
+      params,
       push,
+      setFilter,
+      setPage,
+      total,
     } = this.props;
 
     const tooltipTitle = 'Scrape a recipe for a URL. Or create your own.';
@@ -59,7 +60,12 @@ class ListPres extends React.PureComponent {
         <AppContent className={classes.content}>
           <div className={classes.list}>
             {ids &&
-              ids.map(id => <ListItem key={id} item={data[id]} push={push} />)}
+              ids.map(id => (
+                <ListItem
+                  key={id}
+                  {...{ item: data[id], push, loggedInUserId }}
+                />
+              ))}
           </div>
           <Pagination
             countPerPage={ids.length}

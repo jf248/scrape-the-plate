@@ -10,24 +10,39 @@ ListItem.defaultProps = {
 };
 
 function ListItem(props) {
-  const { item: itemProp, push } = props;
+  const { item: itemProp, push, loggedInUserId } = props;
 
-  const { source: sourceId } = itemProp;
+  const { source: sourceId, book: bookId, user: userId } = itemProp;
 
-  const renderFunc = ({ record: sourceRecord }) => {
+  const renderFunc = (
+    { record: sourceRecord },
+    { record: bookRecord },
+    { record: userRecord }
+  ) => {
     // Make a copy of item and mutate the copy
     const item = { ...itemProp };
 
     item.source = sourceRecord;
+    item.book = bookRecord;
+    item.user = userRecord;
+
+    const isOwner =
+      loggedInUserId && userRecord && loggedInUserId === userRecord.id
+        ? true
+        : false;
 
     const onClick = () => push(`/recipes/${item.id}`);
-    return <ListItemPres {...{ item, onClick }} />;
+    return <ListItemPres {...{ item, onClick, isOwner }} />;
   };
 
   return (
     /* eslint-disable react/jsx-key */
     <Compose
-      components={[<Record resource={'sources'} id={sourceId} />]}
+      components={[
+        <Record resource={'sources'} id={sourceId} />,
+        <Record resource={'books'} id={bookId} />,
+        <Record resource={'users'} id={userId} />,
+      ]}
       render={renderFunc}
     />
     /* eslint-enable react/jsx-key */

@@ -22,12 +22,24 @@ class Updater extends React.Component {
 }
 
 function List() {
-  const renderFunc = ({ push }, recordsMany) => {
+  const renderFunc = ({ push }, recordsMany, auth) => {
     const { ids, data, total, params, goFetch } = recordsMany;
+    const { user: { id: loggedInUserId } = {} } = auth;
     const setPage = page => goFetch({ page });
     const setFilter = filter => goFetch({ filter });
     return (
-      <ListPres {...{ push, setPage, setFilter, ids, data, total, params }} />
+      <ListPres
+        {...{
+          push,
+          setPage,
+          setFilter,
+          ids,
+          data,
+          total,
+          params,
+          loggedInUserId,
+        }}
+      />
     );
   };
 
