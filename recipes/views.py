@@ -1,116 +1,70 @@
-from django.db.models import Q
-from django_filters import rest_framework as filters
-from rest_framework import status, viewsets, permissions
+from rest_framework import status, viewsets
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.decorators import action, api_view
 from rest_framework.exceptions import ParseError, PermissionDenied
-from rest_framework.filters import SearchFilter
-from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
-from . import serializers
-from .models import GroceryGroup, GroceryItem, Recipe
-from .models import Source, Tag, Book, User
+from . import serializers, permissions, models, filters, pagination
 from scraper import scrape
 from scraper.exceptions import (
     InvalidURLError, URLError, WebsiteNotImplementedError, RequestException
 )
 
 
-class ListFilter(filters.Filter):
-    def __init__(self, integer=False, **kwargs):
-        super(ListFilter, self).__init__(**kwargs)
-        if integer:
-            self.filter_value_fn = lambda x: int(x)
-        else:
-            self.filter_value_fn = lambda x: x
-
-    def sanitize(self, value_list):
-        return [v for v in value_list if v != ""]
-
-    def filter(self, qs, value):
-        values = value.split(",")
-        values = self.sanitize(values)
-        f = Q()
-        for v in values:
-            kwargs = {self.name: v}
-            f = f | Q(**kwargs)
-        return qs.filter(f)
-
-
-class CustomPagination(PageNumberPagination):
-    page_size_query_param = 'page_size'
-
-
-class GroceryGroupFilter(filters.FilterSet):
-    id = ListFilter(name='id')
-    name = ListFilter(name='name')
-
-    class Meta:
-        model = GroceryGroup
-        fields = ['name', 'id']
-
-
 class GroceryItemViewSet(viewsets.ModelViewSet):
-    queryset = GroceryItem.objects.all()
+    queryset = models.GroceryItem.objects.all()
     serializer_class = serializers.GroceryItemSerializer
-    # filter_fields=('id', 'name',)
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-    #                       IsOwnerOrReadOnly,)
+    filter_backends = (filters.DjangoFilterBackend)
+    filter_fields = ('id', 'name',)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          permissions.IsOwnerOrReadOnly,)
 
 
 class GroceryGroupViewSet(viewsets.ModelViewSet):
-    queryset = GroceryGroup.objects.all()
+    queryset = models.GroceryGroup.objects.all()
     serializer_class = serializers.GroceryGroupSerializer
+    filter_backends = (filters.SearchFilter, filters.DjangoFilterBackend)
     search_fields = ('name', 'id',)
-    filter_class = GroceryGroupFilter
-    pagination_class = CustomPagination
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-    #                       IsOwnerOrReadOnly,)
+    filter_class = filters.GroceryGroupFilter
+    pagination_class = pagination.CustomPagination
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          permissions.IsOwnerOrReadOnly,)
 
 
-class SourceViewSet(viewsets.ModelViewSet):
-    queryset = Source.objects.all()
+class SourceViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.Source.objects.all()
     serializer_class = serializers.SourceSerializer
-    pagination_class = CustomPagination
+    pagination_class = pagination.CustomPagination
 
 
 class BookViewSet(viewsets.ModelViewSet):
-    queryset = Book.objects.all()
+    queryset = models.Book.objects.all()
     serializer_class = serializers.BookSerializer
-    pagination_class = CustomPagination
+    pagination_class = pagination.CustomPagination
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          permissions.IsOwnerOrReadOnly,)
 
 
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
-    pagination_class = CustomPagination
-
-
-class NumberInFilter(filters.BaseInFilter, filters.CharFilter):
-    pass
-
-
-class RecipeFilter(filters.FilterSet):
-    id = NumberInFilter(name='id', lookup_expr='in')
-
-    class Meta:
-        model = Recipe
-        fields = ()
+    pagination_class = pagination.CustomPagination
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.RecipeSerializer
-    pagination_class = CustomPagination
-    filter_class = RecipeFilter
-    filter_backends = (SearchFilter, filters.DjangoFilterBackend)
+    pagination_class = pagination.CustomPagination
+    filter_class = filters.RecipeFilter
+    filter_backends = (filters.SearchFilter, filters.DjangoFilterBackend)
     search_fields = ('title',)
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          permissions.IsOwnerOrReadOnly,)
 
     def get_queryset(self):
         user = self.request.user
-        return Recipe.get_user_and_public_recipes(user)
+        return models.Recipe.get_user_and_public_recipes(user)
 
     # Override the CreateModelMixin method create to add user from the request.
     def create(self, request, *args, **kwargs):
@@ -189,9 +143,11 @@ class AuthViewSet(viewsets.ViewSet):
 
 
 class TagViewSet(viewsets.ModelViewSet):
-    queryset = Tag.objects.all()
+    queryset = models.Tag.objects.all()
     serializer_class = serializers.TagSerializer
-    pagination_class = CustomPagination
+    pagination_class = pagination.CustomPagination
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          permissions.IsOwnerOrReadOnly,)
 
 
 @api_view(['GET'])
@@ -217,7 +173,7 @@ def scrape_view(request):
         raise ParseError({"url": "Url required, or choose manual entry."})
     try:
         dict_ = scrape(url)
-        source_id = Source.get_id_from_domain_name(dict_['domain'])
+        source_id = models.Source.get_id_from_domain_name(dict_['domain'])
         dict_['source'] = source_id
         return Response(dict_)
     except (InvalidURLError, URLError, WebsiteNotImplementedError) as err:
