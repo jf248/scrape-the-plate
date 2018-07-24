@@ -10,11 +10,11 @@ const styles = () => ({
   },
 });
 
-FlexLeft.defaultProps = {
+FlexGrow.defaultProps = {
   component: 'div',
 };
 
-function FlexLeft(props) {
+function FlexGrow(props) {
   const {
     classes,
     className: classNameProp,
@@ -34,4 +34,4 @@ function FlexLeft(props) {
   );
 }
 
-export default withStyles(styles)(FlexLeft);
+export default withStyles(styles)(FlexGrow);

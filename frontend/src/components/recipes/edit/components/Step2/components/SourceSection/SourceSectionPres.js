@@ -4,6 +4,7 @@ import { MenuItem, Select, withStyles } from '@material-ui/core';
 import { TextField } from 'components/utils';
 import Section from '../Section';
 import BookTitleField from './BookTitleField';
+import { FlexContainer, FlexGrow, FlexShrink } from 'components/utils';
 
 const styles = theme => ({
   marginRight: {
@@ -26,43 +27,53 @@ function SourceSection(props) {
 
   return (
     <Section title={'Source'} {...rest}>
-      {!isScraped && (
-        <Select
-          className={classes.marginRight}
-          value={type}
-          onChange={event => {
-            onChangeType(event.target.value);
-          }}
-        >
-          {types.map(type => (
-            <MenuItem key={type.value} value={type.value}>
-              {type.label}
-            </MenuItem>
-          ))}
-        </Select>
-      )}
-      {type === 'website' && (
-        <TextField
-          fullWidth
-          disabled={isScraped}
-          {...urlInputProps}
-          label={'URL'}
-        />
-      )}
-      {type === 'book' && (
-        <React.Fragment>
-          <BookTitleField
-            className={classes.marginRight}
-            bookInputProps={bookInputProps}
-          />
-          <TextField
-            {...pageInputProps}
-            type={'number'}
-            step={1}
-            label={'Page'}
-          />
-        </React.Fragment>
-      )}
+      <FlexContainer>
+        {!isScraped && (
+          <FlexShrink>
+            <Select
+              className={classes.marginRight}
+              value={type}
+              onChange={event => {
+                onChangeType(event.target.value);
+              }}
+            >
+              {types.map(type => (
+                <MenuItem key={type.value} value={type.value}>
+                  {type.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FlexShrink>
+        )}
+        {type === 'website' && (
+          <FlexGrow>
+            <TextField
+              fullWidth
+              disabled={isScraped}
+              {...urlInputProps}
+              label={'URL'}
+            />
+          </FlexGrow>
+        )}
+        {type === 'book' && (
+          <React.Fragment>
+            <FlexShrink>
+              <BookTitleField
+                className={classes.marginRight}
+                bookInputProps={bookInputProps}
+              />
+            </FlexShrink>
+            <FlexShrink>
+              <TextField
+                {...pageInputProps}
+                type={'number'}
+                step={1}
+                label={'Page'}
+              />
+            </FlexShrink>
+          </React.Fragment>
+        )}
+      </FlexContainer>
     </Section>
   );
 }

@@ -14,7 +14,7 @@ import {
   ToggleField,
 } from 'lib/mui-components';
 
-import { FlexContainer, FlexLeft, FlexRight } from 'components/utils';
+import { FlexContainer, FlexGrow, FlexShrink } from 'components/utils';
 import {
   IngredientsSection,
   NotesSection,
@@ -50,13 +50,13 @@ function Step2Pres(props) {
       <Card>
         <CardContent>
           <FlexContainer className={classes.marginBottom}>
-            <FlexLeft>
+            <FlexGrow>
               <TitleField
                 className={classes.marginRight}
                 {...getInputProps({ name: 'title' })}
               />
-            </FlexLeft>
-            <FlexRight>
+            </FlexGrow>
+            <FlexShrink>
               <ToggleField
                 {...getInputProps({
                   label: 'Public',
@@ -66,7 +66,7 @@ function Step2Pres(props) {
                   color: 'primary',
                 })}
               />
-            </FlexRight>
+            </FlexShrink>
           </FlexContainer>
           <IngredientsSection
             defaultExpanded={false}

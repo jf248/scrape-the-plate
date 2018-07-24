@@ -5,7 +5,7 @@ import { AddCircle } from '@material-ui/icons';
 import { AppContent, AppSearchBar, AppFabButton } from 'lib/mui-app';
 
 import { ListItem, Pagination, Filter } from './components';
-import { FlexContainer, FlexLeft, FlexRight } from 'components/utils';
+import { FlexContainer, FlexGrow, FlexShrink } from 'components/utils';
 
 const styles = theme => ({
   list: {
@@ -40,10 +40,10 @@ class ListPres extends React.PureComponent {
       <React.Fragment>
         <AppSearchBar>
           <FlexContainer>
-            <FlexLeft>
+            <FlexGrow>
               <Filter onChange={setFilter} filter={params.filter} />
-            </FlexLeft>
-            <FlexRight>
+            </FlexGrow>
+            <FlexShrink>
               <Tooltip title={tooltipTitle}>
                 <Button
                   variant={'contained'}
@@ -54,7 +54,7 @@ class ListPres extends React.PureComponent {
                   <AddCircle className={classes.rightButton} />
                 </Button>
               </Tooltip>
-            </FlexRight>
+            </FlexShrink>
           </FlexContainer>
         </AppSearchBar>
         <AppContent className={classes.content}>

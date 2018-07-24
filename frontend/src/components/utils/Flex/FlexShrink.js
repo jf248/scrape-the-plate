@@ -10,11 +10,11 @@ const styles = () => ({
   },
 });
 
-FlexRight.defaultProps = {
+FlexShrink.defaultProps = {
   component: 'div',
 };
 
-function FlexRight(props) {
+function FlexShrink(props) {
   const {
     classes,
     className: classNameProp,
@@ -34,4 +34,4 @@ function FlexRight(props) {
   );
 }
 
-export default withStyles(styles)(FlexRight);
+export default withStyles(styles)(FlexShrink);
