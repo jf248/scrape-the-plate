@@ -1,7 +1,6 @@
 # Burn list
 * onKeyDown for TitleField as well as onClick
 * Website and Url on same line in Step2
-* Hot Reload (create-react-app connected-router)
 * Fill in buttons
 * Submit on Enter
 * Edit and Delete buttons on BookField menu

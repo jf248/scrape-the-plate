@@ -42,6 +42,7 @@ function BookTitleFieldPres(props) {
           error,
           className,
           onClick: onOpenModal,
+          onKeyDown: onOpenModal,
           onBlur,
           value: title,
           ...rest,
@@ -62,6 +63,3 @@ function BookTitleFieldPres(props) {
 }
 
 export default withStyles(styles)(BookTitleFieldPres);
-
-/*
-*/
