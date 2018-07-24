@@ -19,8 +19,9 @@ function* formFailure(action) {
       message =
         fieldErrorsMessage ||
         "Something wasn't right, check the error messages.";
-      //TODO: remove
-      console.warn('Form failure in formFailure saga:', error);
+      if (process.env.NODE_ENV !== 'production') {
+        console.warn('Form failure in formFailure saga:', error);
+      }
     }
 
     if (nonFieldErrors) {

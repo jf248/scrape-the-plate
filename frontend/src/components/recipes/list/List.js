@@ -7,7 +7,7 @@ import { Auth } from 'lib/auth';
 import RoutePush from 'controllers/RoutePush';
 import ListPres from './ListPres';
 
-// TODO: This is an ugly hack to force a goFetch call to referesh the
+// This is an ugly hack to force a goFetch call to referesh the
 // RecordsMany component when user logs in.
 class Updater extends React.Component {
   componentDidUpdate(prevProps) {

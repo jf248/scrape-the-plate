@@ -565,7 +565,7 @@ function initRefreshAds() {
         this.adSlot = _adSlots[slotID];
         this.adSlotID = slotID;
         this.$adEle = $('#' + slotID);
-        // TODO: If we want to check ad-wrapper in-view (see below)
+        // TD: If we want to check ad-wrapper in-view (see below)
         // this.$adWrapper = this.$adEle.closest('.ad-wrapper');
         this.size = $ele.data("ad-size");
         this.inViewThreshold = 55;
@@ -646,7 +646,7 @@ function initRefreshAds() {
                   // Note: Clearing every breakout container causes a flash (e.g., sidebar natives),
                   // so we just clear those that can have both
                   thisRS.$adEle.closest('.ad-wrapper').find('.ad-breakout.clear-on-refresh').filter(':visible').empty();
-                  // TODO: Three push calls seems expensive. Let's find a way to consolidate.
+                  // TD: Three push calls seems expensive. Let's find a way to consolidate.
                   slotsToRefresh.push(thisRS.adSlot);
                   amazonSlotsToRefresh.push({'slotID': thisRS.adSlotID, 'sizes': thisRS.size});
                   gaSlotIDs.push(thisRS.adSlotID);
@@ -725,7 +725,7 @@ function initDelayedAds() {
         });
       } catch (e) {}
       if(entryHeight < 4000) {
-        // TODO: Can we just .remove() the whole wrappers?
+        // TD: Can we just .remove() the whole wrappers?
         $('#sidebar-bng-2').css("display", "none").find('.video-sidebar-player-wrap').remove();
         // Kills interval for video player in-view check (sidebar-sticky.tmpl / sidebar.tmpl)
         if(seGlobalState) { seGlobalState["sidebarVideo"] = false; }
@@ -762,7 +762,7 @@ function initDelayedAds() {
       pushAds(delayedAds);
     }
     // Object.keys is ES5+ (should be IE9+) ... else just won't refresh
-    // TODO: This runs twice, on document.ready and after loading delayed ads (after page load), but those are only on sidebar. Hoping we remove delayed sidebar ads, then this will disappear. Otherwise, could run only here (not document.ready) and add a call (in else statement) for when there's no sidebar.
+    // TD: This runs twice, on document.ready and after loading delayed ads (after page load), but those are only on sidebar. Hoping we remove delayed sidebar ads, then this will disappear. Otherwise, could run only here (not document.ready) and add a call (in else statement) for when there's no sidebar.
     if(Object.keys){initRefreshAds();}
   }
 }
@@ -1003,7 +1003,7 @@ function showComments(blog_id, post_id, comments, startNum, endNum, author_usern
 
   // $('#commentSection').html(commentContent);
 
-/* TODO -- move to printer page
+/* TD -- move to printer page
   // Recipe post - checked comments for printing
   $('input[name$="include-comment"]').change(function() {
     
@@ -3115,7 +3115,7 @@ function modal_login_failure(response){var message=response["message"];$("#login
         // "sponsored-post-sidebar" type goes on sidebar (desktop) OR below all entries (mobile)
         if(nww && nww > 767) {
 
-          // TODO: Fold this into the below after test
+          // TD: Fold this into the below after test
           // if(ad_channel == "chicken") {
           if(true) {
 
@@ -3173,7 +3173,7 @@ function modal_login_failure(response){var message=response["message"];$("#login
 
           }
 
-        // TODO: We can ditch this (mobile below-entries native)
+        // TD: We can ditch this (mobile below-entries native)
         } else {
 
           // Set unshared HTML strings
@@ -3211,7 +3211,7 @@ function modal_login_failure(response){var message=response["message"];$("#login
 
       else if(breakoutData["type"] == "newsletter") {
 
-        // TODO: Fold this into the below after test
+        // TD: Fold this into the below after test
         // if(ad_channel == "chicken") {
         if(true) {
 
@@ -3261,7 +3261,7 @@ function modal_login_failure(response){var message=response["message"];$("#login
 
       else if(breakoutData["type"] == "collection") {
 
-        // TODO: Fold this into the below after test
+        // TD: Fold this into the below after test
         // if(ad_channel == "chicken") {
         if(true) {
 
@@ -3411,7 +3411,7 @@ function modal_login_failure(response){var message=response["message"];$("#login
       }
     }
   };
-  // TODO: Add in second argument here once *ALL* ads running this function are using JS object; take out arguments language below
+  // TD: Add in second argument here once *ALL* ads running this function are using JS object; take out arguments language below
   function native_breakout(id) {
     var args = Array.prototype.slice.call(arguments);
     while(args.length < 2) {
@@ -4007,7 +4007,7 @@ function SidebarVid(el, playerObj, cookieName) {
   this.preventPlayReport = true;
   // resumePlayOnScroll remembers the play/pause state of the video as it scrolls in and out of view
   this.resumePlayOnScroll = true;
-  // TODO: Can we init inView in a better way?
+  // TD: Can we init inView in a better way?
   this.inView = true;
   this.cookieName = cookieName;
 
@@ -4097,7 +4097,7 @@ SidebarVid.prototype = {
           obj.muted = obj._player.muted() ? true : false;
 
           // Pause any other videos on page if user unmutes
-          // TODO: Extend this to video embeds (at least)
+          // TD: Extend this to video embeds (at least)
           if(!obj.muted) {
             $('video').each(function(){
               try {
@@ -4150,7 +4150,7 @@ SidebarVid.prototype = {
     // Seeking event will cancel pause reporting (when progress bar is clicked).
     obj._player.on('seeking', function(evt) {
       obj.cancelPauseReport('seeking');
-      // TODO: Seeking while paused prevents next user-initiated play event reporting
+      // TD: Seeking while paused prevents next user-initiated play event reporting
       obj.preventPlayReport = true;
     });
 
@@ -4198,7 +4198,7 @@ $(document).ready(function() {
 
   var $sidebarVidsOnPage = $('.video-sidebar-player-wrap');
 
-  // TODO: Can we get any of this into the SidebarVids object?
+  // TD: Can we get any of this into the SidebarVids object?
   function initSVP() {
 
     var sidebarVideoData = seGlobalState && seGlobalState.sidebarVideoData;
@@ -4404,7 +4404,7 @@ $(function(){
       var seTitle = title.indexOf(" | Serious Eats") < 0 ? title + " | Serious Eats" : title;
 
       try {
-        // TODO: Can add a data object in here w/ a popstate listener elsewhere if we want to better control browser navigation
+        // TD: Can add a data object in here w/ a popstate listener elsewhere if we want to better control browser navigation
         history.replaceState(null, seTitle, url);
       } catch (err) {}
       document.title = seTitle;
@@ -4420,7 +4420,7 @@ $(function(){
           currentFloorLine = obj.floorLine + winTop;
 
       allEntries.each(function(i) {
-        // TODO: Try to cache some of these
+        // TD: Try to cache some of these
         var thisEntry = $(this),
             betweenEntriesAd = thisEntry.next(".ad-wrapper").find(".auto-ad").filter(':visible').first(), // between-posts ad
             betweenEntriesAdLength = betweenEntriesAd.length, // 0 or 1
@@ -4447,7 +4447,7 @@ $(function(){
         } else if(thisEntryBottom < currentRoofLine && i < allEntries.length - 1) {
 
           // The next entry is the current article; no need to repeat the above logic
-          // TODO: The between-entries ad gives a little shift to this... may want to check the top of the next entry against roofLine as well.
+          // TD: The between-entries ad gives a little shift to this... may want to check the top of the next entry against roofLine as well.
           var nextEntry = $(allEntries[i+1]),
               nextEntryID = nextEntry.data("id") || null;
 
@@ -4527,7 +4527,7 @@ $(function(){
 
             $(window).lazyLoadXT();
 
-            // TODO: Do we need this?
+            // TD: Do we need this?
             // obj.hasEntryChanged();
 
             // try {

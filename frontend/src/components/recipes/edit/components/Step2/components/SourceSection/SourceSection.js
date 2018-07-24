@@ -40,8 +40,6 @@ function SourceSection(props) {
     );
   };
 
-  // TODO: initial type should be based on initialValues, i.e. if scraped -> url
-  // and disabled
   return (
     /* eslint-disable react/jsx-key */
     <Compose

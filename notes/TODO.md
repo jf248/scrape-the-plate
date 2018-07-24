@@ -1,5 +1,4 @@
 # Burn list
-* onKeyDown for TitleField as well as onClick
 * Website and Url on same line in Step2
 * Fill in buttons
 * Submit on Enter
