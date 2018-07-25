@@ -1,1 +1,0 @@
-export const RECORD_DESTROY = 'RECORD_DESTROY';

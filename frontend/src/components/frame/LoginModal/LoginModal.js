@@ -3,12 +3,12 @@ import React from 'react';
 import { Compose, State } from 'lib/react-powerplug';
 
 import Modal from 'controllers/Modal';
-import { LOGIN_MODAL } from 'names';
+import { LOGIN_MODAL } from './names';
 import LoginModalPres from './LoginModalPres';
 
 function LoginModal() {
   const renderFunc = (loginControl, tabs) => {
-    const { isOpen, login, signup, close: closeModal } = loginControl;
+    const { isOpen, onClose } = loginControl;
     const {
       state: { tabsValue },
       setState,
@@ -18,11 +18,7 @@ function LoginModal() {
       setState({ tabsValue: value });
     };
 
-    return (
-      <LoginModalPres
-        {...{ isOpen, closeModal, login, signup, tabsValue, onTabChange }}
-      />
-    );
+    return <LoginModalPres {...{ isOpen, onClose, tabsValue, onTabChange }} />;
   };
 
   /* eslint-disable react/jsx-key */

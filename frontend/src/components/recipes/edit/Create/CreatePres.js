@@ -1,8 +1,6 @@
 import React from 'react';
 import {
   Card,
-  Dialog,
-  DialogTitle,
   Stepper,
   Step,
   StepLabel,
@@ -20,18 +18,7 @@ const styles = theme => ({
 });
 
 function CreatePres(props) {
-  const {
-    classes,
-    activeStep,
-    scrapedData,
-    isSubmitting,
-    skip,
-    goBack,
-    getInputProps,
-    getSubmitProps,
-    selectDomain,
-    sources,
-  } = props;
+  const { classes, activeStep, scrapedData, goBack, ...rest } = props;
   const steps = [
     {
       label: 'Scrape a recipe',
@@ -54,21 +41,14 @@ function CreatePres(props) {
       {activeStep === 0 && (
         <Step1
           {...{
-            skip,
             goBack,
-            getInputProps,
-            getSubmitProps,
-            selectDomain,
-            sources,
+            ...rest,
           }}
         />
       )}
       {activeStep === 1 && (
         <Step2 isCreate={true} initialValues={scrapedData} goBack={goBack} />
       )}
-      <Dialog open={isSubmitting}>
-        <DialogTitle>{"Hang on we're scraping..."}</DialogTitle>
-      </Dialog>
     </AppContent>
   );
 }

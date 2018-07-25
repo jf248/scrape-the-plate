@@ -6,7 +6,18 @@ import { Compose, Focus } from 'lib/react-powerplug';
 import Step1Pres from './Step1Pres';
 
 function Step1(props) {
-  const { skip, getInputProps, getSubmitProps, selectDomain, sources } = props;
+  const {
+    getInputProps,
+    getRootProps,
+    getSubmitProps,
+    isValid,
+    selectDomain,
+    skip,
+    sources,
+    values,
+  } = props;
+
+  const scrapeDisabled = !isValid || !values.url;
 
   const renderFunc = (focuser, modal) => {
     const { getFocusProps, focus } = focuser;
@@ -15,14 +26,16 @@ function Step1(props) {
     return (
       <Step1Pres
         {...{
-          skip,
-          getInputProps,
-          getSubmitProps,
-          selectDomain,
-          getFocusProps,
           focus,
-          openModal,
+          getFocusProps,
+          getInputProps,
           getModalProps,
+          getRootProps,
+          getSubmitProps,
+          openModal,
+          scrapeDisabled,
+          selectDomain,
+          skip,
           sources,
         }}
       />

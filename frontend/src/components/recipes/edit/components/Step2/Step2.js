@@ -17,13 +17,13 @@ function Step2(props) {
     return (
       <Step2Pres
         {...{
-          isCreate,
-          goBack,
           getInputProps,
-          resetForm,
-          getSubmitProps,
           getModalProps,
+          getSubmitProps,
+          goBack,
+          isCreate,
           openModal,
+          resetForm,
         }}
       />
     );

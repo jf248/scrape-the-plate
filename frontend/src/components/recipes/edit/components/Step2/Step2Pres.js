@@ -37,13 +37,13 @@ const styles = theme => ({
 function Step2Pres(props) {
   const {
     classes,
-    isCreate,
-    goBack,
     getInputProps,
-    resetForm,
-    getSubmitProps,
     getModalProps,
+    getSubmitProps,
+    goBack,
+    isCreate,
     openModal,
+    resetForm,
   } = props;
   return (
     <React.Fragment>
@@ -87,7 +87,8 @@ function Step2Pres(props) {
             servesInputProps={getInputProps({ name: 'serves' })}
           />
           <SourceSection
-            defaultExpanded={true}
+            defaultExpanded={false}
+            sourceTypeInputProps={getInputProps({ name: 'sourceType' })}
             sourceInputProps={getInputProps({ name: 'source' })}
             urlInputProps={getInputProps({ name: 'url' })}
             bookInputProps={getInputProps({ name: 'book' })}
@@ -111,6 +112,7 @@ function Step2Pres(props) {
               {...getSubmitProps({
                 size: 'small',
                 color: 'primary',
+                variant: 'contained',
               })}
             >
               Save

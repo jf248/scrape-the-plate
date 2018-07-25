@@ -5,7 +5,7 @@ import { isRequired } from 'lib/form/validators';
 
 import LoginForm from 'controllers/LoginForm';
 import Modal from 'controllers/Modal';
-import { LOGIN_MODAL } from 'names';
+import { LOGIN_MODAL } from 'components/frame/LoginModal';
 import LoginContentPres from './LoginContentPres';
 
 function LoginContent() {

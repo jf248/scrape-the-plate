@@ -5,7 +5,7 @@ import { makeSaga as makeAuthSaga } from 'lib/auth';
 
 import form from 'controllers/Form/saga';
 import loginForm from 'controllers/LoginForm/saga';
-import recordDestroy from 'controllers/RecordDestroy/saga';
+import crud from 'controllers/Crud/saga';
 import recordForm from 'controllers/RecordForm/saga';
 import scrape from 'controllers/Scraper/saga';
 import view from 'controllers/View/saga';
@@ -22,7 +22,7 @@ function* rootSaga() {
     // Sagas from component controllers
     form(),
     loginForm(),
-    recordDestroy(),
+    crud(),
     recordForm(),
     scrape(),
     view(),

@@ -29,8 +29,14 @@ class MenuItem extends React.Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose = () => {
-    this.setState({ anchorEl: null });
+  handleClose = cb => {
+    this.setState({ anchorEl: null }, cb);
+  };
+
+  handleAction = (item, cb) => () => {
+    this.handleClose(() => {
+      cb && cb(item);
+    });
   };
 
   render() {
@@ -41,7 +47,9 @@ class MenuItem extends React.Component {
       downshiftProps,
       index,
       item,
-      selectedItems, // eslint-disable-line no-unused-vars
+      selectedItems,
+      onEdit,
+      onDelete,
       ...rest
     } = this.props;
 
@@ -76,8 +84,12 @@ class MenuItem extends React.Component {
           open={Boolean(anchorEl)}
           onClose={this.handleClose}
         >
-          <SubMenuItem onClick={this.handleClose}>Edit</SubMenuItem>
-          <SubMenuItem onClick={this.handleClose}>Delete</SubMenuItem>
+          <SubMenuItem onClick={this.handleAction(item, onEdit)}>
+            Edit
+          </SubMenuItem>
+          <SubMenuItem onClick={this.handleAction(item, onDelete)}>
+            Delete
+          </SubMenuItem>
         </Menu>
       </React.Fragment>
     );

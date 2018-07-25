@@ -29,17 +29,16 @@ Menu.defaultProps = {
 
 function Menu(props) {
   const {
+    MenuProps: { className: MenuClassName, ...MenuPropsProp },
+    SubheaderProps,
     classes,
     downshiftProps,
     groupedItems,
-    menuBottomElement, // eslint-disable-line no-unused-vars
-    menuBottomFixed, // eslint-disable-line no-unused-vars
-    MenuProps: { className: MenuClassName, ...MenuPropsProp },
     noMatchProps: { className: noMatchClassName, ...noMatchPropsProp },
     noMatchText,
-    renderMenuItem, // eslint-disable-line no-unused-vars
+    onDelete,
+    onEdit,
     selectedItems,
-    SubheaderProps,
   } = props;
 
   const { isOpen, itemToString } = downshiftProps;
@@ -68,7 +67,14 @@ function Menu(props) {
                 return (
                   <MenuItem
                     key={itemToString(item)}
-                    {...{ downshiftProps, index, item, selectedItems }}
+                    {...{
+                      downshiftProps,
+                      index,
+                      item,
+                      selectedItems,
+                      onEdit,
+                      onDelete,
+                    }}
                   />
                 );
               })}

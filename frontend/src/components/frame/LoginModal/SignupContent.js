@@ -11,7 +11,7 @@ import {
 
 import Modal from 'controllers/Modal';
 import LoginForm from 'controllers/LoginForm';
-import { LOGIN_MODAL } from 'names';
+import { LOGIN_MODAL } from 'components/frame/LoginModal';
 import SignupContentPres from './SignupContentPres';
 
 const validate = compose(

@@ -136,7 +136,7 @@ function ViewPres(props) {
           {preparationSteps}
         </Grid>
       </Grid>
-      <FabButton {...{ isLoggedIn, onEdit, onCopy }} />
+      <FabButton {...{ isOwner, isLoggedIn, onEdit, onCopy }} />
     </AppContent>
   );
 }

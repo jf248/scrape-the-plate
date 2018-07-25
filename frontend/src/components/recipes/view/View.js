@@ -8,8 +8,8 @@ import Modal from 'controllers/Modal';
 import RoutePush from 'controllers/RoutePush';
 import Scraper from 'controllers/Scraper';
 import ViewController from 'controllers/View';
-import RecordDestroy from 'controllers/RecordDestroy';
-import { LOGIN_MODAL } from 'names';
+import Crud from 'controllers/Crud';
+import { LOGIN_MODAL } from 'components/frame/LoginModal';
 import ViewPres from './ViewPres';
 
 function View(props) {
@@ -27,7 +27,7 @@ function View(props) {
     loginModal,
     routePush,
     scraper,
-    recordDestroy
+    crud
   ) => {
     const { record: recipeRecord } = recipe;
     const { user: recipeUserId } = recipeRecord || {};
@@ -35,11 +35,11 @@ function View(props) {
     const { onOpen: onOpenLoginModal } = loginModal;
     const { push } = routePush;
     const { copy } = scraper;
-    const { destroy } = recordDestroy;
+    const { destroy } = crud;
 
     const isOwner = currentUserId && recipeUserId === currentUserId;
     const onEdit = () => push(`/recipes/${id}/edit`);
-    const onDelete = () => destroy({ resource: 'recipe', id });
+    const onDelete = () => destroy({ id });
     const onCopy = () => copy(recipe.record);
 
     const record = { ...recipeRecord };
@@ -80,11 +80,9 @@ function View(props) {
         <Modal name={LOGIN_MODAL} />,
         <RoutePush />,
         <Scraper />,
-        <RecordDestroy
+        <Crud
           {...{
             resource: 'recipes',
-            id,
-            authorize: true,
             meta: { onSuccess: { redirect: {}, snackbar: {} } },
           }}
         />,

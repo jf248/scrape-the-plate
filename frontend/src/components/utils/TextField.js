@@ -7,7 +7,7 @@ function TextField({ error, touched, ...rest }) {
     <MuiTextField
       helperText={touched && error}
       error={touched && !!error}
-      margin="normal"
+      margin="dense"
       {...rest}
     />
   );

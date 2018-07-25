@@ -13,13 +13,7 @@ import normalize from './normalize';
 
 function Scraper(props) {
   const renderFunc = (sources, form, stepper, store) => {
-    const {
-      response: scrapedData,
-      getInputProps,
-      getSubmitProps,
-      setValues,
-      isSubmitting,
-    } = form;
+    const { response: scrapedData, setValues, ...otherForm } = form;
     const { queue } = stepper;
     const { goBack, skip, copy } = store;
 
@@ -36,11 +30,9 @@ function Scraper(props) {
       skip,
       goBack,
       sources,
-      getInputProps,
-      getSubmitProps,
       selectDomain,
-      isSubmitting,
       copy,
+      ...otherForm,
     });
   };
 
@@ -51,6 +43,7 @@ function Scraper(props) {
         <RecordsMany resource="sources" />,
         (render, { data: sources }) => (
           <Form
+            submitOnEnter
             name={SCRAPER}
             validate={validate(sources)}
             normalize={normalize}

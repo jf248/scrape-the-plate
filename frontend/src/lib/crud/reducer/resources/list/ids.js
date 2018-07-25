@@ -1,15 +1,19 @@
 import {
+  compose,
+  withFetchSuccess,
   withInitialState,
   withResourceMatch,
-  withFetchSuccess,
-  compose,
 } from '../../utils';
-import { GET_LIST, GET_ONE, CREATE, UPDATE } from '../../../crudTypes';
+import { CREATE, DELETE, GET_LIST, GET_ONE, UPDATE } from '../../../crudTypes';
 
 const addRecordIds = (newRecordIds = [], oldRecordIds) => {
   let recordIds = [...oldRecordIds, ...newRecordIds];
   recordIds = [...new Set(recordIds)];
   return recordIds;
+};
+
+const deleteRecordIds = (idsToDelete = [], oldIds) => {
+  return oldIds.filter(id => !idsToDelete.includes(id));
 };
 
 const idsReducer = (prevState = [], action) => {
@@ -21,6 +25,8 @@ const idsReducer = (prevState = [], action) => {
     case CREATE:
     case UPDATE:
       return addRecordIds([payload.data.id], prevState);
+    case DELETE:
+      return deleteRecordIds(payload.data, prevState);
     default:
       return prevState;
   }

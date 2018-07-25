@@ -3,6 +3,7 @@ import React from 'react';
 import { AppFrame } from 'lib/mui-app';
 
 import { drawer } from 'config';
+import ConfirmationModal from './ConfirmationModal';
 import LoginModal from './LoginModal';
 import LoginButton from './LoginButton';
 import Snackbar from './Snackbar';
@@ -25,6 +26,7 @@ function Route(props) {
     >
       <ComponentOr404 component={component} match={match} {...rest} />
       <LoginModal />
+      <ConfirmationModal />
       <Snackbar />
     </AppFrame>
   );

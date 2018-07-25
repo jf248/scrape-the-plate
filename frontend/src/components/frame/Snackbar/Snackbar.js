@@ -5,8 +5,8 @@ import SnackbarController from 'controllers/Snackbar';
 import SnackbarPres from './SnackbarPres';
 
 function Snackbar() {
-  const renderFunc = ({ close, isOpen, extraProps }) => {
-    return <SnackbarPres {...{ close, isOpen, ...extraProps }} />;
+  const renderFunc = ({ onClose, isOpen, extraProps }) => {
+    return <SnackbarPres {...{ onClose, isOpen, ...extraProps }} />;
   };
 
   return <SnackbarController provider render={renderFunc} />;

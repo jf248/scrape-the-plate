@@ -4,12 +4,17 @@ import { State, Compose } from 'lib/react-powerplug';
 
 import SourceSectionPres from './SourceSectionPres';
 
+SourceSection.defaultProps = {
+  sourceInputProps: {},
+  sourceTypeInputProps: {},
+};
 function SourceSection(props) {
   const {
-    sourceInputProps,
-    urlInputProps,
     bookInputProps,
     pageInputProps,
+    sourceInputProps,
+    sourceTypeInputProps,
+    urlInputProps,
     ...rest
   } = props;
 
@@ -19,21 +24,20 @@ function SourceSection(props) {
     { label: 'Website', value: 'website' },
   ];
 
-  const isScraped = !!sourceInputProps && !!sourceInputProps.value;
+  const isScraped = !!sourceInputProps.value;
+  const type = sourceTypeInputProps.value;
 
   const renderFunc = ({ setState, state }) => {
-    const onChangeType = type => setState({ type });
-    const type = state.type;
     return (
       <SourceSectionPres
         {...{
           type,
           types,
           isScraped,
-          onChangeType,
           urlInputProps,
           bookInputProps,
           pageInputProps,
+          sourceTypeInputProps,
           ...rest,
         }}
       />

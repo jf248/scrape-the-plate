@@ -13,6 +13,30 @@ from scraper.exceptions import (
 )
 
 
+class CreateWithUserMixin():
+    # Based on rest_framework's CreateModelMixin but adds user from the request
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        data['user'] = request.user.pk
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            serializer.data,
+            status=status.HTTP_201_CREATED,
+            headers=headers)
+
+    def perform_create(self, serializer):
+        serializer.save()
+
+    def get_success_headers(self, data):
+        try:
+            return {'Location': str(data[api_settings.URL_FIELD_NAME])}
+        except (TypeError, KeyError):
+            return {}
+
+
 class GroceryItemViewSet(viewsets.ModelViewSet):
     queryset = models.GroceryItem.objects.all()
     serializer_class = serializers.GroceryItemSerializer
@@ -39,12 +63,15 @@ class SourceViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = pagination.CustomPagination
 
 
-class BookViewSet(viewsets.ModelViewSet):
-    queryset = models.Book.objects.all()
+class BookViewSet(CreateWithUserMixin, viewsets.ModelViewSet):
     serializer_class = serializers.BookSerializer
     pagination_class = pagination.CustomPagination
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           permissions.IsOwnerOrReadOnly,)
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.Book.objects.filter(user=user)
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -53,7 +80,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = pagination.CustomPagination
 
 
-class RecipeViewSet(viewsets.ModelViewSet):
+class RecipeViewSet(CreateWithUserMixin, viewsets.ModelViewSet):
     serializer_class = serializers.RecipeSerializer
     pagination_class = pagination.CustomPagination
     filter_class = filters.RecipeFilter
@@ -65,28 +92,6 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         user = self.request.user
         return models.Recipe.get_user_and_public_recipes(user)
-
-    # Override the CreateModelMixin method create to add user from the request.
-    def create(self, request, *args, **kwargs):
-        data = request.data
-        data['user'] = request.user.pk
-        serializer = self.get_serializer(data=data)
-        serializer.is_valid(raise_exception=True)
-        self.perform_create(serializer)
-        headers = self.get_success_headers(serializer.data)
-        return Response(
-            serializer.data,
-            status=status.HTTP_201_CREATED,
-            headers=headers)
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-    def get_success_headers(self, data):
-        try:
-            return {'Location': str(data[api_settings.URL_FIELD_NAME])}
-        except (TypeError, KeyError):
-            return {}
 
 
 class AuthViewSet(viewsets.ViewSet):

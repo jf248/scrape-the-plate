@@ -22,23 +22,15 @@ function RecordForm(props) {
     lazy,
 
     // Form props
-    validate,
-    normalize,
     initialValues,
-    enableReinitialize,
+    ...rest
   } = props;
 
   const renderFunc = (recordProps, formProps) => {
-    const { resetForm, getInputProps, getSubmitProps } = formProps;
-    return renderProps(props, {
-      getInputProps,
-      getSubmitProps,
-      resetForm,
-    });
+    return renderProps(props, formProps);
   };
 
   const handleSubmit = (values, submit) => {
-    console.log('values', values);
     submit(values, { resource, id, authorize, ...meta });
   };
 
@@ -49,13 +41,11 @@ function RecordForm(props) {
         <Record {...{ lazy: lazy || !id, resource, id }} />,
         (render, { record }) => (
           <Form
-            enableReinitialize={enableReinitialize}
             onSubmit={handleSubmit}
             name={RECORD_FORM}
             initialValues={initialValues || record}
+            {...rest}
             render={render}
-            validate={validate}
-            normalize={normalize}
           />
         ),
       ]}

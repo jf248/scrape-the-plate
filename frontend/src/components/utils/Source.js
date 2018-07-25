@@ -32,7 +32,7 @@ function Source({
       {book && (
         <React.Fragment>
           {!isOwner && ' via '}
-          <span>{`${book.name}${page && includePage && `, p. ${page}`}`}</span>
+          <span>{`${book.title}${page && includePage && `, p. ${page}`}`}</span>
         </React.Fragment>
       )}
     </React.Fragment>

@@ -26,20 +26,22 @@ Step1Pres.defaultProps = {};
 function Step1Pres(props) {
   const {
     classes,
-    skip,
-    getInputProps,
-    getSubmitProps,
-    selectDomain,
-    getFocusProps,
     focus,
-    openModal,
+    getFocusProps,
+    getInputProps,
     getModalProps,
+    getRootProps,
+    getSubmitProps,
+    openModal,
+    scrapeDisabled,
+    selectDomain,
+    skip,
     sources,
   } = props;
 
   return (
     <React.Fragment>
-      <Card>
+      <Card {...getRootProps()}>
         <CardHeader title={'Scrape a recipe'} />
         <CardContent>
           <ControlWrapper>
@@ -58,7 +60,14 @@ function Step1Pres(props) {
           <Button size={'small'} onClick={skip}>
             Skip (manual entry)
           </Button>
-          <Button size={'small'} color={'primary'} {...getSubmitProps()}>
+          <Button
+            {...getSubmitProps({
+              disabled: scrapeDisabled,
+              size: 'small',
+              color: 'primary',
+              variant: 'contained',
+            })}
+          >
             Scrape
           </Button>
         </CardActions>

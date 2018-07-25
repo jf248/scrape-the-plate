@@ -11,14 +11,14 @@ export default props => {
       provider={provider}
       name={NAME}
       render={({ push, pop, hasItems: isOpen, queue }) => {
-        const open = () => {
-          push();
+        const onOpen = (payload = {}) => {
+          push(payload);
         };
-        const close = () => {
+        const onClose = () => {
           pop();
         };
         const extraProps = queue[0];
-        return renderProps(props, { open, close, isOpen, extraProps });
+        return renderProps(props, { onOpen, onClose, isOpen, extraProps });
       }}
     />
   );

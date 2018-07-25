@@ -156,6 +156,15 @@ class Form extends Component {
     this.setTouched({ [field]: true });
   };
 
+  handleSubmit = (values, bag) => {
+    const { onSubmit } = this.props;
+    if (onSubmit) {
+      return onSubmit(values, bag);
+    } else {
+      console.warn('Form: No onSubmit prop'); // eslint-disable-line no-console
+    }
+  };
+
   render() {
     const {
       values,
@@ -165,7 +174,7 @@ class Form extends Component {
       isValid,
       isPristine,
     } = this.state;
-    const { onSubmit } = this.props;
+    const { submitOnEnter } = this.props;
     const bag = {
       apiErrors,
       isPristine,
@@ -182,8 +191,19 @@ class Form extends Component {
       values,
     };
 
+    const handleKeyDown = event => {
+      if (submitOnEnter && event.key === 'Enter' && event.shiftKey === false) {
+        event.preventDefault();
+        this.handleSubmit(values, bag);
+      }
+    };
+
     return renderProps(this.props, {
       ...bag,
+      getRootProps: (ownProps = {}) => ({
+        ...ownProps,
+        onKeyDown: callAll(ownProps.onKeyDown, handleKeyDown),
+      }),
       getInputProps: (ownProps = {}) => {
         const { name, onChange, onBlur } = ownProps;
         return {
@@ -197,7 +217,9 @@ class Form extends Component {
       },
       getSubmitProps: (ownProps = {}) => ({
         ...ownProps,
-        onClick: callAll(ownProps.onClick, () => onSubmit(values, bag)),
+        onClick: callAll(ownProps.onClick, () =>
+          this.handleSubmit(values, bag)
+        ),
       }),
     });
   }

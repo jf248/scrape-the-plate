@@ -17,8 +17,8 @@ function SourceSection(props) {
     bookInputProps,
     classes,
     isScraped,
-    onChangeType,
     pageInputProps,
+    sourceTypeInputProps,
     type,
     types,
     urlInputProps,
@@ -30,13 +30,7 @@ function SourceSection(props) {
       <FlexContainer>
         {!isScraped && (
           <FlexShrink>
-            <Select
-              className={classes.marginRight}
-              value={type}
-              onChange={event => {
-                onChangeType(event.target.value);
-              }}
-            >
+            <Select className={classes.marginRight} {...sourceTypeInputProps}>
               {types.map(type => (
                 <MenuItem key={type.value} value={type.value}>
                   {type.label}

@@ -5,10 +5,10 @@ import LoginContent from './LoginContent';
 import SignupContent from './SignupContent';
 
 function LoginModalPres(props) {
-  const { isOpen, closeModal, tabsValue, onTabChange } = props;
+  const { isOpen, onClose, tabsValue, onTabChange } = props;
   const contents = [LoginContent, SignupContent];
   return (
-    <Dialog open={isOpen} onClose={closeModal} disableBackdropClick>
+    <Dialog open={isOpen} onClose={onClose} disableBackdropClick>
       <DialogContent>
         <Tabs
           value={tabsValue}

@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Compose } from 'lib/react-powerplug';
 import { compose, isRequired } from 'lib/form/validators';
-import { Auth } from 'lib/auth';
 
 import { toTitleCase } from 'utils';
 import RecordForm from 'controllers/RecordForm';
@@ -19,24 +18,34 @@ const normalize = values => {
 const validate = compose(isRequired(['title']));
 
 function EditBookDialog() {
-  const renderFunc = (auth, modal, recordForm) => {
+  const renderFunc = (modal, recordForm) => {
     const {
       isOpen,
-      onClose,
       modalProps: { id },
+      onClose,
     } = modal;
-    const { getInputProps, getSubmitProps, resetForm } = recordForm;
+    const {
+      getInputProps,
+      getRootProps,
+      getSubmitProps,
+      isValid,
+      resetForm,
+    } = recordForm;
     const isCreate = !id;
+
+    const onExit = () => resetForm();
 
     return (
       <EditBookDialogPres
         {...{
-          isCreate,
           getInputProps,
-          resetForm,
+          getRootProps,
           getSubmitProps,
+          isCreate,
           isOpen,
+          isValid,
           onClose,
+          onExit,
         }}
       />
     );
@@ -46,16 +55,12 @@ function EditBookDialog() {
     /* eslint-disable react/jsx-key */
     <Compose
       components={[
-        <Auth />,
         <Modal provider name={EDIT_BOOK_DIALOG} />,
-        (render, { user: { id: userId } }, { modalProps: { id } }) => (
+        (render, { modalProps: { id } }) => (
           <RecordForm
             {...{
-              resource: 'books',
               id,
-              validate,
               normalize,
-              initialValues: { id, user: userId },
               meta: {
                 onSuccess: {
                   snackbar: {},
@@ -63,6 +68,8 @@ function EditBookDialog() {
                 },
               },
               render,
+              resource: 'books',
+              validate,
             }}
           />
         ),

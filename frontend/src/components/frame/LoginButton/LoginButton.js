@@ -4,7 +4,7 @@ import { Compose } from 'lib/react-powerplug';
 import { Auth } from 'lib/auth';
 
 import Modal from 'controllers/Modal';
-import { LOGIN_MODAL } from 'names';
+import { LOGIN_MODAL } from 'components/frame/LoginModal';
 import LoginButtonPres from './LoginButtonPres';
 
 function LoginButton() {

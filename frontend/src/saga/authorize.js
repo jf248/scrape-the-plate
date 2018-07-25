@@ -21,7 +21,7 @@ import {
 } from 'controllers/Modal/actions';
 import { isClose } from 'controllers/Modal/effects';
 import { isLoginSuccess } from 'controllers/LoginForm/actions';
-import { LOGIN_MODAL } from 'names';
+import { LOGIN_MODAL } from 'components/frame/LoginModal';
 
 function* authorize() {
   try {

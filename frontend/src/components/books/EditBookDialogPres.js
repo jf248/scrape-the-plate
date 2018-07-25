@@ -12,23 +12,29 @@ EditBookDialogPres.defaultProps = {};
 
 function EditBookDialogPres(props) {
   const {
-    isCreate,
     getInputProps,
-    resetForm,
+    getRootProps,
     getSubmitProps,
+    isCreate,
     isOpen,
+    isValid,
     onClose,
+    onExit,
   } = props;
 
   return (
-    <Dialog open={isOpen} onClose={onClose}>
+    <Dialog {...getRootProps({ open: isOpen, onClose, onExit })}>
       <DialogTitle>{isCreate ? 'Add a book' : 'Edit book'}</DialogTitle>
       <DialogContent>
-        <TextField {...getInputProps({ name: 'title', label: 'Title' })} />
+        <TextField
+          {...getInputProps({ name: 'title', label: 'Title', autoFocus: true })}
+        />
       </DialogContent>
       <DialogActions>
-        <Button onClick={() => resetForm()}>{'Reset'}</Button>
-        <Button {...getSubmitProps()} color="primary">
+        <Button {...{ onClick: onClose, color: 'primary' }}>{'Cancel'}</Button>
+        <Button
+          {...getSubmitProps({ color: 'primary', disabled: isValid === false })}
+        >
           {isCreate ? 'Add' : 'Ok'}
         </Button>
       </DialogActions>

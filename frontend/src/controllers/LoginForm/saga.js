@@ -1,14 +1,14 @@
 import { all, put, race, takeLatest, take } from 'redux-saga/effects';
 
 import { isLoginSuccess, isLoginFailure, login, signup } from 'lib/auth';
+
 import {
   isSubmit as isFormSubmit,
   failure as formFailure,
 } from 'controllers/Form/actions';
 import { close as closeModal } from 'controllers/Modal/actions';
-
+import { LOGIN_MODAL } from 'components/frame/LoginModal';
 import { LOGIN, SIGNUP } from './names';
-import { LOGIN_MODAL } from 'names';
 
 function* submit(action) {
   const { meta, payload: data } = action;

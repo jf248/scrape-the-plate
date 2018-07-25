@@ -93,7 +93,7 @@ const makeSimpleRestDataProvider = (
    * @param {Object} json
    * @returns {Object} REST response
    */
-  const convertHTTPResponseToREST = ({ type }, { response, error }) => {
+  const convertHTTPResponseToREST = ({ type, params }, { response, error }) => {
     if (response) {
       switch (type) {
         case GET_LIST:
@@ -105,6 +105,8 @@ const makeSimpleRestDataProvider = (
             },
             error,
           };
+        case DELETE:
+          return { response: { data: [params.id] } };
         default:
           return { response: { data: response }, error };
       }

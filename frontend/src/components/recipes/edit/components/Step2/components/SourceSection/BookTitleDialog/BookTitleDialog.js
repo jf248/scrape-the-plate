@@ -4,7 +4,9 @@ import { Compose } from 'lib/react-powerplug';
 import { ComboboxController } from 'lib/mui-components/ComboboxField';
 
 import Modal from 'controllers/Modal';
+import Crud from 'controllers/Crud';
 import { EDIT_BOOK_DIALOG } from 'components/books';
+import { CONFIRMATION_MODAL } from 'components/frame/ConfirmationModal';
 import BookTitleDialogPres from './BookTitleDialogPres';
 
 BookTitleDialog.defaultProps = {
@@ -24,17 +26,32 @@ function BookTitleDialog(props) {
 
   const items = ids.map(id => data[id]);
 
-  const renderFunc = (editBookDialog, combobox) => {
+  const renderFunc = (editBookDialog, confirmationModal, crud, combobox) => {
     const { onOpen: onOpenEdit } = editBookDialog;
+    const { onOpen: onOpenConfirmation } = confirmationModal;
     const {
       downshiftProps: { getRootProps },
     } = combobox;
+    const { destroy } = crud;
+
+    const onDelete = item =>
+      onOpenConfirmation({
+        title: 'Delete the book?',
+        onConfirm: () => destroy({ id: item.id }),
+      });
+
+    const onEdit = item => onOpenEdit({ id: item.id });
+
+    const onCreate = () => onOpenEdit();
+
     return (
       <BookTitleDialogPres
         {...{
-          open,
           onClose,
-          onOpenEdit,
+          onDelete,
+          onEdit,
+          onCreate,
+          open,
           ...getRootProps({ refKey: 'downshiftRef' }),
           ...combobox,
         }}
@@ -47,6 +64,8 @@ function BookTitleDialog(props) {
     <Compose
       components={[
         <Modal name={EDIT_BOOK_DIALOG} />,
+        <Modal name={CONFIRMATION_MODAL} />,
+        <Crud resource={'books'} />,
         <ComboboxController
           {...{ isOpen: true, selectedItem, onChange, itemToString, items }}
         />,

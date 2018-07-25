@@ -10,13 +10,13 @@ const styles = theme => ({
 });
 
 function SnackbarPres(props) {
-  const { classes, isOpen, close, message, ...rest } = props;
+  const { classes, isOpen, onClose, message, ...rest } = props;
 
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     } else {
-      close();
+      onClose();
     }
   };
 
@@ -28,7 +28,7 @@ function SnackbarPres(props) {
         horizontal: 'left',
       }}
       autoHideDuration={6000}
-      onClose={close}
+      onClose={onClose}
       ContentProps={{
         'aria-describedby': 'message-id',
       }}

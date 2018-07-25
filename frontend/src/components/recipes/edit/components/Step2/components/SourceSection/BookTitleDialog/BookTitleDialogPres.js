@@ -32,9 +32,11 @@ class BookTitleDialogPres extends React.Component {
   render() {
     const {
       classes,
-      open,
       onClose,
-      onOpenEdit,
+      onCreate,
+      onDelete,
+      onEdit,
+      open,
 
       // from comboboxcontroller
       selectedItems,
@@ -73,12 +75,14 @@ class BookTitleDialogPres extends React.Component {
                 downshiftProps={downshiftProps}
                 groupedItems={groupedItems}
                 selectedItems={selectedItems}
+                onEdit={onEdit}
+                onDelete={onDelete}
               />
             </DialogContent>
             <DialogActions
               className={classNames(classes.editAction, classes.contentFixed)}
             >
-              <Button onClick={() => onOpenEdit()} color="primary">
+              <Button onClick={onCreate} color="primary">
                 {'+ Add a book'}
               </Button>
             </DialogActions>

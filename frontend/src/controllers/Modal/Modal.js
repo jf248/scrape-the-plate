@@ -8,7 +8,7 @@ function Modal(props) {
 
   const renderFunc = loginModal => {
     const { pop, push, queue, hasItems: isOpen } = loginModal;
-    const onOpen = payload => {
+    const onOpen = (payload = {}) => {
       push(payload);
     };
     const onClose = () => {

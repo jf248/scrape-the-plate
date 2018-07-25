@@ -4,19 +4,20 @@ import {
   withFetchSuccess,
   compose,
 } from '../../utils';
-import { GET_ONE, GET_LIST } from '../../../crudTypes';
+import { GET_ONE, GET_LIST, DELETE } from '../../../crudTypes';
 
-const totalReducer = (previousState = 0, action) => {
+const totalReducer = (state = 0, action) => {
   const { meta = {}, payload } = action;
-  const { crudType } = meta;
-
-  if (crudType === GET_ONE) {
-    return previousState === 0 ? 1 : previousState;
+  switch (meta.crudType) {
+    case GET_ONE:
+      return state === 0 ? 1 : state;
+    case GET_LIST:
+      return payload.total || null;
+    case DELETE:
+      return state - payload.data.length;
+    default:
+      return state;
   }
-  if (crudType === GET_LIST) {
-    return payload.total || null;
-  }
-  return previousState;
 };
 
 export default resourceName =>
