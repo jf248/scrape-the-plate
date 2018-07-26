@@ -2,21 +2,18 @@ import React from 'react';
 
 import { Link } from 'lib/mui-components';
 
-function Source({
-  source,
-  url,
-  book,
-  page,
-  user,
-  isOwner,
-  includePage = false,
-}) {
+SourcePres.defaultProps = {
+  includePage: false,
+  recipe: {},
+};
+
+function SourcePres(props) {
+  const { recipe, isOwner, includePage } = props;
+  const { source, url, book, page, user } = recipe;
+
   return (
     <React.Fragment>
-      {!isOwner &&
-        user && (
-          <span>{`${user.first_name} ${user.last_name.slice(0, 1)}`}</span>
-        )}
+      {!isOwner && user && `${user.first_name} ${user.last_name.slice(0, 1)}`}
       {source && (
         <React.Fragment>
           {!isOwner && ' via '}
@@ -32,11 +29,11 @@ function Source({
       {book && (
         <React.Fragment>
           {!isOwner && ' via '}
-          <span>{`${book.title}${page && includePage && `, p. ${page}`}`}</span>
+          {`${book.title}${page && includePage && `, p. ${page}`}`}
         </React.Fragment>
       )}
     </React.Fragment>
   );
 }
 
-export default Source;
+export default SourcePres;

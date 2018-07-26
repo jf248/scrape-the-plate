@@ -1,7 +1,7 @@
 import React from 'react';
 import { InputAdornment, withStyles } from '@material-ui/core';
 
-import { TextField } from 'components/utils';
+import { Field } from 'components/utils';
 import Section from './Section';
 
 const styles = theme => ({
@@ -21,14 +21,14 @@ function DetailsSection(props) {
 
   return (
     <Section title={'Details'} {...rest}>
-      <TextField
+      <Field
         {...servesInputProps}
         className={classes.marginRight}
         label={'Serves'}
         type={'number'}
         step={1}
       />
-      <TextField
+      <Field
         {...prepTimeInputProps}
         className={classes.marginRight}
         label={'Prep. time'}
@@ -38,7 +38,7 @@ function DetailsSection(props) {
           endAdornment: <InputAdornment position="end">minutes</InputAdornment>,
         }}
       />
-      <TextField
+      <Field
         {...cookTimeInputProps}
         className={classes.marginRight}
         label={'Cooking time'}

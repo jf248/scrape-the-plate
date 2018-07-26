@@ -6,7 +6,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 
-import { TextField } from 'components/utils';
+import { Field } from 'components/utils';
 
 const styles = () => ({
   field: {
@@ -19,28 +19,28 @@ function SignupContentPres(props) {
   return (
     <React.Fragment>
       <DialogContent>
-        <TextField
+        <Field
           {...getInputProps({
             className: classes.field,
             label: 'First name',
             name: 'first_name',
           })}
         />
-        <TextField
+        <Field
           {...getInputProps({
             className: classes.field,
             label: 'Last name',
             name: 'last_name',
           })}
         />
-        <TextField
+        <Field
           {...getInputProps({
             className: classes.field,
             label: 'Email',
             name: 'username',
           })}
         />
-        <TextField
+        <Field
           {...getInputProps({
             className: classes.field,
             name: 'password',
@@ -48,7 +48,7 @@ function SignupContentPres(props) {
             type: 'password',
           })}
         />
-        <TextField
+        <Field
           {...getInputProps({
             className: classes.field,
             name: 'retypePassword',

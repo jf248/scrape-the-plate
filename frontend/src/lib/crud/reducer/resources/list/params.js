@@ -10,7 +10,7 @@ const initialState = {
   sort: null,
   order: null,
   page: 1,
-  perPage: 10,
+  perPage: 12,
   filter: {},
 };
 

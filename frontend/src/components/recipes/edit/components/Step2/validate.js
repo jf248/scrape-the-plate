@@ -1,4 +1,4 @@
-import { compose, isRequired } from 'lib/form/validators';
+import { compose, isRequired, isUrl } from 'lib/form/validators';
 
 const custom = (values = {}, errors = {}) => {
   values['sourceType'] === 'book' &&
@@ -14,5 +14,6 @@ const custom = (values = {}, errors = {}) => {
 
 export default compose(
   isRequired(['title']),
+  isUrl('url'),
   custom
 );

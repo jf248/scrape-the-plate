@@ -1,7 +1,7 @@
 import React from 'react';
 import { MenuItem, Select, withStyles } from '@material-ui/core';
 
-import { TextField } from 'components/utils';
+import { Field } from 'components/utils';
 import Section from '../Section';
 import BookTitleField from './BookTitleField';
 import { FlexContainer, FlexGrow, FlexShrink } from 'components/utils';
@@ -11,6 +11,10 @@ const styles = theme => ({
     marginRight: theme.spacing.unit * 2,
   },
 });
+
+SourceSection.defaultProps = {
+  sourceTypeInputProps: {},
+};
 
 function SourceSection(props) {
   const {
@@ -30,7 +34,10 @@ function SourceSection(props) {
       <FlexContainer>
         {!isScraped && (
           <FlexShrink>
-            <Select className={classes.marginRight} {...sourceTypeInputProps}>
+            <Select
+              className={classes.marginRight}
+              {...{ ...sourceTypeInputProps, touched: undefined }}
+            >
               {types.map(type => (
                 <MenuItem key={type.value} value={type.value}>
                   {type.label}
@@ -39,9 +46,9 @@ function SourceSection(props) {
             </Select>
           </FlexShrink>
         )}
-        {type === 'website' && (
+        {(type === 'website' || isScraped) && (
           <FlexGrow>
-            <TextField
+            <Field
               fullWidth
               disabled={isScraped}
               {...urlInputProps}
@@ -58,7 +65,7 @@ function SourceSection(props) {
               />
             </FlexShrink>
             <FlexShrink>
-              <TextField
+              <Field
                 {...pageInputProps}
                 type={'number'}
                 step={1}

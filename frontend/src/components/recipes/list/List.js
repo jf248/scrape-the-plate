@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Compose, renderProps } from 'lib/react-powerplug';
 import { RecordsMany } from 'lib/crud';
-import { Auth } from 'lib/auth';
 
 import RoutePush from 'controllers/RoutePush';
 import ListPres from './ListPres';
@@ -22,22 +21,21 @@ class Updater extends React.Component {
 }
 
 function List() {
-  const renderFunc = ({ push }, recordsMany, auth) => {
+  const renderFunc = ({ push }, recordsMany) => {
     const { ids, data, total, params, goFetch } = recordsMany;
-    const { user: { id: loggedInUserId } = {} } = auth;
     const setPage = page => goFetch({ page });
     const setFilter = filter => goFetch({ filter });
+    const onAddClick = () => push('/recipes/create');
     return (
       <ListPres
         {...{
-          push,
-          setPage,
-          setFilter,
-          ids,
           data,
-          total,
+          ids,
+          onAddClick,
           params,
-          loggedInUserId,
+          setFilter,
+          setPage,
+          total,
         }}
       />
     );
@@ -49,7 +47,6 @@ function List() {
       components={[
         <RoutePush />,
         <RecordsMany resource={'recipes'} />,
-        <Auth />,
         (render, { goFetch }, { isLoggedIn }) => (
           <Updater {...{ goFetch, isLoggedIn, render }} />
         ),

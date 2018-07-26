@@ -19,7 +19,7 @@ class Input extends React.Component {
   }
 
   componentDidUpdate() {
-    if (this.props.type === 'number') {
+    if (this.props.value === undefined || this.props.type === 'number') {
       return;
     }
     var node = this.textInput;

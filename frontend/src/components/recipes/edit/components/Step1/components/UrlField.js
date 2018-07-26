@@ -1,14 +1,15 @@
 import React from 'react';
 
-import { Link, TextField } from 'lib/mui-components';
+import { Link } from 'lib/mui-components';
 
+import { Field } from 'components/utils';
 import { cursorToEnd } from 'utils';
 
 const UrlField = props => {
   const { openSitesModal, error, focus, touched, ...rest } = props;
 
   return (
-    <TextField
+    <Field
       autoFocus
       inputProps={{
         onFocus: cursorToEnd,

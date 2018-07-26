@@ -10,6 +10,10 @@ ToggleField.defaultProps = {
   component: Switch,
 };
 
+/**
+ * A wrapper around the Switch component to turn it into a field that takes
+ * a value prop
+ */
 function ToggleField(props) {
   const {
     component: Component,

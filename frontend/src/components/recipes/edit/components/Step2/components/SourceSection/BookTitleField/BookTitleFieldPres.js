@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 
-import { TextField } from 'components/utils';
+import { Field } from 'components/utils';
 import BookTitleDialog from '../BookTitleDialog';
 
 const styles = () => ({
@@ -35,7 +35,7 @@ function BookTitleFieldPres(props) {
 
   return (
     <React.Fragment>
-      <TextField
+      <Field
         {...{
           label: 'Title',
           touched,

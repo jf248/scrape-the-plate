@@ -2,8 +2,8 @@
     "extends": [
         "prettier",
         "eslint:recommended",
-        "plugin:import/errors",
-        "react-app"
+        "react-app",
+        "plugin:import/errors"
     ],
     "plugins": [
         "import"

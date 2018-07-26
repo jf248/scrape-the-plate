@@ -1,56 +1,99 @@
 import React from 'react';
-import { ButtonBase, Card, CardHeader, withStyles } from '@material-ui/core';
+import {
+  ButtonBase,
+  Card,
+  CardContent,
+  Typography,
+  withStyles,
+} from '@material-ui/core';
 
-import CardContent from './CardContent';
-import Subheader from './Subheader';
+import { Source, Time, SubheadingItem } from 'components/utils';
 
 const styles = theme => ({
-  root: {},
-  cardAction: {
-    display: 'block',
-    textAlign: 'initial',
-  },
-  card: {
-    width: '200px',
-    height: '150px',
+  root: {
     margin: theme.spacing.unit,
+    flex: '1 1 auto',
+    maxWidth: '300px',
+    height: '150px',
+    display: 'flex',
+  },
+  button: {
+    flex: 1,
+    display: 'flex',
+    height: 'inherit',
+    maxWidth: 'inherit',
+    flexFlow: 'column nowrap',
+    textAlign: 'initial',
+
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  description: {
+    flex: '1 1 0',
+    overflow: 'hidden',
+    marginBottom: '24px',
+    paddingTop: '0px',
   },
   title: {
-    ...theme.typography.body2,
-    height: '48px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    maxWidth: 'inherit',
   },
-  subheader: {
-    height: '20px',
+  oneLine: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 });
 
-ListItemPres.defaultProps = {
-  item: {},
+ListItem.defaultProps = {
+  recipe: {},
 };
 
-function ListItemPres(props) {
-  const { classes, item, isOwner, onClick } = props;
+function ListItem(props) {
+  const { classes, recipe, onClick } = props;
 
-  const { title } = item;
+  const { title, prep_time, cook_time, notes, preparation } = recipe;
 
   return (
-    <Card className={classes.card}>
-      <ButtonBase focusRipple onClick={onClick} className={classes.cardAction}>
-        <CardHeader
-          classes={{
-            title: classes.title,
-          }}
-          title={title}
-          subheader={<Subheader {...{ item, isOwner }} />}
-        />
-        <CardContent {...{ item }} />
+    <Card className={classes.root}>
+      <ButtonBase className={classes.button} onClick={onClick}>
+        <CardContent className={classes.title}>
+          <Typography variant={'body2'} className={classes.oneLine}>
+            {title}
+          </Typography>
+          <Typography variant={'caption'} className={classes.oneLine}>
+            <Source recipe={recipe} />
+          </Typography>
+          <Typography variant={'caption'} className={classes.oneLine}>
+            {prep_time && (
+              <SubheadingItem halfMargin label={'Prep'}>
+                <Time time={prep_time} />
+              </SubheadingItem>
+            )}
+            {cook_time && (
+              <SubheadingItem halfMargin label={'Cook'}>
+                <Time time={cook_time} />
+              </SubheadingItem>
+            )}
+            {prep_time && (
+              <SubheadingItem halfMargin label={'Prep'}>
+                <Time time={prep_time} />
+              </SubheadingItem>
+            )}
+            {cook_time && (
+              <SubheadingItem halfMargin label={'Cook'}>
+                <Time time={cook_time} />
+              </SubheadingItem>
+            )}
+          </Typography>
+        </CardContent>
+        <CardContent className={classes.description}>
+          <Typography variant={'body1'}>
+            {notes || preparation.join('\n')}
+          </Typography>
+        </CardContent>
       </ButtonBase>
     </Card>
   );
 }
 
-export default withStyles(styles)(ListItemPres);
+export default withStyles(styles)(ListItem);

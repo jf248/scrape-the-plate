@@ -10,3 +10,5 @@ export { default as ToggleField } from './ToggleField';
 export { default as ComboboxField } from './ComboboxField';
 export { default as InputWithTypeahead } from './InputWithTypeahead';
 export { default as TextField } from './TextField';
+export { default as MenuController } from './MenuController';
+export { default as MoreButton } from './MoreButton';

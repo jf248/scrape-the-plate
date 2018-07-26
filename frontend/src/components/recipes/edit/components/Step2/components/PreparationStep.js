@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { IconButton, Typography, Paper, withStyles } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 
-import { TextField } from 'lib/mui-components';
+import { Field } from 'components/utils';
 import { splitLines } from 'utils';
 
 const styles = theme => {
@@ -120,7 +120,7 @@ class PreparationStep extends Component {
               {stepTitle}
             </Typography>
           )}
-          <TextField
+          <Field
             className={classes.textField}
             fullWidth
             InputProps={{ disableUnderline: true }}

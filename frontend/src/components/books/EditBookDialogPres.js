@@ -6,7 +6,7 @@ import {
   DialogContent,
   Button,
 } from '@material-ui/core';
-import { TextField } from 'components/utils';
+import { Field } from 'components/utils';
 
 EditBookDialogPres.defaultProps = {};
 
@@ -26,7 +26,7 @@ function EditBookDialogPres(props) {
     <Dialog {...getRootProps({ open: isOpen, onClose, onExit })}>
       <DialogTitle>{isCreate ? 'Add a book' : 'Edit book'}</DialogTitle>
       <DialogContent>
-        <TextField
+        <Field
           {...getInputProps({ name: 'title', label: 'Title', autoFocus: true })}
         />
       </DialogContent>

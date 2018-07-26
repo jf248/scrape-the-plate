@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 
-import { TextField } from 'components/utils';
+import { Field } from 'components/utils';
 
 const styles = theme => ({
   root: {
@@ -13,7 +13,7 @@ function TitleField(props) {
   const { classes, ...rest } = props;
 
   return (
-    <TextField
+    <Field
       inputProps={{
         className: classes.root,
       }}

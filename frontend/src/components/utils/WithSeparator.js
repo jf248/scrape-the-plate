@@ -4,7 +4,9 @@ import { withStyles } from '@material-ui/core';
 
 const styles = theme => ({
   root: {
+    display: 'inline-block',
     whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
     '&:after': {
       content: '"\u00b7"',
       fontWeight: 'bold',
@@ -15,28 +17,33 @@ const styles = theme => ({
       content: '""',
     },
   },
+  halfMargin: {
+    '&:after': {
+      marginLeft: theme.spacing.unit / 2,
+      marginRight: theme.spacing.unit / 2,
+    },
+  },
 });
 
-SubheadingLabel.defaultProps = {
+WithSeparator.defaultProps = {
   component: 'span',
+  halfMargin: false,
 };
 
-function SubheadingLabel(props) {
+function WithSeparator(props) {
   const {
-    children,
     classes,
     className: classNameProp,
     component: Component,
+    halfMargin,
     ...rest
   } = props;
 
-  const className = classNames(classes.root, classNameProp);
+  const className = classNames(classes.root, classNameProp, {
+    [classes.halfMargin]: halfMargin,
+  });
 
-  return (
-    <Component className={className} {...rest}>
-      {children}
-    </Component>
-  );
+  return <Component className={className} {...rest} />;
 }
 
-export default withStyles(styles)(SubheadingLabel);
+export default withStyles(styles)(WithSeparator);

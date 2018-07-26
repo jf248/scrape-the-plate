@@ -1,32 +1,20 @@
 import React from 'react';
-import { Divider, Grid, Typography, withStyles } from '@material-ui/core';
+import { Divider, MenuItem, withStyles } from '@material-ui/core';
 
 import { AppContent } from 'lib/mui-app';
+import { MoreButton } from 'lib/mui-components';
 
-import { formatMins } from 'utils';
-import FabButton from './FabButton';
-import { SubheadingLabel, Source } from 'components/utils';
-import MoreButton from './MoreButton';
+import { Time, Source, SubheadingItem } from 'components/utils';
+import {
+  Content,
+  FabButton,
+  Ingredients,
+  Preparation,
+  Subheading,
+  Title,
+} from './components';
 
 const styles = theme => ({
-  source: {},
-  titleWrapper: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  title: {
-    flex: '1 1 0',
-  },
-  icon: {},
-  fontIcon: {
-    display: 'inline',
-  },
-  step: {
-    paddingBottom: theme.spacing.unit * 2,
-  },
-  ingredient: {
-    paddingBottom: theme.spacing.unit,
-  },
   divider: {
     marginBottom: theme.spacing.unit * 4,
   },
@@ -35,8 +23,8 @@ const styles = theme => ({
   },
 });
 
-ViewPres.default = {
-  record: {},
+ViewPres.defaultProps = {
+  recipe: {},
 };
 
 function ViewPres(props) {
@@ -44,99 +32,57 @@ function ViewPres(props) {
     classes,
     isLoggedIn,
     isOwner,
-    onCopy,
-    onDelete,
-    onEdit,
-    onOpenLoginModal,
-    record,
+    onClickCopy,
+    onClickDelete,
+    onClickEdit,
+    onMoreButtonClick,
+    recipe,
   } = props;
-  const {
-    title,
-    ingredients,
-    preparation,
-    source,
-    book,
-    page,
-    user,
-    url,
-    prep_time,
-    cook_time,
-  } = record;
-  const ingredientItems =
-    ingredients &&
-    ingredients.map((ingredient, index) => (
-      <div key={index} className={classes.ingredient}>
-        <Typography variant={'body2'}>{ingredient.text}</Typography>
-      </div>
-    ));
-
-  const preparationSteps =
-    preparation &&
-    preparation.map((step, index) => (
-      <div key={index} className={classes.step}>
-        <Typography variant={'body2'}>{`Step ${index + 1}`}</Typography>
-        <Typography variant={'subheading'}>{step}</Typography>
-      </div>
-    ));
+  const { title, ingredients, preparation, prep_time, cook_time } = recipe;
 
   return (
     <AppContent>
-      <div className={classes.titleWrapper}>
-        <Typography className={classes.title} variant={'display1'} paragraph>
-          {title}
-        </Typography>
-        <MoreButton
-          {...{
-            isLoggedIn,
-            isOwner,
-            onOpenLoginModal,
-            onEdit,
-            onDelete,
-            onCopy,
-          }}
-        />
-      </div>
-      <Typography
-        className={classes.subheading}
-        variant={'subheading'}
-        color={'textSecondary'}
-      >
-        <SubheadingLabel>
-          <span className={classes.label}>{'Source '}</span>
-          <Source
-            {...{ source, url, book, page, user, isOwner, includePage: true }}
-          />
-        </SubheadingLabel>
+      <Title
+        title={title}
+        moreButton={
+          <MoreButton onClick={onMoreButtonClick}>
+            {isOwner && <MenuItem onClick={onClickEdit}>{'Edit'}</MenuItem>}
+            {isOwner && <MenuItem onClick={onClickDelete}>{'Delete'}</MenuItem>}
+            {!isOwner && <MenuItem onClick={onClickCopy}>{'Copy'}</MenuItem>}
+          </MoreButton>
+        }
+      />
+      <Subheading>
+        <SubheadingItem
+          label={'Source'}
+          labelProps={{ className: classes.label }}
+        >
+          <Source {...{ recipe: recipe, isOwner, includePage: true }} />
+        </SubheadingItem>
         {prep_time && (
-          <SubheadingLabel>
-            <span className={classes.label}>{'Prep '}</span>
-            {`${formatMins(prep_time)}`}
-          </SubheadingLabel>
+          <SubheadingItem
+            label={'Prep'}
+            labelProps={{ className: classes.label }}
+          >
+            <Time time={prep_time} />
+          </SubheadingItem>
         )}
         {cook_time && (
-          <SubheadingLabel>
-            <span className={classes.label}>{'Cook '}</span>
-            {`${formatMins(cook_time)}`}
-          </SubheadingLabel>
+          <SubheadingItem
+            label={'Cook'}
+            labelProps={{ className: classes.label }}
+          >
+            <Time time={cook_time} />
+          </SubheadingItem>
         )}
-      </Typography>
+      </Subheading>
 
       <Divider className={classes.divider} />
-      <Grid container spacing={32}>
-        <Grid item xs={12} sm={4}>
-          <Typography variant={'title'} paragraph>
-            Ingredients
-          </Typography>
-          {ingredientItems}
-        </Grid>
-        <Grid item xs={12} sm={8}>
-          <Typography variant={'title'} paragraph>
-            Preparation
-          </Typography>
-          {preparationSteps}
-        </Grid>
-      </Grid>
-      <FabButton {...{ isOwner, isLoggedIn, onEdit, onCopy }} />
+      <Content
+        ingredients={<Ingredients ingredients={ingredients} />}
+        preparation={<Preparation preparation={preparation} />}
+      />
+      <FabButton {...{ isOwner, isLoggedIn, onClickEdit, onClickCopy }} />
     </AppContent>
   );
 }

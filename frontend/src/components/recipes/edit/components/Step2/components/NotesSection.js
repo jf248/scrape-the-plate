@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 
-import { TextField } from 'components/utils';
+import { Field } from 'components/utils';
 
 import Section from './Section';
 
@@ -14,7 +14,7 @@ function NotesSection(props) {
 
   return (
     <Section title={'Notes'} {...rest}>
-      <TextField
+      <Field
         {...inputProps}
         placeholder={'Notes...'}
         fullWidth

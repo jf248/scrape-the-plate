@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { State, Compose } from 'lib/react-powerplug';
-
 import SourceSectionPres from './SourceSectionPres';
 
 SourceSection.defaultProps = {
@@ -27,35 +25,19 @@ function SourceSection(props) {
   const isScraped = !!sourceInputProps.value;
   const type = sourceTypeInputProps.value;
 
-  const renderFunc = ({ setState, state }) => {
-    return (
-      <SourceSectionPres
-        {...{
-          type,
-          types,
-          isScraped,
-          urlInputProps,
-          bookInputProps,
-          pageInputProps,
-          sourceTypeInputProps,
-          ...rest,
-        }}
-      />
-    );
-  };
-
   return (
-    /* eslint-disable react/jsx-key */
-    <Compose
-      components={[
-        <State
-          enableReinitialize
-          initial={{ type: isScraped ? 'website' : 'user' }}
-        />,
-      ]}
-      render={renderFunc}
+    <SourceSectionPres
+      {...{
+        type,
+        types,
+        isScraped,
+        urlInputProps,
+        bookInputProps,
+        pageInputProps,
+        sourceTypeInputProps,
+        ...rest,
+      }}
     />
-    /* eslint-enable react/jsx-key */
   );
 }
 

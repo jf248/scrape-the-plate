@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { IconButton, Paper, withStyles } from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 
-import { TextField } from 'lib/mui-components';
+import { Field } from 'components/utils';
 import { splitLines } from 'utils';
 
 const styles = theme => {
@@ -106,7 +106,7 @@ class Ingredient extends Component {
     /* eslint-disable react/jsx-no-duplicate-props */
     return (
       <Paper elevation={1} square className={classes.root}>
-        <TextField
+        <Field
           InputProps={{ disableUnderline: true }}
           className={classes.textField}
           inputProps={{ className: classes.input }}

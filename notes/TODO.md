@@ -1,4 +1,6 @@
 # Burn list
+* Add link to users, takes to recipes filter by that user
+* Add 'all/just min' switch
 * Menu Controller, switch menu components to use the controller
 * Delete Dialog on View should use ConfirmationModal
 * Change all Modals to Dialogs
