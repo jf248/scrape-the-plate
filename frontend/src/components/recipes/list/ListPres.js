@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Tooltip, withStyles } from '@material-ui/core';
+import { Button, Grid, Tooltip, withStyles } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
 
 import { AppContent, AppSearchBar, AppFabButton } from 'lib/mui-app';
@@ -58,10 +58,16 @@ class ListPres extends React.PureComponent {
           </FlexContainer>
         </AppSearchBar>
         <AppContent className={classes.content}>
-          <div className={classes.list}>
-            {ids &&
-              ids.map(id => <ListItem key={id} {...{ recipe: data[id] }} />)}
-          </div>
+          {ids && (
+            <Grid container spacing={16}>
+              {ids.map(id => (
+                <Grid item xs={12} sm={6} md={4} key={id}>
+                  <ListItem {...{ recipe: data[id] }} />
+                </Grid>
+              ))}
+            </Grid>
+          )}
+          <div className={classes.list} />
           <Pagination
             countPerPage={ids.length}
             count={total}

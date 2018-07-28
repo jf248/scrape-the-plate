@@ -10,7 +10,7 @@ const styles = theme => ({
   content: {
     margin: '0 auto',
     [theme.breakpoints.up('md')]: {
-      maxWidth: '900px',
+      maxWidth: '996px',
     },
   },
 });

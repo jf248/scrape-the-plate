@@ -10,9 +10,9 @@ const styles = theme => ({
     flex: '1 1 100%',
     margin: '0 auto 64px auto',
     width: '100%',
-    padding: '32px 16px 0px 16px',
+    padding: '32px 24px 0px 24px',
     [theme.breakpoints.up('md')]: {
-      maxWidth: '932px',
+      maxWidth: '996px',
     },
     [theme.breakpoints.down('sm')]: {
       padding: '16px 24px 0px 24px',
