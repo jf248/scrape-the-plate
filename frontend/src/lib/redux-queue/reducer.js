@@ -29,7 +29,7 @@ const flush = (prevState, action) => {
   return { ...prevState, [name]: [] };
 };
 
-export default (prevState = {}, action) => {
+export const reducer = (prevState = {}, action) => {
   switch (action.type) {
     case PUSH:
       return push(prevState, action);

@@ -1,19 +1,15 @@
 import { combineReducers } from 'redux';
 
-import dataReducer from './data';
-import listReducer from './list';
+import * as data from './data';
+import * as list from './list';
 
-export default (initialResources = []) => {
-  // initialResources is an array of resource names. Convert it to an object
-  // with the names as keys and undefined as each value.
-  const initialState = {};
-  for (let name of initialResources) {
-    initialState[name] = undefined;
-  }
-  return resources(initialState);
-};
+const resourceReducer = resourceName =>
+  combineReducers({
+    data: data.reducer(resourceName),
+    list: list.reducer(resourceName),
+  });
 
-const resources = initialState => (prevState = initialState, action) => {
+const resourcesReducer = initialState => (prevState = initialState, action) => {
   const names = Object.keys(prevState);
   const reducers = {};
 
@@ -24,8 +20,12 @@ const resources = initialState => (prevState = initialState, action) => {
   return combineReducers(reducers)(prevState, action);
 };
 
-const resourceReducer = name =>
-  combineReducers({
-    data: dataReducer(name),
-    list: listReducer(name),
-  });
+export const reducer = (initialResources = []) => {
+  // initialResources is an array of resource names. Convert it to an object
+  // with the names as keys and undefined as each value.
+  const initialState = {};
+  for (let name of initialResources) {
+    initialState[name] = undefined;
+  }
+  return resourcesReducer(initialState);
+};

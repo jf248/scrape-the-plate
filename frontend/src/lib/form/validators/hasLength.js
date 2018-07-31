@@ -1,4 +1,4 @@
-import validateField from './validateField';
+import { validateField } from './validateField';
 
 const testLength = length => string => {
   if (!string) {
@@ -7,5 +7,5 @@ const testLength = length => string => {
   return string.length >= length;
 };
 
-export default (field, length, error) =>
+export const hasLength = (field, length, error) =>
   validateField(field, testLength(length), error);

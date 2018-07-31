@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 
-import { Field } from 'components/utils';
+import { Field } from 'components/common';
 import { noop } from 'utils';
 
 const styles = () => ({

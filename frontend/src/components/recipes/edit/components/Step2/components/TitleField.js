@@ -1,7 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 
-import { Field } from 'components/utils';
+import { Field } from 'components/common';
 
 const styles = theme => ({
   root: {

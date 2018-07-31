@@ -1,2 +1,2 @@
-import { default as remove } from './remove';
-export default { remove };
+import { remove } from './remove';
+export const object = { remove };

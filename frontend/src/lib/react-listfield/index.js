@@ -1,1 +1,1 @@
-export { default } from './ListField';
+export { default as ListField } from './ListField';

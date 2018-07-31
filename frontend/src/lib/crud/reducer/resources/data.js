@@ -1,10 +1,11 @@
 import {
-  withInitialState,
-  withResourceMatch,
-  withFetchSuccess,
   compose,
-} from '../utils';
-import { CREATE, DELETE, GET_LIST, GET_ONE, UPDATE } from '../../crudTypes';
+  withType,
+  withInitialState,
+  withResource,
+} from 'lib/crud/utils'; // eslint-disable-line import/no-internal-modules
+import { FETCH_SUCCESS } from 'lib/crud/actions'; // eslint-disable-line import/no-internal-modules
+import { CREATE, DELETE, GET_LIST, GET_ONE, UPDATE } from 'lib/crud/crudTypes'; // eslint-disable-line import/no-internal-modules
 
 const addRecords = (newRecords = [], oldRecords) => {
   const newRecordsById = newRecords.reduce((acc, record) => {
@@ -40,9 +41,9 @@ const dataReducer = (prevState = {}, action) => {
   }
 };
 
-export default resourceName =>
+export const reducer = resourceName =>
   compose(
     withInitialState({}),
-    withResourceMatch(resourceName),
-    withFetchSuccess
+    withResource(resourceName),
+    withType(FETCH_SUCCESS)
   )(dataReducer);

@@ -4,9 +4,9 @@
   "description": "A web app for scraping and collating recipes",
   "scripts": {
     "test-django": "$VIRTUAL_ENV/bin/python manage.py test",
-    "heroku-postbuild": "cd frontend/ && yarn install && yarn run build",
+    "heroku-postbuild": "python manage.py migrate && cd frontend/ && yarn install && yarn run build",
     "dumpdata": "$VIRTUAL_ENV/bin/python manage.py dumpdata --indent=2 recipes > fixtures-data/dumped.json ",
-    "precommit": "lint-staged && yarn test-django"
+    "precommit": "lint-staged && yarn test-django && cd frontend && npm run precommit"
   },
   "cacheDirectories": [
     "node_modules",
@@ -23,20 +23,7 @@
   "license": "MIT",
   "homepage": "https://github.com/jf248/scrape-the-plate#readme",
   "devDependencies": {
-    "babel-eslint": "^7.2.3",
-    "babel-preset-react-app": "^3.1.2",
-    "babel-runtime": "^6.23.0",
-    "eslint": "^4.1.1",
-    "eslint-config-prettier": "^2.9.0",
-    "eslint-config-react-app": "^2.1.0",
-    "eslint-plugin-flowtype": "^2.34.1",
-    "eslint-plugin-import": "^2.6.0",
-    "eslint-plugin-jsx-a11y": "^5.1.1",
-    "eslint-plugin-react": "^7.1.0",
     "husky": "^0.14.3",
-    "jest": "^23.4.0",
-    "lint-staged": "^7.2.0",
-    "prettier": "^1.13.7"
-  },
-  "dependencies": {}
+    "lint-staged": "^7.2.0"
+  }
 }

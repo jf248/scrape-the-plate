@@ -1,4 +1,4 @@
-import { compose, isRequired, isUrl } from 'lib/form/validators';
+import { compose, isRequired, isUrl } from 'lib/form';
 
 const custom = (values = {}, errors = {}) => {
   values['sourceType'] === 'book' &&

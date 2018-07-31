@@ -5,8 +5,8 @@ import { connectRouter, routerMiddleware } from 'connected-react-router';
 
 import { verify } from 'lib/auth';
 
-import rootReducer from './reducer';
-import rootSaga from './saga';
+import { reducer } from './reducer';
+import { saga } from './saga';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const history = createBrowserHistory();
@@ -16,24 +16,24 @@ const sagaMiddleware = createSagaMiddleware({ sagaMonitor: monitor });
 const initialState = undefined;
 
 const store = createStore(
-  connectRouter(history)(rootReducer),
+  connectRouter(history)(reducer),
   initialState,
   composeEnhancers(applyMiddleware(routerMiddleware(history), sagaMiddleware))
 );
 
 // Start-up sagas
-let sagaTask = sagaMiddleware.run(rootSaga);
+let sagaTask = sagaMiddleware.run(saga);
 
 if (module.hot) {
   module.hot.accept('./reducer', () => {
-    store.replaceReducer(connectRouter(history)(rootReducer));
+    store.replaceReducer(connectRouter(history)(reducer));
   });
   module.hot.accept('./saga', () => {
     sagaTask.cancel();
     sagaTask.done.then(() => {
-      sagaTask = sagaMiddleware.run(rootSaga);
+      sagaTask = sagaMiddleware.run(saga);
     });
-    store.replaceReducer(connectRouter(history)(rootReducer));
+    store.replaceReducer(connectRouter(history)(reducer));
   });
 }
 
@@ -42,10 +42,10 @@ store.dispatch(verify());
 
 if (module.hot) {
   module.hot.accept('./reducer', () => {
-    store.replaceReducer(connectRouter(history)(rootReducer));
+    store.replaceReducer(connectRouter(history)(reducer));
   });
   module.hot.accept('./saga', () => {
-    store.replaceReducer(connectRouter(history)(rootReducer));
+    store.replaceReducer(connectRouter(history)(reducer));
   });
 }
 

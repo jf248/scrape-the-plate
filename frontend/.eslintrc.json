@@ -1,0 +1,35 @@
+{
+    "extends": [
+        "prettier",
+        "eslint:recommended",
+        "react-app",
+        "plugin:import/errors",
+        "plugin:import/warnings"
+    ],
+    "plugins": [
+        "import"
+    ],
+    "rules": {
+        "no-console": "warn",
+        "import/default": "error",
+        "import/no-absolute-path": "warn",
+        "import/no-self-import": "warn",
+        "import/no-cycle": "warn",
+        "import/no-useless-path-segments": "warn",
+        "import/no-named-as-default": "warn",
+        "import/no-named-as-default-member": "warn",
+        "import/no-named-default": "warn",
+        "import/no-relative-parent-imports": "warn",
+        "import/no-internal-modules": ["warn", {"allow": ["lib/*", "components/*", "controllers/*", "redux-saga/*"]}]
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "moduleDirectory": [
+                    "frontend/src",
+                    "frontend/node_modules"
+                ]
+            }
+        }
+    }
+}

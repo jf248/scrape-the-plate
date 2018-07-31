@@ -1,2 +1,2 @@
-export { default as array } from './array';
-export { default as object } from './object';
+export { array } from './array';
+export { object } from './object';

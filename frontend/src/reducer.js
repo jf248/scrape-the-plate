@@ -1,19 +1,17 @@
 import { combineReducers } from 'redux';
 
-import { reducer as crudReducer } from 'lib/crud';
-import { reducer as authReducer } from 'lib/auth';
-import { reducer as queueReducer } from 'lib/redux-queue';
-import { reducer as formReducer } from 'lib/redux-form-lite';
+import * as crud from 'lib/crud';
+import * as auth from 'lib/auth';
+import * as queue from 'lib/redux-queue';
+import * as form from 'lib/redux-form-lite';
 
-import is404Reducer from 'controllers/Is404/reducer';
-import resources from 'config/resources';
+import * as is404 from 'controllers/is404';
+import { resources } from 'config';
 
-const rootReducer = combineReducers({
-  crud: crudReducer(resources),
-  auth: authReducer,
-  queue: queueReducer,
-  form: formReducer,
-  is404: is404Reducer,
+export const reducer = combineReducers({
+  crud: crud.reducer(resources),
+  auth: auth.reducer,
+  queue: queue.reducer,
+  form: form.reducer,
+  is404: is404.reducer,
 });
-
-export default rootReducer;

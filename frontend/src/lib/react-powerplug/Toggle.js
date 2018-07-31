@@ -1,6 +1,6 @@
 import React from 'react';
 import State from './State';
-import renderProps from './utils/renderProps';
+import { renderProps } from './utils';
 
 const Toggle = ({ on, initial = false, onChange, ...props }) => (
   <State on={on} initial={{ on: initial }} onChange={onChange}>

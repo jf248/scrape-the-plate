@@ -1,15 +1,14 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 
-import { reset as resetCrud } from 'lib/crud';
-
-import { isLogoutSuccess } from 'lib/auth';
+import * as crud from 'lib/crud';
+import * as auth from 'lib/auth';
 
 function* reset() {
-  yield put(resetCrud());
+  yield put(crud.reset());
   yield put(push('/'));
 }
 
-export default function* watchLogOut() {
-  yield takeLatest(isLogoutSuccess, reset);
+export function* saga() {
+  yield takeLatest(auth.isLogoutSuccess, reset);
 }

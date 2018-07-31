@@ -7,7 +7,7 @@ import {
   UNREGISTER,
 } from './actions';
 
-const form = (prevState = {}, action) => {
+const updateForm = (prevState = {}, action) => {
   switch (action.type) {
     case SUBMIT:
       return {
@@ -37,7 +37,7 @@ const form = (prevState = {}, action) => {
   }
 };
 
-export default (prevState = {}, action) => {
+export const reducer = (prevState = {}, action) => {
   switch (action.type) {
     case REGISTER:
       return { ...prevState, [action.meta.name]: {} };
@@ -47,7 +47,10 @@ export default (prevState = {}, action) => {
     case SET_SUBMITTING:
     case SET_RESPONSE:
     case SET_ERROR:
-      return { ...prevState, [action.meta.name]: form(prevState.form, action) };
+      return {
+        ...prevState,
+        [action.meta.name]: updateForm(prevState.form, action),
+      };
     default:
       return prevState;
   }

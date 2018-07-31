@@ -7,50 +7,41 @@ import {
   select,
 } from 'redux-saga/effects';
 
-import {
-  isRequestAuthorize,
-  authorizeSuccess,
-  authorizeFailure,
-} from 'lib/crud';
+import * as crud from 'lib/crud';
+import * as auth from 'lib/auth';
 
-import { isLoggedIn } from 'lib/auth';
-
-import {
-  open as openModal,
-  close as closeModal,
-} from 'controllers/Modal/actions';
-import { isClose } from 'controllers/Modal/effects';
-import { isLoginSuccess } from 'controllers/LoginForm/actions';
-import { LOGIN_MODAL } from 'components/frame/LoginModal';
+import * as modal from 'controllers/modal';
+import * as loginForm from 'controllers/login-form';
+import { LOGIN_MODAL } from 'components/frame';
 
 function* authorize() {
   try {
     // Alreadry logged in?
-    if (yield select(isLoggedIn)) {
-      yield put(authorizeSuccess());
+    if (yield select(auth.isLoggedIn)) {
+      yield put(crud.authorizeSuccess());
       return;
     }
 
     // Open the login page. Wait for a successful login or the login page
     // closed.
-    yield put(openModal(LOGIN_MODAL));
+    yield put(modal.open(LOGIN_MODAL));
     const { success } = yield race({
-      success: take(isLoginSuccess),
-      failure: take(isClose(LOGIN_MODAL)),
+      success: take(loginForm.isLoginSuccess),
+      failure: take(modal.isClose(LOGIN_MODAL)),
     });
     if (success) {
-      yield put(authorizeSuccess());
+      yield put(crud.authorizeSuccess());
     } else {
-      yield put(authorizeFailure());
+      yield put(crud.authorizeFailure());
     }
   } finally {
     if (yield cancelled()) {
-      yield put(closeModal(LOGIN_MODAL));
-      yield put(authorizeFailure());
+      yield put(modal.close(LOGIN_MODAL));
+      yield put(crud.authorizeFailure());
     }
   }
 }
 
-export default function* watchRequestAuthorize() {
-  yield takeLatest(isRequestAuthorize, authorize);
+export function* saga() {
+  yield takeLatest(crud.isRequestAuthorize, authorize);
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import State from './State';
-import renderProps from './utils/renderProps';
+import { renderProps } from './utils';
 
 const Counter = ({ count, initial = 0, onChange, ...props }) => (
   <State count={count} initial={{ count: initial }} onChange={onChange}>

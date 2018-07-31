@@ -1,4 +1,4 @@
-import validateField from './validateField';
+import { validateField } from './validateField';
 
 const testEmail = email => {
   if (!email) {
@@ -8,5 +8,5 @@ const testEmail = email => {
   return re.test(email);
 };
 
-export default (field, error = 'Not a valid email address') =>
+export const isEmail = (field, error = 'Not a valid email address') =>
   validateField(field, testEmail, error);

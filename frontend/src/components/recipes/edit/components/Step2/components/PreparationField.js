@@ -1,6 +1,6 @@
 import React from 'react';
-import { PreparationStep } from '../components';
-import ListField from 'lib/react-listfield';
+import PreparationStep from './PreparationStep';
+import { ListField } from 'lib/react-listfield';
 
 function PreparationField(props) {
   const { value, onChange } = props;

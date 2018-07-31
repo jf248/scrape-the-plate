@@ -1,20 +1,6 @@
-import {
-  withInitialState,
-  withResourceMatch,
-  withFetchSuccess,
-  compose,
-} from '../../utils';
-import { GET_LIST } from '../../../crudTypes';
+import { GET_LIST } from 'lib/crud/crudTypes'; // eslint-disable-line import/no-internal-modules
 
-const initialState = {
-  sort: null,
-  order: null,
-  page: 1,
-  perPage: 12,
-  filter: {},
-};
-
-const paramsReducer = (prevState = initialState, action) => {
+export const reducer = (prevState, action) => {
   const { meta = {} } = action;
   const { crudType, requestParams = {} } = meta;
   if (crudType === GET_LIST) {
@@ -22,10 +8,3 @@ const paramsReducer = (prevState = initialState, action) => {
   }
   return prevState;
 };
-
-export default resourceName =>
-  compose(
-    withInitialState(initialState),
-    withResourceMatch(resourceName),
-    withFetchSuccess
-  )(paramsReducer);

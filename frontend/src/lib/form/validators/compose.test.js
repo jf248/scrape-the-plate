@@ -1,4 +1,4 @@
-import compose from './compose';
+import { compose } from './compose';
 
 describe('composes validators, mutably and immutably', () => {
   const result = compose(

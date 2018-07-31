@@ -1,4 +1,7 @@
-export default (field, predicate, error) => (values, errors = {}) => {
+export const validateField = (field, predicate, error) => (
+  values,
+  errors = {}
+) => {
   if (!predicate(values[field])) {
     errors[field] = error;
   }

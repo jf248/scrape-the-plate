@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { Compose } from 'lib/react-powerplug';
-import { compose, isRequired } from 'lib/form/validators';
+import { compose, isRequired } from 'lib/form';
 
 import { toTitleCase } from 'utils';
-import RecordForm from 'controllers/RecordForm';
-import Modal from 'controllers/Modal';
-import EditBookDialogPres from './EditBookDialogPres';
+import { RecordForm } from 'controllers/record-form';
+import { Modal } from 'controllers/modal';
 import { EDIT_BOOK_DIALOG } from './names';
+import EditBookDialogPres from './EditBookDialogPres';
 
 const normalize = values => {
   return {

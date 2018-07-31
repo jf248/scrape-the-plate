@@ -6,5 +6,5 @@ export { default as IsLoading } from './IsLoading';
 export * from './crudTypes';
 export * from './actions';
 export * from './effects';
-export { default as reducer } from './reducer';
-export { default as makeSaga } from './saga';
+export * from './reducer';
+export * from './saga';

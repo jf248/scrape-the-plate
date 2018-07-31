@@ -1,10 +1,4 @@
 {
-    "*.js": [
-        "eslint --max-warnings=0 --fix",
-        "prettier --write",
-        "git add",
-        "jest --bail --findRelatedTests"
-    ],
     "*.py": [
         "autoflake --in-place --remove-all-unused-imports --remove-unused-variables --exclude='*/migrations/*,*/settings/__init__.py'",
         "autopep8 --in-place --exclude='*/migrations/*'",

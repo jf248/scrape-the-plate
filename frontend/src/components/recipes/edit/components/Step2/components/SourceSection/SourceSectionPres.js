@@ -1,10 +1,14 @@
 import React from 'react';
 import { MenuItem, Select, withStyles } from '@material-ui/core';
 
-import { Field } from 'components/utils';
-import Section from '../Section';
+import {
+  Field,
+  FlexContainer,
+  FlexGrow,
+  FlexShrink,
+  Section,
+} from 'components/common';
 import BookTitleField from './BookTitleField';
-import { FlexContainer, FlexGrow, FlexShrink } from 'components/utils';
 
 const styles = theme => ({
   marginRight: {

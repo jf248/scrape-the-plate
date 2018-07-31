@@ -1,4 +1,5 @@
 import { call, put, takeEvery, take, race } from 'redux-saga/effects';
+
 import {
   FETCH,
   FETCH_LOADING,
@@ -56,11 +57,6 @@ function* handleFetch(dataProvider, action) {
   }
 }
 
-const makeSaga = dataProvider => {
-  if (!dataProvider) return () => null;
-  return function* watchFetch() {
-    yield takeEvery(FETCH, handleFetch, dataProvider);
-  };
-};
-
-export default makeSaga;
+export function* saga(dataProvider) {
+  yield takeEvery(FETCH, handleFetch, dataProvider);
+}

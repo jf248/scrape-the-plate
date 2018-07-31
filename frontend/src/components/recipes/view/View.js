@@ -3,13 +3,12 @@ import React from 'react';
 import { Compose } from 'lib/react-powerplug';
 import { Auth } from 'lib/auth';
 
-import Modal from 'controllers/Modal';
-import RoutePush from 'controllers/RoutePush';
-import Scraper from 'controllers/Scraper';
-import ViewController from 'controllers/View';
-import Crud from 'controllers/Crud';
-import { LOGIN_MODAL } from 'components/frame/LoginModal';
-import { CONFIRMATION_MODAL } from 'components/frame/ConfirmationModal';
+import { Modal } from 'controllers/modal';
+import { RoutePush } from 'controllers/route-push';
+import { Scraper } from 'controllers/scraper';
+import { View as ViewController } from 'controllers/view';
+import { Crud } from 'controllers/crud';
+import { LOGIN_MODAL, CONFIRMATION_MODAL } from 'components/frame';
 import ViewPres from './ViewPres';
 
 function View(props) {

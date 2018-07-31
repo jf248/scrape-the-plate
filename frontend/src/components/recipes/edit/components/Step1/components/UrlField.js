@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'lib/mui-components';
 
-import { Field } from 'components/utils';
+import { Field } from 'components/common';
 import { cursorToEnd } from 'utils';
 
 const UrlField = props => {

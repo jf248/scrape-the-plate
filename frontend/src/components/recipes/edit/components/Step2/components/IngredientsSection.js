@@ -1,7 +1,7 @@
 import React from 'react';
 
 import IngredientsField from './IngredientsField';
-import Section from './Section';
+import { Section } from 'components/common';
 
 function IngredientsSection(props) {
   const { inputProps, ...rest } = props;

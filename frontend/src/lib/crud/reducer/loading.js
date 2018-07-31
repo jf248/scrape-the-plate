@@ -1,10 +1,6 @@
-import {
-  FETCH_LOADING,
-  FETCH_SUCCESS,
-  FETCH_FAILURE,
-} from '../actions/fetchActions';
+import { FETCH_LOADING, FETCH_SUCCESS, FETCH_FAILURE } from 'lib/crud/actions'; // eslint-disable-line import/no-internal-modules
 
-export default (previousState = 0, { type }) => {
+export const reducer = (previousState = 0, { type }) => {
   switch (type) {
     case FETCH_LOADING:
       return previousState + 1;

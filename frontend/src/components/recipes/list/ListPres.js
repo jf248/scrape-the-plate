@@ -5,7 +5,7 @@ import { AddCircle } from '@material-ui/icons';
 import { AppContent, AppSearchBar, AppFabButton } from 'lib/mui-app';
 
 import { ListItem, Pagination, Filter } from './components';
-import { FlexContainer, FlexGrow, FlexShrink } from 'components/utils';
+import { FlexContainer, FlexGrow, FlexShrink } from 'components/common';
 
 const styles = theme => ({
   list: {

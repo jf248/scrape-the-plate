@@ -1,4 +1,4 @@
-import validateField from './validateField';
+import { validateField } from './validateField';
 
 export const testUrl = url => {
   if (!url) {
@@ -8,5 +8,5 @@ export const testUrl = url => {
   return url && re.test(url);
 };
 
-export default (field, error = 'Not a valid URL.') =>
+export const isUrl = (field, error = 'Not a valid URL.') =>
   validateField(field, testUrl, error);

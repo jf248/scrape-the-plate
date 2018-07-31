@@ -3,7 +3,7 @@ import React from 'react';
 import { Compose, renderProps } from 'lib/react-powerplug';
 import { RecordsMany } from 'lib/crud';
 
-import RoutePush from 'controllers/RoutePush';
+import { RoutePush } from 'controllers/route-push';
 import ListPres from './ListPres';
 
 // This is an ugly hack to force a goFetch call to referesh the

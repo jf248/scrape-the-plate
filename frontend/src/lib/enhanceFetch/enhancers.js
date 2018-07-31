@@ -31,7 +31,7 @@ export const addCsrfToken = getToken => fetchFunc => {
 
 export const logRequest = fetchFunc => {
   const next = (url, init = {}) => {
-    console.log('Making request:', url, init);
+    console.log('Making request:', url, init); // eslint-disable-line no-console
     return fetchFunc(url, init);
   };
   return next;
@@ -78,7 +78,7 @@ export const thenFormatResponse = formatter => fetchFunc => {
 export const thenLogResponse = fetchFunc => {
   const next = (url, init = {}) => {
     return fetchFunc(url, init).then(response => {
-      console.log('Response:', response);
+      console.log('Response:', response); // eslint-disable-line no-console
       return response;
     });
   };

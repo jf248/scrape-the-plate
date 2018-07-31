@@ -3,7 +3,7 @@ import { LOGOUT } from './types';
 
 const initialState = { isLoggingIn: false, isLoggedIn: false, user: {} };
 
-export default (previousState = initialState, action) => {
+export const reducer = (previousState = initialState, action) => {
   const { type, payload, meta } = action;
   switch (type) {
     case FETCH_LOADING:

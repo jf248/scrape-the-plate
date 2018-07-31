@@ -1,0 +1,2 @@
+export const CONFIRMATION_MODAL = 'CONFIRMATION_MODAL';
+export const LOGIN_MODAL = 'LOGIN_MODAL';

@@ -3,7 +3,7 @@ import React from 'react';
 import { Compose } from 'lib/react-powerplug';
 import { Modals } from 'lib/mui-components';
 
-import RecordForm from 'controllers/RecordForm';
+import { RecordForm } from 'controllers/record-form';
 import validate from './validate';
 import normalize from './normalize';
 import Step2Pres from './Step2Pres';

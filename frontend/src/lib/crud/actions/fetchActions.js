@@ -5,7 +5,7 @@ import {
   UPDATE,
   DELETE,
   CUSTOM,
-} from '../crudTypes';
+} from 'lib/crud/crudTypes'; // eslint-disable-line import/no-internal-modules
 
 export const FETCH = 'CRUD/FETCH';
 export const FETCH_LOADING = 'CRUD/FETCH_LOADING';

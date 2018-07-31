@@ -5,9 +5,16 @@ import { renderProps } from 'lib/react-powerplug';
 import { login, logout, signup } from './actions';
 import { isLoggedIn, isLoggingIn, user } from './selectors';
 
-function Auth(props) {
+function Component(props) {
   const { isLoggedIn, isLoggingIn, login, signup, logout, user } = props;
-  return renderProps(props, { isLoggedIn, isLoggingIn, login, signup, logout, user });
+  return renderProps(props, {
+    isLoggedIn,
+    isLoggingIn,
+    login,
+    signup,
+    logout,
+    user,
+  });
 }
 
 const mapStateToProps = state => {
@@ -26,9 +33,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-const Connected = connect(
+const Auth = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Auth);
+)(Component);
 
-export default Connected;
+export default Auth;

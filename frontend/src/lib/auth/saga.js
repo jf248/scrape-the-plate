@@ -19,9 +19,6 @@ function* handleFetch(authProvider, action) {
   });
 }
 
-export default authProvider => {
-  if (!authProvider) return () => null;
-  return function* watchFetch() {
-    yield takeEvery(FETCH, handleFetch, authProvider);
-  };
-};
+export function* saga(authProvider) {
+  yield takeEvery(FETCH, handleFetch, authProvider);
+}

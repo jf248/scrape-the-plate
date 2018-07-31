@@ -3,6 +3,4 @@
  * @param {*} value - The value to wrap.
  * @returns {Array} - The wrapped value.
  */
-const wrap = value => (Array.isArray(value) ? value : [value]);
-
-export default wrap;
+export const wrap = value => (Array.isArray(value) ? value : [value]);

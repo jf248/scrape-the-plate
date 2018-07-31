@@ -1,6 +1,6 @@
 import { List, Create, Update, View } from 'components/recipes';
 import { About } from 'components/about';
-import { TempPage } from 'components/temp';
+// import { TempPage } from 'components/temp';
 import { NotFound } from 'components/not-found';
 
 const routes = [
@@ -19,7 +19,7 @@ const routes = [
   },
   { path: '/recipes/:id', component: View, exact: true },
   { path: '/about', component: About, exact: true, title: 'About' },
-  { path: '/temp', component: TempPage, exact: true, title: 'Temporary Page' },
+  // { path: '/temp', component: TempPage, exact: true, title: 'Temporary Page' },
   { path: '/', component: List, exact: true, title: 'Recipes' },
   { path: '*', component: NotFound, exact: false, title: 'Not Found' },
 ];

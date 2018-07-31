@@ -14,7 +14,7 @@ import {
   ToggleField,
 } from 'lib/mui-components';
 
-import { FlexContainer, FlexGrow, FlexShrink } from 'components/utils';
+import { FlexContainer, FlexGrow, FlexShrink } from 'components/common';
 import {
   IngredientsSection,
   NotesSection,
@@ -23,6 +23,7 @@ import {
   TitleField,
   DetailsSection,
   SourceSection,
+  TagsSection,
 } from './components';
 
 const styles = theme => ({
@@ -79,6 +80,10 @@ function Step2Pres(props) {
           <NotesSection
             defaultExpanded={false}
             inputProps={getInputProps({ name: 'notes' })}
+          />
+          <TagsSection
+            defaultExpanded={false}
+            inputProps={getInputProps({ name: 'tags' })}
           />
           <DetailsSection
             defaultExpanded={false}

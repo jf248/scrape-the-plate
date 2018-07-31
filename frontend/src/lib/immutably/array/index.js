@@ -1,5 +1,5 @@
-import { default as push } from './push';
-import { default as remove } from './remove';
-import { default as replace } from './replace';
-import { default as wrap } from './wrap';
-export default { push, remove, replace, wrap };
+import { push } from './push';
+import { remove } from './remove';
+import { replace } from './replace';
+import { wrap } from './wrap';
+export const array = { push, remove, replace, wrap };

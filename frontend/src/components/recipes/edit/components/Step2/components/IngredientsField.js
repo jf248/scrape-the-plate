@@ -1,6 +1,6 @@
 import React from 'react';
 import Ingredient from './Ingredient';
-import ListField from 'lib/react-listfield';
+import { ListField } from 'lib/react-listfield';
 
 function IngredientsField(props) {
   const { value, onChange } = props;

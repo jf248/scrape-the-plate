@@ -4,7 +4,7 @@ import { Divider, MenuItem, withStyles } from '@material-ui/core';
 import { AppContent } from 'lib/mui-app';
 import { MoreButton } from 'lib/mui-components';
 
-import { Time, Source, SubheadingItem } from 'components/utils';
+import { Time, Source, SubheadingItem } from 'components/common';
 import {
   Content,
   FabButton,

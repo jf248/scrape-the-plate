@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PreparationField from './PreparationField';
-import Section from './Section';
+import { Section } from 'components/common';
 
 function PreparationSection(props) {
   const { inputProps, ...rest } = props;

@@ -1,10 +1,4 @@
-import {
-  compose,
-  withFetchSuccess,
-  withInitialState,
-  withResourceMatch,
-} from '../../utils';
-import { CREATE, DELETE, GET_LIST, GET_ONE, UPDATE } from '../../../crudTypes';
+import { CREATE, DELETE, GET_LIST, GET_ONE, UPDATE } from 'lib/crud/crudTypes'; // eslint-disable-line import/no-internal-modules
 
 const addRecordIds = (newRecordIds = [], oldRecordIds) => {
   let recordIds = [...oldRecordIds, ...newRecordIds];
@@ -16,7 +10,7 @@ const deleteRecordIds = (idsToDelete = [], oldIds) => {
   return oldIds.filter(id => !idsToDelete.includes(id));
 };
 
-const idsReducer = (prevState = [], action) => {
+export const reducer = (prevState, action) => {
   const { meta, payload } = action;
   switch (meta.crudType) {
     case GET_LIST:
@@ -31,10 +25,3 @@ const idsReducer = (prevState = [], action) => {
       return prevState;
   }
 };
-
-export default resourceName =>
-  compose(
-    withInitialState([]),
-    withResourceMatch(resourceName),
-    withFetchSuccess
-  )(idsReducer);

@@ -1,5 +1,3 @@
-import wrap from './wrap';
+import { wrap } from './wrap';
 
-const push = (array, newItem) => [...array, ...wrap(newItem)];
-
-export default push;
+export const push = (array, newItem) => [...array, ...wrap(newItem)];

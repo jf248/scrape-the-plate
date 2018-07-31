@@ -6,11 +6,11 @@ import {
   DialogContent,
   Button,
 } from '@material-ui/core';
-import { Field } from 'components/utils';
+import { Field } from 'components/common';
 
 EditBookDialogPres.defaultProps = {};
 
-function EditBookDialogPres(props) {
+export default function EditBookDialogPres(props) {
   const {
     getInputProps,
     getRootProps,
@@ -41,5 +41,3 @@ function EditBookDialogPres(props) {
     </Dialog>
   );
 }
-
-export default EditBookDialogPres;

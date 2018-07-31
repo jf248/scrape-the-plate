@@ -1,28 +1,15 @@
-import {
-  withInitialState,
-  withResourceMatch,
-  withFetchSuccess,
-  compose,
-} from '../../utils';
-import { GET_ONE, GET_LIST, DELETE } from '../../../crudTypes';
+import { GET_ONE, GET_LIST, DELETE } from 'lib/crud/crudTypes'; // eslint-disable-line import/no-internal-modules
 
-const totalReducer = (state = 0, action) => {
+export const reducer = (prevState, action) => {
   const { meta = {}, payload } = action;
   switch (meta.crudType) {
     case GET_ONE:
-      return state === 0 ? 1 : state;
+      return prevState === 0 ? 1 : prevState;
     case GET_LIST:
       return payload.total || null;
     case DELETE:
-      return state - payload.data.length;
+      return prevState - payload.data.length;
     default:
-      return state;
+      return prevState;
   }
 };
-
-export default resourceName =>
-  compose(
-    withInitialState(0),
-    withResourceMatch(resourceName),
-    withFetchSuccess
-  )(totalReducer);

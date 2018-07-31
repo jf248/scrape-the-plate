@@ -1,7 +1,7 @@
-export { default as isEmail } from './isEmail';
-export { default as isUrl } from './isUrl';
-export { default as isRequired } from './isRequired';
-export { default as validateField } from './validateField';
-export { default as compose } from './compose';
-export { default as areEqual } from './areEqual';
-export { default as hasLength } from './hasLength';
+export { isEmail } from './isEmail';
+export { isUrl } from './isUrl';
+export { isRequired } from './isRequired';
+export { validateField } from './validateField';
+export { compose } from './compose';
+export { areEqual } from './areEqual';
+export { hasLength } from './hasLength';

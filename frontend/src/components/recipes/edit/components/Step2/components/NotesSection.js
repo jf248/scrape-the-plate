@@ -1,9 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core';
 
-import { Field } from 'components/utils';
-
-import Section from './Section';
+import { Field, Section } from 'components/common';
 
 const styles = () => ({
   root: {},

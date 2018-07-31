@@ -2,20 +2,22 @@ import React from 'react';
 
 import { AppFrame } from 'lib/mui-app';
 
-import { drawer } from 'config';
-import ConfirmationModal from './ConfirmationModal';
-import LoginModal from './LoginModal';
-import LoginButton from './LoginButton';
-import Snackbar from './Snackbar';
-import CircularProgress from './CircularProgress';
-import ComponentOr404 from './ComponentOr404';
+import {
+  ConfirmationModal,
+  LoginModal,
+  LoginButton,
+  Snackbar,
+  CircularProgress,
+  ComponentOr404,
+} from './components';
+import { LOGIN_MODAL, CONFIRMATION_MODAL } from './names';
 
 Route.defaultProps = {
   component: 'div',
 };
 
 function Route(props) {
-  const { component, title, computedMatch: match, ...rest } = props;
+  const { component, title, computedMatch: match, drawer, ...rest } = props;
 
   return (
     <AppFrame
@@ -25,8 +27,8 @@ function Route(props) {
       MiddleComponent={CircularProgress}
     >
       <ComponentOr404 component={component} match={match} {...rest} />
-      <LoginModal />
-      <ConfirmationModal />
+      <LoginModal name={LOGIN_MODAL} />
+      <ConfirmationModal name={CONFIRMATION_MODAL} />
       <Snackbar />
     </AppFrame>
   );
