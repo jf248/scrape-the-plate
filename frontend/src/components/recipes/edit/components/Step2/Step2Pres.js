@@ -43,7 +43,7 @@ function Step2Pres(props) {
     getSubmitProps,
     goBack,
     isCreate,
-    openModal,
+    onOpenModal,
     resetForm,
   } = props;
   return (
@@ -110,7 +110,7 @@ function Step2Pres(props) {
             </ActionsLeft>
           )}
           <ActionsRight>
-            <Button size={'small'} onClick={() => openModal('reset')}>
+            <Button size={'small'} onClick={onOpenModal}>
               Reset
             </Button>
             <Button
@@ -125,10 +125,7 @@ function Step2Pres(props) {
           </ActionsRight>
         </Actions>
       </Card>
-      <ResetDialog
-        resetForm={resetForm}
-        {...getModalProps({ name: 'reset' })}
-      />
+      <ResetDialog resetForm={resetForm} {...getModalProps()} />
     </React.Fragment>
   );
 }

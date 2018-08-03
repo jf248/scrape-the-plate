@@ -1,1 +1,0 @@
-export const EDIT_BOOK_DIALOG = 'EDIT_BOOK_DIALOG';

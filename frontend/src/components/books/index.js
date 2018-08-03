@@ -1,3 +1,2 @@
-export { default as EditBookDialog } from './EditBookDialog';
-export { default as BookDialog } from './BookDialog';
-export * from './names';
+export { default as EditContent } from './EditContent';
+export { editDialogProps } from './editDialogProps';

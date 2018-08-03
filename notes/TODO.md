@@ -1,4 +1,6 @@
 # Burn list
+* submitOnEnter
+* Performance: make some components pure?
 * Add link to users, takes to recipes filter by that user
 * Add 'all/just min' switch
 * Menu Controller, switch menu components to use the controller

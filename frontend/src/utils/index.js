@@ -1,6 +1,7 @@
-export { default as identity } from './identity';
-export { default as noop } from './noop';
-export { default as toTitleCase } from './toTitleCase';
-export { default as splitLines } from './splitLines';
-export { default as cursorToEnd } from './cursorToEnd';
-export { default as formatMins } from './formatMins';
+export { identity } from './identity';
+export { noop } from './noop';
+export { toTitleCase } from './toTitleCase';
+export { splitLines } from './splitLines';
+export { cursorToEnd } from './cursorToEnd';
+export { formatMins } from './formatMins';
+export { isObject } from './isObject';

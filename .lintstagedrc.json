@@ -1,7 +1,7 @@
 {
     "*.py": [
-        "autoflake --in-place --remove-all-unused-imports --remove-unused-variables --exclude='*/migrations/*,*/settings/__init__.py'",
-        "autopep8 --in-place --exclude='*/migrations/*'",
-        "flake8"
+        "autoflake --in-place --remove-all-unused-imports --remove-unused-variables --exclude='*_auto_*,*/settings/__init__.py'",
+        "autopep8 --in-place --exclude='*_auto_*'",
+        "flake8 exclude=*_auto_*"
     ]
 }

@@ -20,15 +20,16 @@ class AbstractModel(models.Model):
         abstract = True
 
 
-class Tag(models.Model):
+class User(AbstractUser, AbstractModel):
+    def normalize(self):
+        self.email = self.username
+
+
+class Tag(AbstractModel):
     name = models.CharField(max_length=255, unique=True)
-
-    def save(self, *args, **kwargs):
-        self.name = general.singular_lower_stripped(self.name)
-        super(Tag, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, blank=True, null=True
+    )
 
     class Meta:
         ordering = ['name']
@@ -53,7 +54,7 @@ class Source(AbstractModel):
         ordering = ['name']
 
 
-class Ingredient(models.Model):
+class Ingredient(AbstractModel):
     # grocery_item = models.ForeignKey(GroceryItem, on_delete=models.PROTECT)
     text = models.CharField(max_length=255)
     # group = models.CharField(max_length=255, blank=True)
@@ -62,16 +63,14 @@ class Ingredient(models.Model):
         return self.text
 
 
-class User(AbstractUser, AbstractModel):
-    def normalize(self):
-        self.email = self.username
-
-
 class Book(AbstractModel):
     title = models.CharField(max_length=255)
     user = models.ForeignKey(
         get_user_model(), on_delete=models.CASCADE, blank=True, null=True
     )
+
+    class Meta:
+        ordering = ['title']
 
 
 class Recipe(AbstractModel):

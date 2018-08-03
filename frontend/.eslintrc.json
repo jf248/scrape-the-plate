@@ -19,7 +19,7 @@
         "import/no-named-as-default": "warn",
         "import/no-named-as-default-member": "warn",
         "import/no-named-default": "warn",
-        "import/no-relative-parent-imports": "warn",
+        "import/no-relative-parent-imports": "off",
         "import/no-internal-modules": ["warn", {"allow": ["lib/*", "components/*", "controllers/*", "redux-saga/*"]}]
     },
     "settings": {

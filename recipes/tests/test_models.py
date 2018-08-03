@@ -43,13 +43,6 @@ class SavePatcherMixin(object):
 
 class TagTests(SavePatcherMixin, ModelTesterMixin, TestCase):
 
-    def test_save_corrects_name(self):
-        tag = self.mixer.blend(models.Tag, name=' tests ')
-        tag.save()
-
-        self.mock_save.assert_called_with(tag)
-        self.assertEqual(tag.name, 'test')
-
     def test_meta(self):
         self.assertMeta(
             model_cls=models.Tag,

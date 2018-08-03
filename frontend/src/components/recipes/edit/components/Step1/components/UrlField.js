@@ -6,7 +6,7 @@ import { Field } from 'components/common';
 import { cursorToEnd } from 'utils';
 
 const UrlField = props => {
-  const { openSitesModal, error, focus, touched, ...rest } = props;
+  const { onOpenModal, error, focus, touched, ...rest } = props;
 
   return (
     <Field
@@ -20,12 +20,7 @@ const UrlField = props => {
       margin={'normal'}
       helperText={[
         touched && error && `${error} `,
-        <Link
-          tabIndex={-1}
-          key={'Link'}
-          onFocus={focus}
-          onClick={openSitesModal}
-        >
+        <Link tabIndex={-1} key={'Link'} onFocus={focus} onClick={onOpenModal}>
           Which sites can I scrape?
         </Link>,
       ]}

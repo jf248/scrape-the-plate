@@ -20,7 +20,8 @@ function About(props) {
       </Typography>
       <Typography variant={'body1'} paragraph>
         Created with React, Redux and Django. Source code available{' '}
-        <Link href={'https://www.github.com/jf248/scrape-the-plate'}>here</Link>.
+        <Link href={'https://www.github.com/jf248/scrape-the-plate'}>here</Link>
+        .
       </Typography>
       <Typography variant={'body1'} paragraph>
         by <Link href={'https://www.github.com/jf248'}>Josh Freedman</Link>

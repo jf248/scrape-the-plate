@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Compose } from 'lib/react-powerplug';
-import { Modals } from 'lib/mui-components';
+import * as Enhanced from 'lib/mui-components';
 
 import { RecordForm } from 'controllers/record-form';
 import validate from './validate';
@@ -13,7 +13,7 @@ function Step2(props) {
 
   const renderFunc = (recordForm, modals) => {
     const { getInputProps, resetForm, getSubmitProps } = recordForm;
-    const { getModalProps, openModal } = modals;
+    const { getModalProps, onOpen: onOpenModal } = modals;
     return (
       <Step2Pres
         {...{
@@ -22,7 +22,7 @@ function Step2(props) {
           getSubmitProps,
           goBack,
           isCreate,
-          openModal,
+          onOpenModal,
           resetForm,
         }}
       />
@@ -43,7 +43,7 @@ function Step2(props) {
             meta: { onSuccess: { redirect: {}, snackbar: {} } },
           }}
         />,
-        <Modals />,
+        <Enhanced.ModalController />,
       ]}
       render={renderFunc}
     />

@@ -1,2 +1,1 @@
-const identity = x => x;
-export default identity;
+export const identity = x => x;

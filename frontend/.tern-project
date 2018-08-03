@@ -10,5 +10,5 @@
       "node": {},
       "webpack": {}
   },
-  "dontLoad": ["**/node_modules/!(react*|redux*)/**/*.js"]
+  "dontLoad": ["**/node_modules/!(react*|redux*|@material-ui*)/**/*.js"]
 }

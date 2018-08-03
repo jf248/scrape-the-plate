@@ -17,7 +17,7 @@ function TagsSectionPres(props) {
   const className = classNames(classes.root, classNameProp);
 
   return (
-    <Section className={className} {...rest}>
+    <Section title={'Tags'} className={className} {...rest}>
       <TagsField inputProps={inputProps} />
     </Section>
   );

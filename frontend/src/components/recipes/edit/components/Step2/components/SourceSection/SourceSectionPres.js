@@ -8,7 +8,7 @@ import {
   FlexShrink,
   Section,
 } from 'components/common';
-import BookTitleField from './BookTitleField';
+import BookField from './BookField';
 
 const styles = theme => ({
   marginRight: {
@@ -63,7 +63,7 @@ function SourceSection(props) {
         {type === 'book' && (
           <React.Fragment>
             <FlexShrink>
-              <BookTitleField
+              <BookField
                 className={classes.marginRight}
                 bookInputProps={bookInputProps}
               />

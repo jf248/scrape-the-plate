@@ -147,12 +147,15 @@ class AuthViewSet(viewsets.ViewSet):
         return Response(data)
 
 
-class TagViewSet(viewsets.ModelViewSet):
-    queryset = models.Tag.objects.all()
+class TagViewSet(CreateWithUserMixin, viewsets.ModelViewSet):
     serializer_class = serializers.TagSerializer
     pagination_class = pagination.CustomPagination
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           permissions.IsOwnerOrReadOnly,)
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.Tag.objects.filter(user=user)
 
 
 @api_view(['GET'])

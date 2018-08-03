@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AppFrame } from './Frame';
+import AppFrame from './AppFrame';
 
 Route.defaultProps = {
   frameProps: {},

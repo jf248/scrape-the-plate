@@ -32,7 +32,7 @@ function Step1Pres(props) {
     getModalProps,
     getRootProps,
     getSubmitProps,
-    openModal,
+    onOpenModal,
     scrapeDisabled,
     selectDomain,
     skip,
@@ -49,7 +49,7 @@ function Step1Pres(props) {
               {...getFocusProps({ refName: 'inputRef' })}
               {...getInputProps({
                 name: 'url',
-                openSitesModal: () => openModal('sites'),
+                onOpenModal,
                 focus,
               })}
             />
@@ -73,7 +73,7 @@ function Step1Pres(props) {
         </CardActions>
       </Card>
       <SitesDialog
-        {...getModalProps({ name: 'sites' })}
+        {...getModalProps()}
         onSelectDomain={selectDomain}
         sources={sources}
       />

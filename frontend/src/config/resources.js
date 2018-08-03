@@ -1,1 +1,1 @@
-export default ['recipes', 'sources', 'books', 'users'];
+export default ['recipes', 'sources', 'books', 'users', 'tags'];

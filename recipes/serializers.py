@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import transaction
+from django.db.models.fields.related import ManyToManyField
 from rest_framework import serializers
 from rest_framework.fields import CharField
 from rest_framework.utils import model_meta
@@ -125,15 +126,21 @@ class ModelValidateMixin(object):
         # Or:
             # Create a new instance using attrs
         instance = self.instance
-        pk_name = self.Meta.model._meta.pk.name
+        ModelClass = self.Meta.model
+        meta = ModelClass._meta
+        pk_name = meta.pk.name
+
         if instance is None and hasattr(attrs, pk_name):
             instance = self.Meta.model.objects.filter(
                 pk=attrs[pk_name]).first()
-        if instance:
-            for field_name, value in attrs.items():
+        if instance is None:
+            instance = ModelClass()
+
+        # Ignore, i.e. don't validate ManyToManyField fields
+        for field_name, value in attrs.items():
+            field = meta.get_field(field_name)
+            if not isinstance(field, ManyToManyField):
                 setattr(instance, field_name, value)
-        else:
-            instance = self.Meta.model(**attrs)
 
         # We catch any django ValidationErrors and raise drf ValidationError's
         # instead.
@@ -217,7 +224,6 @@ class ListField(CharField):
 class RecipeSerializer(CustomSerializer):
     # Overwrite the default ingredients field to use a nested serializer
     ingredients = IngredientSerializer(many=True, required=False)
-    tags = TagSerializer(many=True, required=False)
     preparation = ListField(allow_blank=True, required=False, style={
                             'base_template': 'textarea.html'})
 

@@ -43,6 +43,11 @@ function View(props) {
         title: 'Delete this recipe?',
         onConfirm: () => destroy({ id }),
       });
+    const onMoreButtonClick = () => {
+      if (!isLoggedIn) {
+        onOpenLoginModal();
+      }
+    };
 
     return (
       <ViewPres
@@ -52,7 +57,7 @@ function View(props) {
           onClickCopy,
           onClickDelete,
           onClickEdit,
-          onOpenLoginModal,
+          onMoreButtonClick,
           recipe,
         }}
       />

@@ -6,7 +6,7 @@
  * Copyright © 2008–2013 David Gouch. Licensed under the MIT License.
  */
 
-export default function toTitleCase(string) {
+export function toTitleCase(string) {
   var smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i;
   return (string || '')
     .toLowerCase()

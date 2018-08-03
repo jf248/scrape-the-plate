@@ -1,4 +1,4 @@
-const formatMins = mins => {
+export const formatMins = mins => {
   if (mins < 60) {
     return `${mins} min`;
   }
@@ -11,5 +11,3 @@ const formatMins = mins => {
 
   return `${hours} hr`;
 };
-
-export default formatMins;

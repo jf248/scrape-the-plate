@@ -2,37 +2,33 @@ import React from 'react';
 
 import { Compose } from 'lib/react-powerplug';
 import { RecordsMany } from 'lib/crud';
+import * as Enhanced from 'lib/mui-components';
 
-import { TAGS_DIALOG } from 'components/tags';
-import { Modal } from 'controllers/modal';
 import TagsFieldPres from './TagsFieldPres';
 
-function BookTitleField(props) {
+function TagsField(props) {
   const { inputProps, ...rest } = props;
-  const { value = [], error, touched, onChange, onBlur } = inputProps;
+  const { value: valueProp, error, touched, onChange, onBlur } = inputProps;
+
+  const value = valueProp ? valueProp : [];
 
   const renderFunc = (modal, recordsMany) => {
-    const { onOpen } = modal;
-    const { ids, data = [] } = recordsMany;
+    const { onOpen: onOpenModal, getModalProps } = modal;
+    const { data = [] } = recordsMany;
 
-    const tagNames = data
-      .filter(tag => value.includes(tag.id))
-      .map(tag => tag.name);
-
-    const onOpenDialog = () => onOpen({});
+    const tagNames = value ? value.map(id => data[id].name) : [];
 
     return (
       <TagsFieldPres
         {...{
-          value,
-          tagNames,
           error,
-          ids,
-          data,
-          onChange,
-          touched,
+          getModalProps,
           onBlur,
-          onOpenDialog,
+          onChange,
+          onOpenModal,
+          tagNames,
+          touched,
+          value,
           ...rest,
         }}
       />
@@ -43,7 +39,7 @@ function BookTitleField(props) {
     /* eslint-disable react/jsx-key */
     <Compose
       components={[
-        <Modal name={TAGS_DIALOG} />,
+        <Enhanced.ModalController />,
         <RecordsMany resource={'tags'} />,
       ]}
       render={renderFunc}
@@ -52,4 +48,4 @@ function BookTitleField(props) {
   );
 }
 
-export default BookTitleField;
+export default TagsField;

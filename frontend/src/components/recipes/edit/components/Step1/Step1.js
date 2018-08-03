@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Modals } from 'lib/mui-components';
+import * as Enhanced from 'lib/mui-components';
 import { Compose, Focus } from 'lib/react-powerplug';
 
 import Step1Pres from './Step1Pres';
@@ -21,7 +21,7 @@ function Step1(props) {
 
   const renderFunc = (focuser, modal) => {
     const { getFocusProps, focus } = focuser;
-    const { openModal, getModalProps } = modal;
+    const { onOpen: onOpenModal, getModalProps } = modal;
 
     return (
       <Step1Pres
@@ -32,7 +32,7 @@ function Step1(props) {
           getModalProps,
           getRootProps,
           getSubmitProps,
-          openModal,
+          onOpenModal,
           scrapeDisabled,
           selectDomain,
           skip,
@@ -43,7 +43,12 @@ function Step1(props) {
   };
 
   /* eslint-disable react/jsx-key */
-  return <Compose components={[<Focus />, <Modals />]} render={renderFunc} />;
+  return (
+    <Compose
+      components={[<Focus />, <Enhanced.ModalController />]}
+      render={renderFunc}
+    />
+  );
   /* eslint-enable react/jsx-key */
 }
 

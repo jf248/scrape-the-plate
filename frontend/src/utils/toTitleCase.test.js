@@ -1,4 +1,4 @@
-import { toTitleCase } from '.';
+import { toTitleCase } from './toTitleCase';
 
 describe('toTitleCase', () => {
   it('capitalises all words except small words', () => {

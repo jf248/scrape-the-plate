@@ -1,12 +1,16 @@
 import React from 'react';
 
-import { TextField } from 'lib/mui-components';
+import * as Enhanced from 'lib/mui-components';
+import * as utils from 'utils';
 
 Field.defaultProps = {
-  component: TextField,
+  component: Enhanced.TextField,
 };
 
-function Field({ error, touched, component: Component, ...rest }) {
+function Field({ error: errorProp, touched, component: Component, ...rest }) {
+  // Check error is not an object
+  const error = utils.isObject(errorProp) ? undefined : errorProp;
+
   return (
     <Component
       helperText={touched && error}

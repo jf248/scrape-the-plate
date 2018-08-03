@@ -2,8 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 
-import { Field } from 'components/common';
-import { TagsDialog } from 'components/tags';
+import * as Common from 'components/common';
+import * as Tags from 'components/tags';
 
 const styles = () => ({
   root: {},
@@ -14,43 +14,49 @@ TagsFieldPres.defaultProps = {
   tagNames: [],
 };
 
-function TagsFieldPres(props) {
-  const {
-    className: classNameProp,
-    classes,
-    error,
-    onBlur,
-    onChange,
-    onOpenDialog,
-    tagNames,
-    touched,
-    value,
-    ...rest
-  } = props;
-
+function TagsFieldPres({
+  className: classNameProp,
+  classes,
+  error,
+  onBlur,
+  onChange,
+  onOpenModal,
+  tagNames,
+  touched,
+  value,
+  getModalProps,
+  ...rest
+}) {
   const className = classNames(classes.root, classNameProp);
 
   // TODO changed to a chipinput
   return (
     <React.Fragment>
-      <Field
+      <Common.Field
         {...{
-          label: 'Title',
-          touched,
-          error,
           className,
-          onClick: onOpenDialog,
-          onKeyDown: onOpenDialog,
+          component: Common.ChipField,
+          error,
+          fullWidth: true,
+          label: 'Tags',
           onBlur,
-          value: tagNames.join(', '),
+          onClick: onOpenModal,
+          onKeyDown: onOpenModal,
+          touched,
+          value: tagNames,
           ...rest,
         }}
       />
-      <TagsDialog
-        {...{
+      <Common.ResourceDialog
+        {...getModalProps({
+          editDialogContentComponent: Tags.EditContent,
+          editDialogProps: Tags.editDialogProps,
+          multiple: true,
           onChange,
+          resource: 'tags',
+          stringField: 'name',
           value,
-        }}
+        })}
       />
     </React.Fragment>
   );
