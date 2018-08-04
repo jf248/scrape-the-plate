@@ -2,6 +2,7 @@ import React from 'react';
 import { ButtonBase, Card, Typography, withStyles } from '@material-ui/core';
 
 import { Source, Time, SubheadingItem } from 'components/common';
+import Tags from './Tags';
 
 const styles = theme => ({
   root: {
@@ -27,9 +28,8 @@ const styles = theme => ({
     height: '100%',
     padding: '16px 24px 0 24px',
   },
-  description: {},
   title: {
-    marginBottom: '24px',
+    marginBottom: '16px',
   },
   oneLine: {
     overflow: 'hidden',
@@ -43,10 +43,8 @@ ListItem.defaultProps = {
   recipe: {},
 };
 
-function ListItem(props) {
-  const { classes, recipe, onClick } = props;
-
-  const { title, prep_time, cook_time, notes, preparation } = recipe;
+function ListItem({ classes, recipe, onClick }) {
+  const { cook_time, notes, prep_time, preparation, tags, title } = recipe;
 
   return (
     <Card className={classes.root}>
@@ -81,8 +79,11 @@ function ListItem(props) {
                 </SubheadingItem>
               )}
             </Typography>
+            <Typography variant={'caption'} className={classes.oneLine}>
+              <Tags {...{ tags }} />
+            </Typography>
           </div>
-          <Typography variant={'body1'} className={classes.description}>
+          <Typography variant={'body1'}>
             {notes || preparation.join('\n')}
           </Typography>
         </div>
