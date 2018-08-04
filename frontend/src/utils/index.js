@@ -5,3 +5,4 @@ export { splitLines } from './splitLines';
 export { cursorToEnd } from './cursorToEnd';
 export { formatMins } from './formatMins';
 export { isObject } from './isObject';
+export { deepEqual } from './deepEqual';

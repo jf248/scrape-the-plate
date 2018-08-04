@@ -12,6 +12,7 @@ import {
   Preparation,
   Subheading,
   Title,
+  Tags,
 } from './components';
 
 const styles = theme => ({
@@ -38,7 +39,14 @@ function ViewPres(props) {
     onMoreButtonClick,
     recipe,
   } = props;
-  const { title, ingredients, preparation, prep_time, cook_time } = recipe;
+  const {
+    tags,
+    title,
+    ingredients,
+    preparation,
+    prep_time,
+    cook_time,
+  } = recipe;
 
   return (
     <AppContent>
@@ -76,7 +84,7 @@ function ViewPres(props) {
           </SubheadingItem>
         )}
       </Subheading>
-
+      <Tags {...{ tags }} />
       <Divider className={classes.divider} />
       <Content
         ingredients={<Ingredients ingredients={ingredients} />}

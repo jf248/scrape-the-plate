@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { renderProps } from 'lib/react-powerplug';
 
 import { getList } from './actions';
+import * as utils from 'utils';
 
 class RecordsMany extends React.Component {
   componentDidMount() {
@@ -16,7 +17,8 @@ class RecordsMany extends React.Component {
     const propsToCheck = ['resource'];
     if (
       !lazy &&
-      propsToCheck.some(prop => prevProps[prop] !== this.props[prop])
+      (propsToCheck.some(prop => prevProps[prop] !== this.props[prop]) ||
+        !utils.deepEqual(prevProps.params, params))
     ) {
       goFetch(params);
     }
@@ -49,7 +51,7 @@ const mapStateToProps = (state, ownProps) => {
     ids: resource && resource.list.ids,
     total: resource && resource.list.total,
     data: resource && resource.data,
-    params: resource && resource.list.params,
+    params: { ...(resource && resource.list.params), ...ownProps.params },
     isLoading: state.crud.loading > 0,
   };
 };

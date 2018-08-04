@@ -4,3 +4,4 @@ export { default as Title } from './Title';
 export { default as Content } from './Content';
 export { default as Ingredients } from './Ingredients';
 export { default as Preparation } from './Preparation';
+export { default as Tags } from './Tags';
