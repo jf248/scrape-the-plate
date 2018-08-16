@@ -40,6 +40,7 @@ function Filter(props) {
         inputProps={{
           onKeyPress: handleKeyPress,
         }}
+        defaultValue={filter.search}
       />
     </Component>
   );
