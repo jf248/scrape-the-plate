@@ -1,4 +1,12 @@
 # Burn list
+* Delete not going to list page
+* FAB not floating
+* View doesn't show notes
+* View prints fab button and more button
+* List search isn't retained when you go back
+
+
+* Filter for just mine, all
 * submitOnEnter
 * Performance: make some components pure?
 * Add link to users, takes to recipes filter by that user
