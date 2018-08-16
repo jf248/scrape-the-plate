@@ -1,5 +1,4 @@
 # Burn list
-* Delete not going to list page
 * FAB not floating
 * View doesn't show notes
 * View prints fab button and more button

@@ -46,6 +46,10 @@ ListItem.defaultProps = {
 function ListItem({ classes, recipe, onClick }) {
   const { cook_time, notes, prep_time, preparation, tags, title } = recipe;
 
+  if (!recipe) {
+    return null;
+  }
+
   return (
     <Card className={classes.root}>
       <ButtonBase className={classes.button} onClick={onClick}>
@@ -84,7 +88,7 @@ function ListItem({ classes, recipe, onClick }) {
             </Typography>
           </div>
           <Typography variant={'body1'}>
-            {notes || preparation.join('\n')}
+            {notes || (preparation && preparation.join('\n'))}
           </Typography>
         </div>
       </ButtonBase>
