@@ -6,9 +6,10 @@ import { ModeEdit, Add, InsertDriveFile } from '@material-ui/icons';
 
 const styles = theme => ({
   wrapper: {
-    position: 'absolute',
-    bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2,
+    position: 'fixed',
+    bottom: '0%',
+    right: '100px',
+    paddingBottom: '32px',
   },
   fab: {},
 });

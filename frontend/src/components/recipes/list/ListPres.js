@@ -35,7 +35,7 @@ class ListPres extends React.PureComponent {
       total,
     } = this.props;
 
-    const tooltipTitle = 'Scrape a recipe for a URL. Or create your own.';
+    const tooltipTitle = 'Scrape a recipe from a URL. Or create your own.';
     return (
       <React.Fragment>
         <AppSearchBar>

@@ -1,5 +1,4 @@
 # Burn list
-* FAB not floating
 * View doesn't show notes
 * View prints fab button and more button
 * List search isn't retained when you go back

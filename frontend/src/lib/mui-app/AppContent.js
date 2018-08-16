@@ -8,7 +8,7 @@ const styles = theme => ({
     display: 'flex',
     flexDirection: 'column',
     flex: '1 1 100%',
-    margin: '0 auto 64px auto',
+    margin: '0 auto 104px auto',
     width: '100%',
     padding: '32px 24px 0px 24px',
     [theme.breakpoints.up('md')]: {
