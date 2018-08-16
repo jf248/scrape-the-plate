@@ -14,6 +14,7 @@ function Content(props) {
     className: classNameProp,
     ingredients,
     preparation,
+    notes,
     ...rest
   } = props;
 
@@ -21,6 +22,11 @@ function Content(props) {
 
   return (
     <Grid className={className} container spacing={32} {...rest}>
+      {notes && (
+        <Grid item sm={12}>
+          <Typography variant={'body1'}>{notes}</Typography>
+        </Grid>
+      )}
       <Grid item xs={12} sm={4}>
         <Typography variant={'title'} paragraph>
           Ingredients

@@ -14,6 +14,7 @@ function SourcePres(props) {
   return (
     <React.Fragment>
       {!isOwner && user && `${user.first_name} ${user.last_name.slice(0, 1)}`}
+      {isOwner && !source && !book && 'My own'}
       {source && (
         <React.Fragment>
           {!isOwner && ' via '}

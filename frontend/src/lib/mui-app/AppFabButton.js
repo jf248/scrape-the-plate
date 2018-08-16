@@ -10,6 +10,9 @@ const styles = theme => ({
     bottom: '0%',
     right: '100px',
     paddingBottom: '32px',
+    '@media print': {
+      display: 'none',
+    },
   },
   fab: {},
 });

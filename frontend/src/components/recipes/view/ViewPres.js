@@ -22,6 +22,11 @@ const styles = theme => ({
   label: {
     color: theme.typography.subheading.color,
   },
+  noPrint: {
+    '@media print': {
+      display: 'none',
+    },
+  },
 });
 
 ViewPres.defaultProps = {
@@ -46,6 +51,7 @@ function ViewPres(props) {
     preparation,
     prep_time,
     cook_time,
+    notes,
   } = recipe;
 
   return (
@@ -53,7 +59,7 @@ function ViewPres(props) {
       <Title
         title={title}
         moreButton={
-          <MoreButton onClick={onMoreButtonClick}>
+          <MoreButton onClick={onMoreButtonClick} className={classes.noPrint}>
             {isOwner && <MenuItem onClick={onClickEdit}>{'Edit'}</MenuItem>}
             {isOwner && <MenuItem onClick={onClickDelete}>{'Delete'}</MenuItem>}
             {!isOwner && <MenuItem onClick={onClickCopy}>{'Copy'}</MenuItem>}
@@ -62,14 +68,14 @@ function ViewPres(props) {
       />
       <Subheading>
         <SubheadingItem
-          label={'Source'}
+          label={'Source:'}
           labelProps={{ className: classes.label }}
         >
-          <Source {...{ recipe: recipe, isOwner, includePage: true }} />
+          <Source {...{ recipe, isOwner, includePage: true }} />
         </SubheadingItem>
         {prep_time && (
           <SubheadingItem
-            label={'Prep'}
+            label={'Prep:'}
             labelProps={{ className: classes.label }}
           >
             <Time time={prep_time} />
@@ -77,7 +83,7 @@ function ViewPres(props) {
         )}
         {cook_time && (
           <SubheadingItem
-            label={'Cook'}
+            label={'Cook:'}
             labelProps={{ className: classes.label }}
           >
             <Time time={cook_time} />
@@ -87,6 +93,7 @@ function ViewPres(props) {
       <Tags {...{ tags }} />
       <Divider className={classes.divider} />
       <Content
+        notes={notes}
         ingredients={<Ingredients ingredients={ingredients} />}
         preparation={<Preparation preparation={preparation} />}
       />

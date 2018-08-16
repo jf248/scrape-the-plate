@@ -18,6 +18,7 @@ function Subheading(props) {
       className={className}
       variant={'subheading'}
       color={'textSecondary'}
+      paragraph
       {...rest}
     >
       {children}
