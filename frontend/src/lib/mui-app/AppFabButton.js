@@ -5,16 +5,30 @@ import { Link } from 'react-router-dom';
 import { ModeEdit, Add, InsertDriveFile } from '@material-ui/icons';
 
 const styles = theme => ({
-  wrapper: {
+  fixedWrapper: {
     position: 'fixed',
     bottom: '0%',
-    right: '100px',
-    paddingBottom: '32px',
+    right: '0%',
+    width: '100%',
+    display: 'flex',
+  },
+  centerWrapper: {
+    flex: '1 1 100%',
+    margin: '0 auto 32px auto',
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      maxWidth: '996px',
+    },
+    padding: '0px 24px 0px 24px',
+  },
+  floatWrapper: {
+    float: 'right',
+  },
+  fab: {
     '@media print': {
       display: 'none',
     },
   },
-  fab: {},
 });
 
 AppFabButton.defaultProps = {
@@ -69,11 +83,15 @@ function AppFabButton(props) {
   };
 
   return (
-    <Tooltip {...tooltipProps}>
-      <div className={classes.wrapper}>
-        <Button {...buttonProps}>{variant.icon}</Button>
+    <div className={classes.fixedWrapper}>
+      <div className={classes.centerWrapper}>
+        <div className={classes.floatWrapper}>
+          <Tooltip {...tooltipProps}>
+            <Button {...buttonProps}>{variant.icon}</Button>
+          </Tooltip>
+        </div>
       </div>
-    </Tooltip>
+    </div>
   );
 }
 
