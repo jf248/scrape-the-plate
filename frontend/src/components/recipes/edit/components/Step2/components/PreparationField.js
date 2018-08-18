@@ -3,7 +3,7 @@ import PreparationStep from './PreparationStep';
 import { ListField } from 'lib/react-listfield';
 
 function PreparationField(props) {
-  const { value, onChange } = props;
+  const { value, onChange, onBlur } = props;
 
   /* eslint-disable react/jsx-key */
   const renderFunc = ({ items, getItemProps }) => {
@@ -17,6 +17,7 @@ function PreparationField(props) {
     <ListField
       value={value}
       onChange={onChange}
+      onBlur={onBlur}
       blankItem={''}
       render={renderFunc}
     />

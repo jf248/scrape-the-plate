@@ -27,6 +27,16 @@ export default values => {
       break;
   }
 
+  if (Array.isArray(values['ingredients'])) {
+    newValues = {
+      ...newValues,
+      ingredients: values['ingredients'].map(ingredient => ({
+        ...ingredient,
+        text: ingredient.text.trim(),
+      })),
+    };
+  }
+
   return {
     public: true,
     ...newValues,

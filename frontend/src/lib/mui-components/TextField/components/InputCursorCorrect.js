@@ -6,7 +6,7 @@ import React from 'react';
  * @see: https://stackoverflow.com/a/35295650
  */
 
-class Input extends React.Component {
+class InputCursorCorrect extends React.Component {
   constructor(props) {
     super(props);
     this.handleRef = this.handleRef.bind(this);
@@ -18,22 +18,40 @@ class Input extends React.Component {
     this.textInput = node;
   }
 
-  componentDidUpdate() {
-    if (this.props.value === undefined || this.props.type === 'number') {
+  componentDidMount() {
+    // Not controlled, nothing to update
+    if (this.props.value === undefined) {
       return;
     }
+    // Set value of the input to props.value
     var node = this.textInput;
-    var oldLength = node.value.length;
-    var oldIdx = node.selectionStart;
     node.value = this.props.value;
-    var newIdx = Math.max(0, node.value.length - oldLength + oldIdx);
-    node.selectionStart = node.selectionEnd = newIdx;
+  }
+
+  componentDidUpdate() {
+    // Not controlled, nothing to update
+    if (this.props.value === undefined) {
+      return;
+    }
+
+    // Set value of the input to props.value
+    var node = this.textInput;
+    node.value = this.props.value;
+
+    // If not 'number' type, set the selectionStart and selectionEnd
+    if (!this.props.type === 'number') {
+      var oldLength = node.value.length;
+      var oldIdx = node.selectionStart;
+      var newIdx = Math.max(0, node.value.length - oldLength + oldIdx);
+      node.selectionStart = node.selectionEnd = newIdx;
+    }
   }
 
   render() {
-    const { inputRef, ...rest } = this.props; // eslint-disable-line no-unused-vars
-    return <input {...rest} ref={this.handleRef} value={undefined} />;
+    const { inputRef, multiline, ...rest } = this.props; // eslint-disable-line no-unused-vars
+    const Component = multiline ? 'textarea' : 'input';
+    return <Component {...rest} ref={this.handleRef} value={undefined} />;
   }
 }
 
-export default Input;
+export default InputCursorCorrect;

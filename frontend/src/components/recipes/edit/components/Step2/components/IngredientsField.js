@@ -3,7 +3,7 @@ import Ingredient from './Ingredient';
 import { ListField } from 'lib/react-listfield';
 
 function IngredientsField(props) {
-  const { value, onChange } = props;
+  const { value, onChange, onBlur } = props;
 
   const renderFunc = ({ items, getItemProps }) => {
     /* eslint-disable react/jsx-key */
@@ -23,6 +23,7 @@ function IngredientsField(props) {
       value={value}
       blankItem={{ text: '' }}
       onChange={onChange}
+      onBlur={onBlur}
       render={renderFunc}
     />
   );

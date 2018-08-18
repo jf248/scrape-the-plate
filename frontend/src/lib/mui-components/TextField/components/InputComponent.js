@@ -29,17 +29,18 @@ InputComponent.defaultProps = {
 
 function InputComponent(props) {
   const {
-    classes,
     className,
+    classes,
+    endAdornment,
     inputRef,
     minInputWidth,
+    multiline,
     typeAheadProps: {
       className: typeAheadClassName,
       ...typeAheadPropsProp
     } = {},
     typeAheadText,
     startAdornment,
-    endAdornment,
     ...rest
   } = props;
 
@@ -70,6 +71,7 @@ function InputComponent(props) {
             inputRef={inputRef}
             className={classnames(className, classes.input)}
             style={{ minWidth: minInputWidth }}
+            multiline={multiline}
             {...rest}
           />
         </div>

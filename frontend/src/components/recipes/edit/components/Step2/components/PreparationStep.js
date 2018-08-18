@@ -15,9 +15,6 @@ const styles = theme => {
     content: {
       flexGrow: 1,
     },
-    input: {
-      overflow: 'hidden',
-    },
     textField: {
       flex: '1 1 100%',
     },
@@ -73,6 +70,7 @@ class PreparationStep extends Component {
     const {
       index,
       item,
+      onBlur,
       onChange,
       onRemove,
       classes,
@@ -88,6 +86,8 @@ class PreparationStep extends Component {
     const handleBlur = event => {
       if (!event.target.value) {
         onRemove();
+      } else {
+        onBlur();
       }
     };
 
@@ -124,9 +124,9 @@ class PreparationStep extends Component {
             className={classes.textField}
             fullWidth
             InputProps={{ disableUnderline: true }}
-            inputProps={{ className: classes.input }}
             inputRef={x => (this.input = x)}
             multiline
+            rows={2}
             onBlur={handleBlur}
             onChange={handleTextChange}
             onKeyDown={handleKeyDown}

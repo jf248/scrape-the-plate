@@ -35,6 +35,7 @@ function TextField(props) {
     inputProps: inputPropsProp,
     InputProps: { startAdornment, endAdornment, ...InputPropsProp },
     InputLabelProps: InputLabelPropsProp,
+    multiline,
     ...rest
   } = props;
 
@@ -52,6 +53,7 @@ function TextField(props) {
   const inputProps = {
     startAdornment,
     endAdornment,
+    multiline,
     typeAheadText,
     typeAheadProps,
     ...inputPropsProp,
@@ -63,6 +65,7 @@ function TextField(props) {
         InputLabelProps,
         InputProps,
         inputProps,
+        multiline,
         ...rest,
       }}
     />

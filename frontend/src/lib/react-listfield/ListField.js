@@ -6,7 +6,7 @@ import { array } from 'lib/immutably';
 ListField.defaultProps = {};
 
 function ListField(props) {
-  const { defaultValue, value, onChange, blankItem } = props;
+  const { defaultValue, value, onChange, blankItem, onBlur } = props;
 
   const renderFunc = ({ state: { value }, setState }) => {
     const handleRemove = index => () => {
@@ -44,6 +44,7 @@ function ListField(props) {
         item,
         onChange: callAll(onChange, handleChange(index)),
         onRemove: callAll(onRemove, handleRemove(index)),
+        onBlur: onBlur,
         last: index + 1 === items.length,
         orphan: items.length === 1,
         ...rest,

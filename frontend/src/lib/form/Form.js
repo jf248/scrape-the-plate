@@ -30,8 +30,10 @@ class Form extends Component {
     apiErrors: undefined,
     initialValues: {},
     normalize: x => x,
+    normalizeOnChange: false,
+    normalizeOnBlur: true,
     validate: () => ({}),
-    validateOnChange: true,
+    validateOnChange: false,
     validateOnBlur: true,
   };
 
@@ -105,9 +107,9 @@ class Form extends Component {
   };
 
   setValues = values => {
-    const { normalize, validateOnChange } = this.props;
+    const { normalize } = this.props;
     this._setFieldState('values', values, normalize);
-    validateOnChange && this.runValidation();
+    this.runValidation();
     this.removeApiErrors(Object.keys(values));
   };
 
@@ -118,9 +120,11 @@ class Form extends Component {
   };
 
   setTouched = touched => {
+    const { normalize, normalizeOnBlur, validateOnBlur } = this.props;
     this._setFieldState('touched', touched);
     this.setState({ isPristine: false });
-    this.props.validateOnBlur && this.runValidation();
+    validateOnBlur && this.runValidation();
+    normalizeOnBlur && this._setFieldState('values', {}, normalize);
   };
 
   // We know all the fields, so we changed touched to true
@@ -149,7 +153,14 @@ class Form extends Component {
   };
 
   handleChange = field => eventOrValue => {
-    this.setValues({ [field]: getValue(eventOrValue) });
+    const { normalizeOnChange, normalize, validateOnChange } = this.props;
+    this._setFieldState(
+      'values',
+      { [field]: getValue(eventOrValue) },
+      normalizeOnChange ? normalize : x => x
+    );
+    validateOnChange && this.runValidation();
+    this.removeApiErrors([field]);
   };
 
   handleBlur = field => () => {
@@ -157,9 +168,14 @@ class Form extends Component {
   };
 
   handleSubmit = (values, bag) => {
-    const { onSubmit } = this.props;
+    const { onSubmit, normalize } = this.props;
     if (onSubmit) {
-      return onSubmit(values, bag);
+      return this.runValidation().then(() => {
+        if (this.state.isValid) {
+          onSubmit(normalize(values), bag);
+        }
+      });
+      //return onSubmit(normalize(values), bag);
     } else {
       console.warn('Form: No onSubmit prop'); // eslint-disable-line no-console
     }

@@ -12,10 +12,6 @@ const styles = theme => {
   };
 
   return {
-    input: {
-      flexGrow: 1,
-      overflow: 'hidden',
-    },
     textField: {
       flex: '1 1 auto',
     },
@@ -63,7 +59,15 @@ class Ingredient extends Component {
   };
 
   render() {
-    const { item, blankItem, onChange, onRemove, classes, orphan } = this.props;
+    const {
+      item,
+      blankItem,
+      onChange,
+      onRemove,
+      onBlur,
+      classes,
+      orphan,
+    } = this.props;
 
     const handleTextChange = event => {
       if (event.target.value === '') {
@@ -79,6 +83,8 @@ class Ingredient extends Component {
     const handleBlur = event => {
       if (!event.target.value) {
         onRemove();
+      } else {
+        onBlur();
       }
     };
 
@@ -109,9 +115,9 @@ class Ingredient extends Component {
         <Field
           InputProps={{ disableUnderline: true }}
           className={classes.textField}
-          inputProps={{ className: classes.input }}
           inputRef={x => (this.input = x)}
           multiline
+          rows={1}
           onBlur={handleBlur}
           onChange={handleTextChange}
           onKeyDown={handleKeyDown}

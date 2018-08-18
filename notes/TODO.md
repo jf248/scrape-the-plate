@@ -1,5 +1,5 @@
 # Burn list
-* List search isn't retained when you go back
+* Title is React App
 
 
 * Filter for just mine, all
