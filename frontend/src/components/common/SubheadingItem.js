@@ -26,7 +26,7 @@ function SubheadingItem(props) {
 
   return (
     <WithSeparator className={className} {...rest}>
-      <span {...labelProps}>{`${label} `}</span>
+      {label && <span {...labelProps}>{`${label} `}</span>}
       {children}
     </WithSeparator>
   );

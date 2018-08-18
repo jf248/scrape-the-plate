@@ -29,7 +29,8 @@ const styles = theme => ({
     padding: '16px 24px 0 24px',
   },
   title: {
-    marginBottom: '16px',
+    marginBottom: '8px',
+    height: '72px',
   },
   oneLine: {
     overflow: 'hidden',

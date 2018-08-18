@@ -1,6 +1,8 @@
 import React from 'react';
 import * as Mui from '@material-ui/core';
 
+import * as Common from 'components/common';
+
 const styles = theme => ({
   chip: {
     marginBottom: theme.spacing.unit,
@@ -13,9 +15,11 @@ TagsPres.defaultProps = {
 };
 
 function TagsPres({ classes, tagNames }) {
-  return tagNames.length > 0 ? (
-    <span>{`Tags: ${tagNames.join(', ')}`}</span>
-  ) : null;
+  return tagNames.map(tagName => (
+    <Common.SubheadingItem halfMargin key={tagName}>
+      {tagName}
+    </Common.SubheadingItem>
+  ));
 }
 
 export default Mui.withStyles(styles)(TagsPres);
