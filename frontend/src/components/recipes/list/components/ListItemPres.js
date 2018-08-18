@@ -6,10 +6,12 @@ import Tags from './Tags';
 
 const styles = theme => ({
   root: {
+    flex: '0 0 auto',
+    margin: theme.spacing.unit,
     display: 'flex',
     flexFlow: 'column nowrap',
     height: '150px',
-    maxWidth: '300px',
+    width: '300px',
   },
   button: {
     display: 'block',

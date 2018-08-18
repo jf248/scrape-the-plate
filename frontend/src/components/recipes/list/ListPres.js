@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Grid, Hidden, Tooltip, withStyles } from '@material-ui/core';
+import { Button, Hidden, Tooltip, withStyles } from '@material-ui/core';
 import { AddCircle } from '@material-ui/icons';
 
 import { AppContent, AppSearchBar, AppFabButton } from 'lib/mui-app';
@@ -9,7 +9,6 @@ import { FlexContainer, FlexGrow, FlexShrink } from 'components/common';
 
 const styles = theme => ({
   list: {
-    padding: theme.spacing.unit,
     display: 'flex',
     flexWrap: 'wrap',
   },
@@ -22,6 +21,10 @@ const styles = theme => ({
 });
 
 class ListPres extends React.PureComponent {
+  static defaultProps = {
+    ids: [],
+  };
+
   render() {
     const {
       classes,
@@ -60,16 +63,11 @@ class ListPres extends React.PureComponent {
           </FlexContainer>
         </AppSearchBar>
         <AppContent className={classes.content}>
-          {ids && (
-            <Grid container spacing={16}>
-              {ids.map(id => (
-                <Grid item xs={12} sm={6} md={4} key={id}>
-                  <ListItem {...{ recipe: data[id] }} />
-                </Grid>
-              ))}
-            </Grid>
-          )}
-          <div className={classes.list} />
+          <div className={classes.list}>
+            {ids.map(id => (
+              <ListItem {...{ recipe: data[id], key: id }} />
+            ))}
+          </div>
           <Pagination
             countPerPage={ids.length}
             count={total}
