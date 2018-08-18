@@ -1,7 +1,4 @@
 # Burn list
-* Title is React App
-
-
 * Filter for just mine, all
 * submitOnEnter
 * Performance: make some components pure?
