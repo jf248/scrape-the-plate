@@ -1,20 +1,24 @@
 import React from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
+import { Switch } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 
 import { store, history } from './store';
-import { Switch as ColdSwitch } from 'lib/mui-app';
-import { routes, drawer } from 'config';
-import { Route } from 'components/frame';
+import { routes } from 'config';
+import { Route as ColdRoute } from 'components/frame';
 
-const Switch = hot(module)(ColdSwitch);
+const Route = hot(module)(ColdRoute);
 
 function App() {
   return (
     <ReduxProvider store={store}>
       <ConnectedRouter history={history}>
-        <Switch {...{ routes, RouteComponent: Route, drawer }} />
+        <Switch>
+          {routes.map(route => (
+            <Route {...route} />
+          ))}
+        </Switch>
       </ConnectedRouter>
     </ReduxProvider>
   );

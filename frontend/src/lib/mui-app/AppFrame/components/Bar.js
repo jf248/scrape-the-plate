@@ -26,16 +26,7 @@ const styles = {
 AppBar.defaultProps = {};
 
 function AppBar(props) {
-  const {
-    classes,
-    drawerToggle,
-    title,
-    ActionsComponent: ActionsComponentProp,
-    MiddleComponent: MiddleComponentProp,
-  } = props;
-
-  const ActionsComponent = ActionsComponentProp || (() => <div />);
-  const MiddleComponent = MiddleComponentProp || (() => <div />);
+  const { classes, drawerToggle, middle, right, title } = props;
 
   return (
     <MuiAppBar position="fixed" className={classes.root}>
@@ -51,10 +42,8 @@ function AppBar(props) {
         <Typography variant="title" color="inherit" className={classes.flex}>
           {title}
         </Typography>
-        <div className={classes.flex}>
-          <MiddleComponent />
-        </div>
-        <ActionsComponent />
+        <div className={classes.flex}>{middle}</div>
+        {right}
       </Toolbar>
     </MuiAppBar>
   );

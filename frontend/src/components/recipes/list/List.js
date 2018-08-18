@@ -2,8 +2,8 @@ import React from 'react';
 
 import { Compose, renderProps } from 'lib/react-powerplug';
 import { RecordsMany } from 'lib/crud';
+import { Auth } from 'lib/auth';
 
-import { RoutePush } from 'controllers/route-push';
 import ListPres from './ListPres';
 
 // This is an ugly hack to force a goFetch call to referesh the
@@ -21,17 +21,15 @@ class Updater extends React.Component {
 }
 
 function List() {
-  const renderFunc = ({ push }, recordsMany) => {
+  const renderFunc = (auth, recordsMany) => {
     const { ids, data, total, params, goFetch } = recordsMany;
     const setPage = page => goFetch({ page });
     const setFilter = filter => goFetch({ filter });
-    const onAddClick = () => push('/recipes/create');
     return (
       <ListPres
         {...{
           data,
           ids,
-          onAddClick,
           params,
           setFilter,
           setPage,
@@ -45,9 +43,9 @@ function List() {
     /* eslint-disable react/jsx-key */
     <Compose
       components={[
-        <RoutePush />,
+        <Auth />,
         <RecordsMany resource={'recipes'} />,
-        (render, { goFetch }, { isLoggedIn }) => (
+        (render, { isLoggedIn }, { goFetch }) => (
           <Updater {...{ goFetch, isLoggedIn, render }} />
         ),
       ]}

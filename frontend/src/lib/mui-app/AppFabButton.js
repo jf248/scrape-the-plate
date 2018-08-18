@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Button, Tooltip, withStyles } from '@material-ui/core';
+import { Button, withStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { ModeEdit, Add, InsertDriveFile } from '@material-ui/icons';
 
@@ -33,7 +33,6 @@ const styles = theme => ({
 
 AppFabButton.defaultProps = {
   buttonProps: {},
-  tooltipProps: {},
   variant: 'edit',
 };
 
@@ -43,38 +42,32 @@ function AppFabButton(props) {
     classes,
     onClick,
     to,
-    tooltipProps: tooltipPropsProp,
     variant: variantProp,
+    extendedText,
   } = props;
 
   const variants = {
     edit: {
       title: 'Edit',
-      icon: <ModeEdit />,
+      icon: ModeEdit,
     },
     add: {
       title: 'New',
-      icon: <Add />,
+      icon: Add,
     },
     copy: {
       title: 'Copy',
-      icon: <InsertDriveFile />,
+      icon: InsertDriveFile,
     },
   };
 
   const variant = variants[variantProp];
-
-  const tooltipProps = {
-    id: 'tooltip-fab',
-    title: variant.title,
-    placement: 'top',
-    ...tooltipPropsProp,
-  };
+  const Icon = variant.icon;
 
   const component = to && (props => <Link to={to} {...props} />);
 
   const buttonProps = {
-    variant: 'fab',
+    variant: extendedText ? 'extendedFab' : 'fab',
     color: 'secondary',
     component,
     onClick,
@@ -86,9 +79,10 @@ function AppFabButton(props) {
     <div className={classes.fixedWrapper}>
       <div className={classes.centerWrapper}>
         <div className={classes.floatWrapper}>
-          <Tooltip {...tooltipProps}>
-            <Button {...buttonProps}>{variant.icon}</Button>
-          </Tooltip>
+          <Button {...buttonProps}>
+            <Icon />
+            {extendedText}
+          </Button>
         </div>
       </div>
     </div>

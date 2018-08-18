@@ -22,12 +22,12 @@ const styles = () => ({
 
 function AppFrame(props) {
   const {
-    ActionsComponent,
+    barMiddle,
+    barRight,
     children,
     classes,
-    drawerConfig,
+    drawerContent,
     title,
-    MiddleComponent,
   } = props;
 
   const renderFunc = ({ state, setState }) => {
@@ -36,16 +36,14 @@ function AppFrame(props) {
     return (
       <div className={classes.root}>
         <Bar
-          ActionsComponent={ActionsComponent}
-          MiddleComponent={MiddleComponent}
+          middle={barMiddle}
+          right={barRight}
           drawerToggle={toggle}
           title={title}
         />
-        <Drawer
-          onToggle={toggle}
-          open={state.open}
-          drawerConfig={drawerConfig}
-        />
+        <Drawer onToggle={toggle} open={state.open}>
+          {drawerContent}
+        </Drawer>
         <div className={classes.belowAppBar}>{children}</div>
       </div>
     );

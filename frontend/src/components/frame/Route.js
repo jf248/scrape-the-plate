@@ -9,6 +9,7 @@ import {
   Snackbar,
   CircularProgress,
   ComponentOr404,
+  DrawerContent,
 } from './components';
 import { LOGIN_MODAL, CONFIRMATION_MODAL } from './names';
 
@@ -17,14 +18,14 @@ Route.defaultProps = {
 };
 
 function Route(props) {
-  const { component, title, computedMatch: match, drawer, ...rest } = props;
+  const { component, title, computedMatch: match, ...rest } = props;
 
   return (
     <AppFrame
       title={title}
-      drawerConfig={drawer}
-      ActionsComponent={LoginButton}
-      MiddleComponent={CircularProgress}
+      drawerContent={<DrawerContent />}
+      barMiddle={<CircularProgress />}
+      barRight={<LoginButton />}
     >
       <ComponentOr404 component={component} match={match} {...rest} />
       <LoginModal name={LOGIN_MODAL} />
