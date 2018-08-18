@@ -72,16 +72,6 @@ function ListItem({ classes, recipe, onClick }) {
                   <Time time={cook_time} />
                 </SubheadingItem>
               )}
-              {prep_time && (
-                <SubheadingItem halfMargin label={'Prep'}>
-                  <Time time={prep_time} />
-                </SubheadingItem>
-              )}
-              {cook_time && (
-                <SubheadingItem halfMargin label={'Cook'}>
-                  <Time time={cook_time} />
-                </SubheadingItem>
-              )}
             </Typography>
             <Typography variant={'caption'} className={classes.oneLine}>
               <Tags {...{ tags }} />
