@@ -52,6 +52,7 @@ function ViewPres(props) {
     prep_time,
     cook_time,
     notes,
+    serves,
   } = recipe;
 
   return (
@@ -87,6 +88,14 @@ function ViewPres(props) {
             labelProps={{ className: classes.label }}
           >
             <Time time={cook_time} />
+          </SubheadingItem>
+        )}
+        {serves && (
+          <SubheadingItem
+            label={'Serves:'}
+            labelProps={{ className: classes.label }}
+          >
+            {serves}
           </SubheadingItem>
         )}
       </Subheading>
