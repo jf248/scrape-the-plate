@@ -3,8 +3,8 @@ import { withStyles } from '@material-ui/core';
 
 import { AppContent, AppSearchBar, AppFabButton } from 'lib/mui-app';
 
-import { ListItem, Pagination, Filter } from './components';
-import { FlexContainer, FlexGrow } from 'components/common';
+import { ListItem, Pagination, Filter, OnlyUserToggle } from './components';
+import { FlexContainer, FlexGrow, FlexShrink } from 'components/common';
 
 const styles = theme => ({
   list: {
@@ -29,10 +29,13 @@ class ListPres extends React.PureComponent {
       classes,
       data,
       ids,
-      params,
+      filter,
+      page,
       setFilter,
       setPage,
       total,
+      onlyUser,
+      onOnlyUserToggle,
     } = this.props;
 
     return (
@@ -40,8 +43,11 @@ class ListPres extends React.PureComponent {
         <AppSearchBar>
           <FlexContainer>
             <FlexGrow>
-              <Filter onChange={setFilter} filter={params.filter} />
+              <Filter onChange={setFilter} filter={filter} />
             </FlexGrow>
+            <FlexShrink>
+              <OnlyUserToggle value={onlyUser} onToggle={onOnlyUserToggle} />
+            </FlexShrink>
           </FlexContainer>
         </AppSearchBar>
         <AppContent className={classes.content}>
@@ -53,7 +59,7 @@ class ListPres extends React.PureComponent {
           <Pagination
             countPerPage={ids.length}
             count={total}
-            page={params.page}
+            page={page}
             onChangePage={setPage}
           />
           <AppFabButton

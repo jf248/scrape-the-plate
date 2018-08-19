@@ -22,18 +22,34 @@ class Updater extends React.Component {
 
 function List() {
   const renderFunc = (auth, recordsMany) => {
-    const { ids, data, total, params, goFetch } = recordsMany;
-    const setPage = page => goFetch({ page });
-    const setFilter = filter => goFetch({ filter });
+    const { user: { id: userId } = {} } = auth;
+    const { ids, data, total, params = {}, goFetch } = recordsMany;
+    const { filter, page } = params;
+    const setPage = page => goFetch({ ...params, page });
+    const setFilter = filter => goFetch({ ...params, filter });
+    const onlyUser = !!filter.user;
+    const onOnlyUserToggle = () => {
+      let newParams;
+      const { user, ...newFilter } = filter;
+      if (user) {
+        newParams = { ...params, filter: newFilter };
+      } else {
+        newParams = { ...params, filter: { ...newFilter, user: userId } };
+      }
+      goFetch(newParams);
+    };
     return (
       <ListPres
         {...{
           data,
           ids,
-          params,
+          page,
+          filter,
           setFilter,
           setPage,
           total,
+          onlyUser,
+          onOnlyUserToggle,
         }}
       />
     );

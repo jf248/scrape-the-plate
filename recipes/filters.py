@@ -53,6 +53,7 @@ class GroceryGroupFilter(filters.FilterSet):
 
 class RecipeFilter(filters.FilterSet):
     id = NumberInFilter(name='id', lookup_expr='in')
+    user = NumberInFilter(name='user', lookup_expr='in')
 
     class Meta:
         model = models.Recipe

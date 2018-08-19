@@ -4,24 +4,11 @@ import { connect } from 'react-redux';
 import { renderProps } from 'lib/react-powerplug';
 
 import { getList } from './actions';
-import * as utils from 'utils';
 
 class RecordsMany extends React.Component {
   componentDidMount() {
-    const { lazy, goFetch, params } = this.props;
-    !lazy && goFetch(params);
-  }
-
-  componentDidUpdate(prevProps) {
-    const { lazy, goFetch, params } = this.props;
-    const propsToCheck = ['resource'];
-    if (
-      !lazy &&
-      (propsToCheck.some(prop => prevProps[prop] !== this.props[prop]) ||
-        !utils.deepEqual(prevProps.params, params))
-    ) {
-      goFetch(params);
-    }
+    const { lazy, goFetch, params, initialParams } = this.props;
+    !lazy && goFetch(initialParams || params);
   }
 
   render() {
