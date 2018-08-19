@@ -10,19 +10,19 @@ const styles = () => ({
   },
 });
 
-function MenuBottom(props) {
-  const { classes, className, menuBottomElement } = props;
-  if (!menuBottomElement) {
+function ListBottom(props) {
+  const { classes, className, listBottomElement } = props;
+  if (!listBottomElement) {
     return null;
   }
   return (
     <Fragment>
       <Divider />
-      {cloneElement(menuBottomElement, {
+      {cloneElement(listBottomElement, {
         className: classnames(classes.listBottom, className),
       })}
     </Fragment>
   );
 }
 
-export default withStyles(styles)(MenuBottom);
+export default withStyles(styles)(ListBottom);

@@ -13,11 +13,11 @@ const styles = theme => ({
   },
 });
 
-MenuItem.defaultProps = {
+ListItem.defaultProps = {
   submenuItems: [],
 };
 
-function MenuItem(props) {
+function ListItem(props) {
   const {
     children,
     className: classNameProp,
@@ -60,4 +60,4 @@ function MenuItem(props) {
   );
 }
 
-export default Mui.withStyles(styles)(MenuItem);
+export default Mui.withStyles(styles)(ListItem);

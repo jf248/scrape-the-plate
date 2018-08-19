@@ -2,7 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import * as Mui from '@material-ui/core';
 
-import MenuItem from './MenuItem';
+import ListItem from './ListItem';
 
 const styles = theme => ({
   noMatch: {
@@ -19,17 +19,17 @@ const styles = theme => ({
   },
 });
 
-Menu.defaultProps = {
+List.defaultProps = {
   noMatchProps: {},
   noMatchText: 'No matches...',
   menuBottomFixed: true,
-  MenuProps: {},
+  ListProps: {},
   selectedItems: [],
 };
 
-function Menu(props) {
+function List(props) {
   const {
-    MenuProps: { className: MenuClassName, ...MenuPropsProp },
+    ListProps: { className: ListClassName, ...ListPropsProp },
     SubheaderProps,
     classes,
     downshiftProps,
@@ -67,7 +67,7 @@ function Menu(props) {
                 const index = sublist.firstIndex + indexOfSublist;
                 const selected = selectedItems.includes(item);
                 return (
-                  <MenuItem
+                  <ListItem
                     key={itemToString(item)}
                     {...{
                       downshiftProps,
@@ -86,15 +86,15 @@ function Menu(props) {
     }
   };
 
-  const { ref, ...otherMenuProps } = downshiftProps.getMenuProps();
+  const { ref, ...otherListProps } = downshiftProps.getMenuProps();
 
   if (isOpen) {
     return (
       <Mui.RootRef rootRef={ref}>
         <Mui.List
-          {...otherMenuProps}
-          className={classnames(MenuClassName)}
-          {...MenuPropsProp}
+          {...otherListProps}
+          className={classnames(ListClassName)}
+          {...ListPropsProp}
         >
           {renderSublists()}
         </Mui.List>
@@ -105,4 +105,4 @@ function Menu(props) {
   }
 }
 
-export default Mui.withStyles(styles)(Menu);
+export default Mui.withStyles(styles)(List);

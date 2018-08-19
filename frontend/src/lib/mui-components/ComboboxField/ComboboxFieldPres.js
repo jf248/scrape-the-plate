@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 
-import { Input, Menu } from './components';
+import { Input, List } from './components';
 
 const styles = () => ({
   root: {
@@ -16,12 +16,12 @@ class ComboboxFieldPres extends React.Component {
     const {
       classes,
       className: classNameProp,
-      menuBottomElement,
-      menuBottomFixed,
-      MenuProps,
+      listBottomElement,
+      listBottomFixed,
+      ListProps,
       noMatchProps,
       noMatchText,
-      renderMenuItem,
+      renderListItem,
       renderSelectedItem,
       SubheaderProps,
       TextFieldProps,
@@ -54,15 +54,15 @@ class ComboboxFieldPres extends React.Component {
           onKeyDown={onKeyDown}
           isControlledOpen={isControlledOpen}
         />
-        <Menu
+        <List
           downshiftProps={downshiftProps}
           groupedItems={groupedItems}
-          menuBottomElement={menuBottomElement}
-          menuBottomFixed={menuBottomFixed}
-          MenuProps={MenuProps}
+          listBottomElement={listBottomElement}
+          listBottomFixed={listBottomFixed}
+          ListProps={ListProps}
           noMatchProps={noMatchProps}
           noMatchText={noMatchText}
-          renderMenuItem={renderMenuItem}
+          renderListItem={renderListItem}
           selectedItems={selectedItems}
           SubheaderProps={SubheaderProps}
         />

@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { Typography, withStyles } from '@material-ui/core';
 
 const styles = theme => ({
-  menuItem: {
+  listItem: {
     padding: '4px 16px 4px 24px',
   },
   highlighted: {
@@ -14,11 +14,11 @@ const styles = theme => ({
   },
 });
 
-MenuItem.defaultProps = {
+ListItem.defaultProps = {
   selectedItems: [],
 };
 
-function MenuItem(props) {
+function ListItem(props) {
   const {
     classes,
     className: classNameProp,
@@ -32,7 +32,7 @@ function MenuItem(props) {
   const { getItemProps, highlightedIndex, itemToString } = downshiftProps;
 
   const className = classnames(
-    classes.menuItem,
+    classes.listItem,
     { [classes.highlighted]: highlightedIndex === index },
     { [classes.selected]: selectedItems.includes(item) },
     classNameProp
@@ -52,4 +52,4 @@ function MenuItem(props) {
   );
 }
 
-export default withStyles(styles)(MenuItem);
+export default withStyles(styles)(ListItem);

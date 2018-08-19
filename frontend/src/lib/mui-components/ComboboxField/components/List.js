@@ -8,8 +8,8 @@ import {
   withStyles,
 } from '@material-ui/core';
 
-import MenuBottom from './MenuBottom';
-import MenuItem from './MenuItem';
+import ListBottom from './ListBottom';
+import ListItem from './ListItem';
 
 const styles = theme => ({
   paper: {
@@ -30,36 +30,36 @@ const styles = theme => ({
   },
 });
 
-Menu.defaultProps = {
+List.defaultProps = {
   noMatchProps: {},
   noMatchText: 'No matches...',
-  menuBottomFixed: true,
-  MenuProps: {},
+  listBottomFixed: true,
+  ListProps: {},
   selectedItems: [],
 };
 
-function Menu(props) {
+function List(props) {
   const {
     classes,
     downshiftProps,
     groupedItems,
-    menuBottomElement,
-    menuBottomFixed,
-    MenuProps: { className: MenuClassName, ...MenuPropsProp },
+    listBottomElement,
+    listBottomFixed,
+    ListProps: { className: ListClassName, ...ListPropsProp },
     noMatchProps: { className: noMatchClassName, ...noMatchPropsProp },
     noMatchText,
-    renderMenuItem,
+    renderListItem,
     selectedItems,
     SubheaderProps,
   } = props;
 
   const { isOpen, itemToString } = downshiftProps;
 
-  const renderMenuItems = sublist =>
+  const renderListItems = sublist =>
     sublist.items.map((item, indexOfSublist) => {
       const index = sublist.firstIndex + indexOfSublist;
       const renderFunc =
-        renderMenuItem || (props => React.createElement(MenuItem, props)); // eslint-disable-line react/display-name
+        renderListItem || (props => React.createElement(ListItem, props)); // eslint-disable-line react/display-name
       return renderFunc({
         downshiftProps,
         index,
@@ -86,7 +86,7 @@ function Menu(props) {
         return (
           <React.Fragment key={group || 'single-sublist'}>
             <ListSubheader {...SubheaderProps}>{group}</ListSubheader>
-            {renderMenuItems(sublist)}
+            {renderListItems(sublist)}
             {index < last && <Divider />}
           </React.Fragment>
         );
@@ -98,17 +98,17 @@ function Menu(props) {
     return (
       <Paper className={classes.paper}>
         <div
-          {...downshiftProps.getMenuProps()}
-          className={classnames(classes.listContainer, MenuClassName)}
-          {...MenuPropsProp}
+          {...downshiftProps.getListProps()}
+          className={classnames(classes.listContainer, ListClassName)}
+          {...ListPropsProp}
         >
           {renderSublists()}
-          {!menuBottomFixed && (
-            <MenuBottom menuBottomElement={menuBottomElement} />
+          {!listBottomFixed && (
+            <ListBottom listBottomElement={listBottomElement} />
           )}
         </div>
-        {menuBottomFixed && (
-          <MenuBottom menuBottomElement={menuBottomElement} />
+        {listBottomFixed && (
+          <ListBottom listBottomElement={listBottomElement} />
         )}
       </Paper>
     );
@@ -117,4 +117,4 @@ function Menu(props) {
   }
 }
 
-export default withStyles(styles)(Menu);
+export default withStyles(styles)(List);

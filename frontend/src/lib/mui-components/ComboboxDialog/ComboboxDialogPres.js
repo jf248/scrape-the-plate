@@ -65,7 +65,7 @@ class ComboboxDialogPres extends React.Component {
             </Mui.DialogContent>
             <Mui.Divider />
             <Mui.DialogContent className={classes.menu}>
-              <C.Menu
+              <C.List
                 downshiftProps={downshiftProps}
                 groupedItems={groupedItems}
                 selectedItems={selectedItems}
