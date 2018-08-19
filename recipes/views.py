@@ -71,7 +71,7 @@ class BookViewSet(CreateWithUserMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return models.Book.objects.filter(user=user)
+        return models.Book.objects.filter(user=user.id)
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -155,7 +155,7 @@ class TagViewSet(CreateWithUserMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return models.Tag.objects.filter(user=user)
+        return models.Tag.objects.filter(user=user.id)
 
 
 @api_view(['GET'])
