@@ -24,6 +24,7 @@ const UrlField = props => {
           Which sites can I scrape?
         </Link>,
       ]}
+      touched={touched}
       {...rest}
     />
   );

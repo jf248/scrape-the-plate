@@ -1,16 +1,12 @@
 # Burn list
-* Filter for just mine, all
-* submitOnEnter
-* Performance: make some components pure?
-* Add link to users, takes to recipes filter by that user
-* Add 'all/just min' switch
 * Menu Controller, switch menu components to use the controller
 * Delete Dialog on View should use ConfirmationModal
 * Change all Modals to Dialogs
-* Tags
 * Move dataProvider logic to enhancedFetch?
 * When to reverse compose function?
 
+* Perfomance
+* Add link to users, takes to recipes filter by that user
 * Search and filter: debounced, search ingredients, tags, sites
 * Image upload
 * More scrape sites
