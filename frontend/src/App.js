@@ -16,7 +16,7 @@ function App() {
       <ConnectedRouter history={history}>
         <Switch>
           {routes.map(route => (
-            <Route {...route} />
+            <Route key={route.path} {...route} />
           ))}
         </Switch>
       </ConnectedRouter>
