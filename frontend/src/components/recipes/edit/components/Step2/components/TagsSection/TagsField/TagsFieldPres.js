@@ -29,7 +29,6 @@ function TagsFieldPres({
 }) {
   const className = classNames(classes.root, classNameProp);
 
-  // TODO changed to a chipinput
   return (
     <React.Fragment>
       <Common.Field

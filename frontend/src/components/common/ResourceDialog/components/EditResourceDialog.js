@@ -17,7 +17,6 @@ function EditResourceDialog({ name, component, resource, ...rest }) {
       getInputProps,
       getRootProps,
       getSubmitProps,
-      isValid,
       resetForm,
     } = recordForm;
     const isCreate = !id;
@@ -34,7 +33,6 @@ function EditResourceDialog({ name, component, resource, ...rest }) {
           getSubmitProps,
           isCreate,
           isOpen,
-          isValid,
           onClose,
           onExit,
 

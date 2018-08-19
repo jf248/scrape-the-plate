@@ -16,7 +16,6 @@ export default function EditTagDialogPres(props) {
     getSubmitProps,
     isCreate,
     isOpen,
-    isValid,
     onClose,
     onExit,
     component: Component,
@@ -35,9 +34,7 @@ export default function EditTagDialogPres(props) {
       </DialogContent>
       <DialogActions>
         <Button {...{ onClick: onClose, color: 'primary' }}>{'Cancel'}</Button>
-        <Button
-          {...getSubmitProps({ color: 'primary', disabled: isValid === false })}
-        >
+        <Button {...getSubmitProps({ color: 'primary' })}>
           {isCreate ? 'Add' : 'Ok'}
         </Button>
       </DialogActions>
