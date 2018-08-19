@@ -1,9 +1,5 @@
 # Burn list
-* Menu Controller, switch menu components to use the controller
-* Delete Dialog on View should use ConfirmationModal
-* Change all Modals to Dialogs
 * Move dataProvider logic to enhancedFetch?
-* When to reverse compose function?
 
 * Perfomance
 * Add link to users, takes to recipes filter by that user

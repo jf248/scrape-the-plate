@@ -4,6 +4,8 @@ import { Compose, renderProps } from 'lib/react-powerplug';
 import { RecordsMany } from 'lib/crud';
 import { Auth } from 'lib/auth';
 
+import { Modal } from 'controllers/modal';
+import { LOGIN_MODAL } from 'components/frame';
 import ListPres from './ListPres';
 
 // This is an ugly hack to force a goFetch call to referesh the
@@ -21,14 +23,20 @@ class Updater extends React.Component {
 }
 
 function List() {
-  const renderFunc = (auth, recordsMany) => {
-    const { user: { id: userId } = {} } = auth;
+  const renderFunc = (auth, recordsMany, updater, loginModal) => {
+    const { isLoggedIn, user: { id: userId } = {} } = auth;
     const { ids, data, total, params = {}, goFetch } = recordsMany;
     const { filter, page } = params;
+    const { onOpen: onOpenLoginModal } = loginModal;
+
     const setPage = page => goFetch({ ...params, page });
     const setFilter = filter => goFetch({ ...params, filter });
     const onlyUser = !!filter.user;
     const onOnlyUserToggle = () => {
+      if (!isLoggedIn) {
+        onOpenLoginModal();
+        return;
+      }
       let newParams;
       const { user, ...newFilter } = filter;
       if (user) {
@@ -38,6 +46,7 @@ function List() {
       }
       goFetch(newParams);
     };
+
     return (
       <ListPres
         {...{
@@ -64,6 +73,7 @@ function List() {
         (render, { isLoggedIn }, { goFetch }) => (
           <Updater {...{ goFetch, isLoggedIn, render }} />
         ),
+        <Modal name={LOGIN_MODAL} />,
       ]}
       render={renderFunc}
     />
