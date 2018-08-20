@@ -1,5 +1,4 @@
 # Burn list
-- Bug: ListField: keeps value when item deleted
 - Title should stay on one line
 - Grocery Items
 - Perfomance

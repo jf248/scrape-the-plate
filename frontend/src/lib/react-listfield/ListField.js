@@ -10,9 +10,12 @@ function ListField(props) {
 
   const renderFunc = ({ state: { value }, setState }) => {
     const handleRemove = index => () => {
-      setState(prevState => ({
-        value: array.remove(prevState.value, index),
-      }));
+      setState(prevState => {
+        const newValue = array.remove(prevState.value, index);
+        return {
+          value: newValue,
+        };
+      });
     };
 
     const handleChange = index => item => {

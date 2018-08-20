@@ -4,7 +4,7 @@
 
 import React from 'react';
 
-import Textarea from './TextArea';
+import Textarea from './Textarea';
 
 /**
  * Wrapper around <input/> to stop cursor jumping to the end when a controlled
@@ -55,8 +55,12 @@ class InputCursorCorrect extends React.Component {
 
   render() {
     const { inputRef, multiline, ...rest } = this.props; // eslint-disable-line no-unused-vars
-    const Component = multiline ? Textarea : 'input';
-    return <Component {...rest} ref={this.handleRef} value={undefined} />;
+    if (multiline) {
+      return (
+        <Textarea {...rest} textareaRef={this.handleRef} value={undefined} />
+      );
+    }
+    return <input {...rest} ref={this.handleRef} value={undefined} />;
   }
 }
 
