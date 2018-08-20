@@ -173,6 +173,8 @@ class Form extends Component {
       return this.runValidation().then(() => {
         if (this.state.isValid) {
           onSubmit(normalize(values), bag);
+        } else {
+          this.setTouchedAll();
         }
       });
       //return onSubmit(normalize(values), bag);
