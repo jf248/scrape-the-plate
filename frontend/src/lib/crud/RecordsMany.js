@@ -7,8 +7,20 @@ import { getList } from './actions';
 
 class RecordsMany extends React.Component {
   componentDidMount() {
-    const { lazy, goFetch, params, initialParams } = this.props;
-    !lazy && goFetch(initialParams || params);
+    const { lazy, resource, goFetch, params, initialParams } = this.props;
+    !lazy && resource && goFetch(initialParams || params);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { lazy, resource, goFetch } = this.props;
+    const propsToCheck = ['resource'];
+    if (
+      !lazy &&
+      resource &&
+      propsToCheck.some(prop => prevProps[prop] !== this.props[prop])
+    ) {
+      goFetch();
+    }
   }
 
   render() {

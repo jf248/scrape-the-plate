@@ -1,0 +1,1 @@
+export { restFetch } from './restFetch';

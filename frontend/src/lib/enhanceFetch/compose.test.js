@@ -1,7 +1,7 @@
 import { compose } from './compose';
 
 describe('compose', () => {
-  test('calls enhancers sequentially', () => {
+  test('calls enhancers in reverse', () => {
     const enhancer1 = jest.fn();
     const enhanced1 = jest.fn();
     enhancer1.mockReturnValue(enhanced1);
@@ -19,8 +19,8 @@ describe('compose', () => {
 
     expect(enhancer1.mock.calls.length).toBe(1);
     expect(enhancer2.mock.calls.length).toBe(1);
-    expect(enhancer2.mock.calls[0][0]).toBe(enhanced1);
-    expect(result).toBe(enhanced2);
+    expect(enhancer1.mock.calls[0][0]).toBe(enhanced2);
+    expect(result).toBe(enhanced1);
   });
 
   test('returns fetchFunc if no enhnacers given', () => {

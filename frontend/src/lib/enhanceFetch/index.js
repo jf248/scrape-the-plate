@@ -1,12 +1,4 @@
 export { compose } from './compose';
-
-export {
-  addJsonHeaders,
-  addAuthToken,
-  addCsrfToken,
-  logRequest,
-  thenCombineResponse,
-  thenJson,
-  thenFormatResponse,
-  thenLogResponse,
-} from './enhancers';
+export { restFetch } from './restFetch';
+export { authFetch } from './authFetch';
+export * from './enhancers';

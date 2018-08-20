@@ -1,11 +1,11 @@
-import { makeSimpleTokenAuthProvider } from 'lib/authProviders';
-import enhancedFetch from './enhancedFetch';
+import * as enhance from 'lib/enhanceFetch';
 
-const LOGIN_URL = '/api/v1/auth/login/';
-const SIGNUP_URL = '/api/v1/auth/signup/';
-const VERIFY_URL = '/api/v1/auth/verify/';
+import { enhancedFetch } from './enhancedFetch';
 
-export default makeSimpleTokenAuthProvider(
-  { login: LOGIN_URL, signup: SIGNUP_URL, verify: VERIFY_URL },
-  enhancedFetch
-);
+const URLS = {
+  login: '/api/v1/auth/login/',
+  signup: '/api/v1/auth/login/',
+  verify: '/api/v1/auth/login/',
+};
+
+export const authProvider = enhance.authFetch(URLS)(enhancedFetch);
