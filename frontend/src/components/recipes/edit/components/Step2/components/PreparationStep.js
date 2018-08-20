@@ -124,9 +124,7 @@ class PreparationStep extends Component {
             className={classes.textField}
             fullWidth
             InputProps={{ disableUnderline: true }}
-            inputRef={x => (this.input = x)}
             multiline
-            rows={2}
             onBlur={handleBlur}
             onChange={handleTextChange}
             onKeyDown={handleKeyDown}

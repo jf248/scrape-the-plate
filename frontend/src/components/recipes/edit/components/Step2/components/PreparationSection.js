@@ -6,8 +6,7 @@ import { Section } from 'components/common';
 function PreparationSection(props) {
   const { inputProps, ...rest } = props;
 
-  const caption =
-    'Add the preparation steps one by one, or paste them all at once.';
+  const caption = 'Tip: You can paste multiple steps at once.';
 
   return (
     <Section caption={caption} title={'Preparation steps'} {...rest}>

@@ -1,4 +1,10 @@
+/**
+ * Copied from material-ui. This is an internal component that isn't exported.
+ */
+
 import React from 'react';
+
+import Textarea from './TextArea';
 
 /**
  * Wrapper around <input/> to stop cursor jumping to the end when a controlled
@@ -49,7 +55,7 @@ class InputCursorCorrect extends React.Component {
 
   render() {
     const { inputRef, multiline, ...rest } = this.props; // eslint-disable-line no-unused-vars
-    const Component = multiline ? 'textarea' : 'input';
+    const Component = multiline ? Textarea : 'input';
     return <Component {...rest} ref={this.handleRef} value={undefined} />;
   }
 }

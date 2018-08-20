@@ -115,9 +115,7 @@ class Ingredient extends Component {
         <Field
           InputProps={{ disableUnderline: true }}
           className={classes.textField}
-          inputRef={x => (this.input = x)}
           multiline
-          rows={1}
           onBlur={handleBlur}
           onChange={handleTextChange}
           onKeyDown={handleKeyDown}

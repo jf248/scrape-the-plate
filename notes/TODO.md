@@ -1,15 +1,15 @@
 # Burn list
-* Move dataProvider logic to enhancedFetch?
-
-* Perfomance
-* Add link to users, takes to recipes filter by that user
-* Search and filter: debounced, search ingredients, tags, sites
-* Image upload
-* More scrape sites
-* Tests
-* Grocery Items
-* Meal plan, Shopping list
-* Like feature
+- Bug: ListField: keeps value when item deleted
+- Title should stay on one line
+- Grocery Items
+- Perfomance
+- Add link to users, takes to recipes filter by that user
+- Search and filter: debounced, search ingredients, tags, sites
+- Image upload
+- More scrape sites
+- Tests
+- Meal plan, Shopping list
+- Like feature
 
 
 # DRF
