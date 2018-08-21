@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import {
   AppBar as MuiAppBar,
   Toolbar,
@@ -15,18 +16,23 @@ const styles = {
     },
   },
   flex: {
-    flex: '0.5',
+    flex: '1',
   },
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
+  },
+  oneLine: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 };
 
 AppBar.defaultProps = {};
 
 function AppBar(props) {
-  const { classes, drawerToggle, middle, right, title } = props;
+  const { classes, drawerToggle, progress, right, title } = props;
 
   return (
     <MuiAppBar position="fixed" className={classes.root}>
@@ -39,12 +45,16 @@ function AppBar(props) {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="title" color="inherit" className={classes.flex}>
+        <Typography
+          variant="title"
+          color="inherit"
+          className={classNames(classes.flex, classes.oneLine)}
+        >
           {title}
         </Typography>
-        <div className={classes.flex}>{middle}</div>
         {right}
       </Toolbar>
+      {progress}
     </MuiAppBar>
   );
 }

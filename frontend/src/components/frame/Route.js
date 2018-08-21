@@ -7,7 +7,7 @@ import {
   LoginModal,
   LoginButton,
   Snackbar,
-  CircularProgress,
+  LinearProgress,
   ComponentOr404,
   DrawerContent,
 } from './components';
@@ -24,7 +24,7 @@ function Route(props) {
     <AppFrame
       title={title}
       drawerContent={<DrawerContent />}
-      barMiddle={<CircularProgress />}
+      barProgress={<LinearProgress />}
       barRight={<LoginButton />}
     >
       <ComponentOr404 component={component} match={match} {...rest} />

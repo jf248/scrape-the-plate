@@ -22,7 +22,7 @@ const styles = () => ({
 
 function AppFrame(props) {
   const {
-    barMiddle,
+    barProgress,
     barRight,
     children,
     classes,
@@ -36,7 +36,7 @@ function AppFrame(props) {
     return (
       <div className={classes.root}>
         <Bar
-          middle={barMiddle}
+          progress={barProgress}
           right={barRight}
           drawerToggle={toggle}
           title={title}

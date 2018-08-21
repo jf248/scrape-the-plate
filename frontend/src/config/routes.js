@@ -17,7 +17,7 @@ const routes = [
     exact: true,
     title: 'Edit the recipe',
   },
-  { path: '/recipes/:id', component: View, exact: true },
+  { path: '/recipes/:id', component: View, title: 'Recipe', exact: true },
   { path: '/about', component: About, exact: true, title: 'About' },
   // { path: '/temp', component: TempPage, exact: true, title: 'Temporary Page' },
   { path: '/', component: List, exact: true, title: 'Recipes' },

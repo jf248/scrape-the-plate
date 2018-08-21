@@ -1,4 +1,4 @@
-export { default as CircularProgress } from './CircularProgress';
+export { default as LinearProgress } from './LinearProgress';
 export { default as ComponentOr404 } from './ComponentOr404';
 export { default as ConfirmationModal } from './ConfirmationModal';
 export { default as LoginButton } from './LoginButton';

@@ -1,5 +1,4 @@
 # Burn list
-- Title should stay on one line
 - Grocery Items
 - Perfomance
 - Add link to users, takes to recipes filter by that user
