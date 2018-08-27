@@ -14,6 +14,9 @@ const styles = () => ({
   expansionDetails: {
     display: 'block',
   },
+  error: {
+    paddingLeft: '8px',
+  },
 });
 
 Section.defaultProps = {};
@@ -26,6 +29,7 @@ function Section(props) {
     className: classNameProp,
     defaultExpanded,
     title,
+    error,
     ...rest
   } = props;
 
@@ -38,7 +42,18 @@ function Section(props) {
       {...rest}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Typography variant={'subheading'}>{title}</Typography>
+        <Typography variant={'subheading'} color={error ? 'error' : 'default'}>
+          {title}
+        </Typography>
+        {error && (
+          <Typography
+            variant={'caption'}
+            color={'error'}
+            className={classes.error}
+          >
+            {'Errors in this section'}
+          </Typography>
+        )}
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.expansionDetails}>
         {caption && (

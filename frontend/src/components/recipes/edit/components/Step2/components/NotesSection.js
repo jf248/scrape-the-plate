@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core';
+import * as Mui from '@material-ui/core';
 
 import { Field, Section } from 'components/common';
 
@@ -9,11 +9,13 @@ const styles = () => ({
 
 function NotesSection(props) {
   const { classes, inputProps, ...rest } = props; // eslint-disable-line no-unused-vars
+  const isError = !!inputProps.error;
 
   return (
-    <Section title={'Notes'} {...rest}>
+    <Section title={'Notes'} error={isError} {...rest}>
       <Field
         {...inputProps}
+        component={Mui.TextField}
         placeholder={'Notes...'}
         fullWidth
         multiline={true}
@@ -22,4 +24,4 @@ function NotesSection(props) {
   );
 }
 
-export default withStyles(styles)(NotesSection);
+export default Mui.withStyles(styles)(NotesSection);

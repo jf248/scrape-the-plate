@@ -24,10 +24,17 @@ function SourceSection(props) {
 
   const isScraped = !!sourceInputProps.value;
   const type = sourceTypeInputProps.value;
+  const error =
+    !!bookInputProps.error ||
+    !!pageInputProps.error ||
+    !!sourceInputProps.error ||
+    !!sourceTypeInputProps.error ||
+    !!urlInputProps.error;
 
   return (
     <SourceSectionPres
       {...{
+        error,
         type,
         types,
         isScraped,

@@ -10,7 +10,6 @@ const styles = () => ({
 });
 
 TagsFieldPres.defaultProps = {
-  data: [],
   tagNames: [],
 };
 
@@ -23,7 +22,7 @@ function TagsFieldPres({
   onOpenModal,
   tagNames,
   touched,
-  value,
+  selectedItems,
   getModalProps,
   ...rest
 }) {
@@ -54,7 +53,7 @@ function TagsFieldPres({
           onChange,
           resource: 'tags',
           stringField: 'name',
-          value,
+          selectedItems,
         })}
       />
     </React.Fragment>

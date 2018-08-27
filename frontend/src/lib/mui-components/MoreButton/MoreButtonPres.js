@@ -1,11 +1,8 @@
 import React from 'react';
-import classNames from 'classnames';
 import { IconButton, Menu, withStyles } from '@material-ui/core';
 import { MoreVert } from '@material-ui/icons';
 
-const styles = () => ({
-  root: {},
-});
+const styles = () => ({});
 
 MoreButtonPres.defaultProps = {};
 
@@ -19,9 +16,9 @@ function MoreButtonPres(props) {
     onClick,
     onClose,
     open,
+    IconButtonProps,
+    ...rest
   } = props;
-
-  const className = classNames(classNameProp, classes.root);
 
   return (
     <React.Fragment>
@@ -29,11 +26,11 @@ function MoreButtonPres(props) {
         aria-label="More"
         aria-haspopup="true"
         onClick={onClick}
-        className={className}
+        {...IconButtonProps}
       >
         {icon || <MoreVert />}
       </IconButton>
-      <Menu {...{ anchorEl, open, onClose }}>{children}</Menu>
+      <Menu {...{ anchorEl, open, onClose, ...rest }}>{children}</Menu>
     </React.Fragment>
   );
 }

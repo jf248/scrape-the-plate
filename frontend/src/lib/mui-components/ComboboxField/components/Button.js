@@ -5,7 +5,7 @@ import { InputAdornment, ButtonBase } from '@material-ui/core';
 function Button(props) {
   const {
     disabled,
-    downshiftProps: { clearSelection, inputValue, isOpen, toggleMenu },
+    downshift: { clearSelection, inputValue, isOpen, toggleMenu },
     multiple,
     isControlledOpen,
   } = props;

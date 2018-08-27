@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core';
 const styles = () => ({
   root: {
     display: 'flex',
-    flex: '1 0 auto',
+    flex: '1 1 auto',
     justifyContent: 'flex-start',
   },
 });

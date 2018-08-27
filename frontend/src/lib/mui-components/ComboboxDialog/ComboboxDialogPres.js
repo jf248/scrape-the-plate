@@ -3,13 +3,27 @@ import * as Mui from '@material-ui/core';
 
 import * as C from './components';
 
-const styles = () => ({
+const styles = theme => ({
   root: {},
+  paper: {
+    // Copied from material-ui Dialog, but add in height: 100%
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    margin: 48,
+    position: 'relative',
+    overflowY: 'auto', // Fix IE11 issue, to remove at some point.
+    // We disable the focus ring for mouse, touch and keyboard users.
+    outline: 'none',
+  },
   contentFixed: {
     flex: '0 0 auto',
   },
-  menu: {
+  list: {
     padding: '0px',
+    backgroundColor: theme.palette.background.paper,
+    display: 'flex',
+    flexDirection: 'column',
   },
   input: {
     width: '300px',
@@ -17,28 +31,38 @@ const styles = () => ({
 });
 
 class ComboboxDialogPres extends React.Component {
+  static defaultProps = {
+    itemToGroup: item => item && item['group'],
+  };
+
   render() {
     const {
-      children,
+      InputProps,
       classes,
-      open,
+      inputProps,
+      listBottomElement,
       onClose,
+      open,
       submenuItems,
       title,
-      inputProps,
-      InputProps,
+      clickedIndex,
+      onMoreClick,
+      itemToGroup,
 
       // from comboboxcontroller
       selectedItems,
       multiple,
       onKeyDown,
-      typeAheadText,
-      selectedItemFocusIndex,
-      groupedItems,
-      downshiftProps,
+      suggestion,
+      focusIndex,
+      downshift,
       downshiftRef,
       isControlledOpen,
-
+      comparator,
+      items,
+      inputValue,
+      onInputValueChange,
+      groupIndicies,
       ...rest
     } = this.props;
 
@@ -46,33 +70,42 @@ class ComboboxDialogPres extends React.Component {
       /* eslint-disable react/jsx-no-duplicate-props */
       <React.Fragment>
         <Mui.RootRef rootRef={downshiftRef}>
-          <Mui.Dialog {...{ open, onClose, ...rest }}>
-            <Mui.DialogTitle>{title}</Mui.DialogTitle>
+          <Mui.Dialog
+            {...{ open, onClose, classes: { paper: classes.paper }, ...rest }}
+          >
+            {title && <Mui.DialogTitle>{title}</Mui.DialogTitle>}
             <Mui.DialogContent className={classes.contentFixed}>
               <C.Input
+                autoFocus
                 className={classes.input}
-                downshiftProps={downshiftProps}
+                downshift={downshift}
                 multiple={multiple}
-                typeAheadText={typeAheadText}
-                selectedItemFocusIndex={selectedItemFocusIndex}
+                suggestion={suggestion}
+                focusIndex={focusIndex}
                 selectedItems={selectedItems}
                 onKeyDown={onKeyDown}
                 isControlledOpen={isControlledOpen}
                 placeholder={'Search...'}
                 inputProps={inputProps}
                 InputProps={InputProps}
+                value={inputValue}
+                onChange={event => onInputValueChange(event.target.value)}
               />
             </Mui.DialogContent>
             <Mui.Divider />
-            <Mui.DialogContent className={classes.menu}>
-              <C.List
-                downshiftProps={downshiftProps}
-                groupedItems={groupedItems}
+            <Mui.DialogContent className={classes.list}>
+              <C.ListVirtualized
+                items={items}
+                comparator={comparator}
+                downshift={downshift}
                 selectedItems={selectedItems}
                 submenuItems={submenuItems}
+                clickedIndex={clickedIndex}
+                onMoreClick={onMoreClick}
+                itemToGroup={itemToGroup}
               />
             </Mui.DialogContent>
-            {children}
+            {listBottomElement}
             <Mui.Divider />
             <Mui.DialogActions>
               <Mui.Button onClick={onClose} color="primary">

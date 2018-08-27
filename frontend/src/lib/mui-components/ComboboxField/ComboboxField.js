@@ -1,7 +1,7 @@
 import React from 'react';
 
 import ComboboxFieldPres from './ComboboxFieldPres';
-import ComboboxController from 'lib/mui-components/ComboboxController'; // eslint-disable-line import/no-internal-modules
+import ComboboxWithFilterController from 'lib/mui-components/ComboboxWithFilterController'; // eslint-disable-line import/no-internal-modules
 
 function ComboboxField(props) {
   const {
@@ -16,6 +16,7 @@ function ComboboxField(props) {
     style,
     SubheaderProps,
     TextFieldProps,
+    suggestion,
     ...rest
   } = props;
 
@@ -23,7 +24,7 @@ function ComboboxField(props) {
     return (
       <ComboboxFieldPres
         {...{
-          ...combobox.downshiftProps.getRootProps({ refKey: 'innerRef' }),
+          ...combobox.downshift.getRootProps({ refKey: 'innerRef' }),
           className,
           menuBottomElement,
           menuBottomFixed,
@@ -33,6 +34,7 @@ function ComboboxField(props) {
           renderMenuItem,
           renderSelectedItem,
           style,
+          suggestion,
           SubheaderProps,
           TextFieldProps,
           ...combobox,
@@ -41,7 +43,7 @@ function ComboboxField(props) {
     );
   };
 
-  return <ComboboxController {...rest} render={renderFunc} />;
+  return <ComboboxWithFilterController {...rest} render={renderFunc} />;
 }
 
 export default ComboboxField;

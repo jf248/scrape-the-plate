@@ -4,6 +4,7 @@ from .default import *  # noqa: F403
 DEBUG = True
 ALLOWED_HOSTS = []
 MIDDLEWARE.append('mysite.middleware.dev_cors_middleware')  # noqa: F405
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')  # noqa: F405
 
 """
 LOGGING = {

@@ -11,8 +11,7 @@
  * @param {string} groupField - The field name by which items will be grouped.
  * @returns {Array} reducerAndSeed - The arguments for Array.prototype.reduce()
  */
-export const makeGroupReducer = (groupField = 'group') => {
-  const itemToGroup = item => item[groupField];
+export const makeGroupReducer = (itemToGroup = item => item['group']) => {
   const fn = (acc, item) => {
     let groupIndex = acc.groups[itemToGroup(item)];
     if (groupIndex === undefined) {

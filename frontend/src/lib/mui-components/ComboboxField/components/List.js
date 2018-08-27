@@ -41,68 +41,62 @@ List.defaultProps = {
 function List(props) {
   const {
     classes,
-    downshiftProps,
-    groupedItems,
+    downshift,
+    items,
+    groupIndicies,
     listBottomElement,
     listBottomFixed,
     ListProps: { className: ListClassName, ...ListPropsProp },
     noMatchProps: { className: noMatchClassName, ...noMatchPropsProp },
     noMatchText,
-    renderListItem,
     selectedItems,
     SubheaderProps,
   } = props;
 
-  const { isOpen, itemToString } = downshiftProps;
+  const { isOpen, itemToString } = downshift;
 
-  const renderListItems = sublist =>
-    sublist.items.map((item, indexOfSublist) => {
-      const index = sublist.firstIndex + indexOfSublist;
-      const renderFunc =
-        renderListItem || (props => React.createElement(ListItem, props)); // eslint-disable-line react/display-name
-      return renderFunc({
-        downshiftProps,
-        index,
-        item,
-        key: itemToString(item),
-        selectedItems,
-      });
-    });
+  const NoMatch = () => (
+    <div
+      className={classnames(classes.noMatch, noMatchClassName)}
+      {...noMatchPropsProp}
+    >
+      <Typography color={'inherit'}>{noMatchText}</Typography>
+    </div>
+  );
 
-  const renderSublists = () => {
-    const last = groupedItems.length - 1;
-    if (groupedItems.length === 0) {
-      return (
-        <div
-          className={classnames(classes.noMatch, noMatchClassName)}
-          {...noMatchPropsProp}
-        >
-          <Typography color={'inherit'}>{noMatchText}</Typography>
-        </div>
-      );
-    } else {
-      return groupedItems.map((sublist, index) => {
-        const group = sublist.group;
+  const ListItems = () =>
+    items.map((item, index) => {
+      if (groupIndicies.includes(index)) {
         return (
-          <React.Fragment key={group || 'single-sublist'}>
-            <ListSubheader {...SubheaderProps}>{group}</ListSubheader>
-            {renderListItems(sublist)}
-            {index < last && <Divider />}
+          <React.Fragment key={item}>
+            {index !== 0 && <Divider />}
+            <ListSubheader {...SubheaderProps}>{item}</ListSubheader>
           </React.Fragment>
         );
-      });
-    }
-  };
+      }
+
+      return (
+        <ListItem
+          {...{
+            index,
+            key: itemToString(item),
+            item,
+            downshift,
+            selectedItems,
+          }}
+        />
+      );
+    });
 
   if (isOpen) {
     return (
       <Paper className={classes.paper}>
         <div
-          {...downshiftProps.getListProps()}
+          {...downshift.getListProps()}
           className={classnames(classes.listContainer, ListClassName)}
           {...ListPropsProp}
         >
-          {renderSublists()}
+          {items.length === 0 ? <NoMatch /> : <ListItems />}
           {!listBottomFixed && (
             <ListBottom listBottomElement={listBottomElement} />
           )}

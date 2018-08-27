@@ -3,12 +3,16 @@ import PreparationStep from './PreparationStep';
 import { ListField } from 'lib/react-listfield';
 
 function PreparationField(props) {
-  const { value, onChange, onBlur } = props;
+  const { error, value, onChange, onBlur } = props;
+
+  const getError = index => (Array.isArray(error) ? error[index] : undefined);
 
   /* eslint-disable react/jsx-key */
   const renderFunc = ({ items, getItemProps }) => {
     return items.map((item, index) => (
-      <PreparationStep {...getItemProps({ item, index })} />
+      <PreparationStep
+        {...getItemProps({ item, index, error: getError(index) })}
+      />
     ));
   };
   /* eslint-enable react/jsx-key */

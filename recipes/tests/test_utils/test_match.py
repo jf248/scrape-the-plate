@@ -1,5 +1,5 @@
 from mixer.backend.django import Mixer
-from unittest.mock import patch, call
+from unittest.mock import patch
 from unittest import TestCase
 
 from recipes.models import GroceryItem, GroceryPhrase
@@ -61,17 +61,19 @@ class GroceryMatcherHelperTests(TestCase):
 
 class GroceryMatcherTests(TestCase):
 
-    @patch('recipes.utils.match.ModelHelper', autospec=True)
+    @patch('recipes.utils.match.GroceryItem', autospec=True)
+    @patch('recipes.utils.match.GroceryPhrase', autospec=True)
     @patch('recipes.utils.match.GroceryMatcherHelper', autospec=True)
-    def test_match(self, m_matcher, m_helper):
-        m_helper.get_all.return_value = 'all'
+    def test_match(self, m_matcher, m_item, m_phrase):
+        m_item.get_all.return_value = 'all'
+        m_phrase.get_all.return_value = 'all'
         m_matcher.match.return_value = 'result'
 
         result = GroceryMatcher.match('ingredients')
 
         self.assertEqual(result, 'result')
-        calls = [call(GroceryItem), call(GroceryPhrase)]
-        m_helper.get_all.assert_has_calls(calls)
+        m_item.get_all.assert_called_with()
+        m_phrase.get_all.assert_called_with()
         m_matcher.match.assert_called_with('ingredients', 'all', 'all')
 
     # def test_match_returns_list_of_dicts(self):

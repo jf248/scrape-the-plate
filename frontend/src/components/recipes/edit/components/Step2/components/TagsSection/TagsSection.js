@@ -15,9 +15,10 @@ function TagsSectionPres(props) {
   const { classes, className: classNameProp, inputProps, ...rest } = props;
 
   const className = classNames(classes.root, classNameProp);
+  const isError = !!inputProps.error;
 
   return (
-    <Section title={'Tags'} className={className} {...rest}>
+    <Section title={'Tags'} className={className} error={isError} {...rest}>
       <TagsField inputProps={inputProps} />
     </Section>
   );

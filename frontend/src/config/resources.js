@@ -1,1 +1,9 @@
-export default ['recipes', 'sources', 'books', 'users', 'tags'];
+export default [
+  'recipes',
+  'sources',
+  'books',
+  'users',
+  'tags',
+  'groceryItems',
+  'groceryGroups',
+];

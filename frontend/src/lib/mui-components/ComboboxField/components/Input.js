@@ -23,19 +23,19 @@ function Input(props) {
   const {
     classes,
     disabled,
-    downshiftProps,
+    downshift,
     inputProps: inputPropsProp,
     InputProps: InputPropsProp,
     isControlledOpen,
     multiple,
     renderSelectedItem: renderSelectedItemProp,
-    selectedItemFocusIndex,
+    focusIndex,
     selectedItems,
-    typeAheadText,
+    suggestion,
     ...rest
   } = props;
 
-  const { selectItem, itemToString } = downshiftProps;
+  const { selectItem, itemToString } = downshift;
 
   const renderSelectedItem =
     renderSelectedItemProp ||
@@ -47,7 +47,7 @@ function Input(props) {
     multiple && selectedItems.length > 0
       ? selectedItems.map((item, index) =>
           renderSelectedItem({
-            hasFocus: index === selectedItemFocusIndex,
+            hasFocus: index === focusIndex,
             item,
             itemToString,
             deselect: disabled ? noop : () => selectItem(item),
@@ -60,7 +60,7 @@ function Input(props) {
     <Button
       className={classnames({ [classes.withMarginBottom]: withMargin })}
       disabled={disabled}
-      downshiftProps={downshiftProps}
+      downshift={downshift}
       multiple={multiple}
       isControlledOpen={isControlledOpen}
     />
@@ -82,11 +82,11 @@ function Input(props) {
 
   return (
     <TextField
-      {...downshiftProps.getInputProps({
+      {...downshift.getInputProps({
         disabled,
         inputProps,
         InputProps,
-        typeAheadText,
+        suggestion,
         ...rest,
       })}
     />

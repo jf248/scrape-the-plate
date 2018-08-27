@@ -39,7 +39,7 @@ function InputComponent(props) {
       className: typeAheadClassName,
       ...typeAheadPropsProp
     } = {},
-    typeAheadText,
+    suggestion,
     startAdornment,
     ...rest
   } = props;
@@ -55,7 +55,7 @@ function InputComponent(props) {
           className={classes.inputWrapper}
           style={{ minWidth: minInputWidth }}
         >
-          {typeAheadText && (
+          {suggestion && (
             <div
               className={classnames(
                 className,
@@ -64,7 +64,7 @@ function InputComponent(props) {
               )}
               {...typeAheadPropsProp}
             >
-              {typeAheadText}
+              {suggestion}
             </div>
           )}
           <InputCursorCorrect

@@ -22,6 +22,7 @@ SourceSection.defaultProps = {
 
 function SourceSection(props) {
   const {
+    error,
     bookInputProps,
     classes,
     isScraped,
@@ -34,7 +35,7 @@ function SourceSection(props) {
   } = props;
 
   return (
-    <Section title={'Source'} {...rest}>
+    <Section title={'Source'} error={error} {...rest}>
       <FlexContainer>
         {!isScraped && (
           <FlexShrink>

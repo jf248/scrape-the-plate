@@ -6,3 +6,5 @@ export { cursorToEnd } from './cursorToEnd';
 export { formatMins } from './formatMins';
 export { isObject } from './isObject';
 export { deepEqual } from './deepEqual';
+export { formatApiError } from './formatApiError';
+export { isEmpty } from './isEmpty';

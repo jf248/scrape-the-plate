@@ -3,16 +3,13 @@ import Downshift from 'downshift';
 
 import { Compose, State, renderProps } from 'lib/react-powerplug';
 
-import {
-  callAll,
-  makeGroupReducer,
-  makeFirstIndexReducer,
-  wrapInArray,
-} from 'lib/mui-components/utils'; // eslint-disable-line import/no-internal-modules
+import { wrapInArray } from 'lib/mui-components/utils'; // eslint-disable-line import/no-internal-modules
 
 ComboboxController.defaultProps = {
   defaultInputValue: '',
-  groupField: 'group',
+  defaultSelectedItems: [],
+  comparator: (x, y) => x === y,
+  itemToGroup: item => item['group'],
   items: [],
   itemToString: function(item) {
     return item === null ? '' : item;
@@ -24,294 +21,169 @@ ComboboxController.defaultProps = {
   TextFieldProps: {},
 };
 
-function ComboboxController(props) {
-  const {
-    defaultInputValue,
-    defaultSelectedItem,
-    filterFunc,
-    groupField,
-    items,
-    itemToString,
-    multiple,
-    onChange,
-    onSelect,
-    selectedItem,
-    isOpen: isControlledOpen,
-    ...rest
-  } = props;
+function ComboboxController({
+  children,
+  comparator: comparatorProp,
+  defaultSelectedItems,
+  items,
+  multiple,
+  render,
+  selectedItems: selectedItemsProp,
 
-  const defaultFilterFunc = (items = [], query = '') =>
-    items.filter(item =>
-      itemToString(item)
-        .toLowerCase()
-        .includes(query.toLowerCase())
-    );
+  // downshit props:
+  isOpen: isControlledOpen,
+  itemToString,
+  onChange,
+  //onSelect,
+  onInputValueChange: onInputValueChangeProp,
+  ...rest
+}) {
+  const handleChange = changes => {
+    // We only want to expose changes to selectedItems, not the full state object
+    // { selectedItems, focusIndex }.
+    const unWrap = items => (multiple ? items : items[0] || null);
 
-  const deleteSelectedItem = arg => {
-    const {
-      downshiftProps: { selectItem },
-      inputValue,
-      selectedItemFocusIndex: index,
-      selectedItem,
-    } = arg;
-    if (!inputValue && index !== null) {
-      selectItem(wrapInArray(selectedItem)[index]);
+    if (changes.hasOwnProperty('selectedItems')) {
+      const { selectedItems } = changes;
+      onChange && onChange(unWrap(selectedItems));
+      //onSelect && onSelect(unWrap(selectedItems));
+    }
+
+    if (changes.hasOwnProperty('inputValue')) {
+      const { inputValue } = changes;
+      onInputValueChangeProp && onInputValueChangeProp(inputValue);
     }
   };
 
-  const getFilteredItems = (items = [], query = '', selectedItem) => {
-    selectedItem = wrapInArray(selectedItem);
-    items = filterFunc
-      ? filterFunc(items, query)
-      : defaultFilterFunc(items, query);
-    if (isControlledOpen) {
-      return items;
+  const comparator = (x, y) => {
+    if (x && y) {
+      return comparatorProp(x, y);
     }
-    return items.filter(item => !selectedItem.includes(item));
+    return false;
   };
 
-  const getGroupedItems = (items = []) =>
-    items
-      .reduce(...makeGroupReducer(groupField))
-      .result.reduce(...makeFirstIndexReducer()).result;
-
-  const getInitial = () => {
-    let initialSelectedItem;
-    let initialInputValue;
-    if (selectedItem) {
-      initialInputValue = multiple
-        ? defaultInputValue
-        : itemToString(selectedItem);
-      initialSelectedItem = multiple ? wrapInArray(selectedItem) : selectedItem;
-    } else {
-      initialInputValue = defaultInputValue;
-      if (defaultSelectedItem) {
-        initialSelectedItem = multiple
-          ? wrapInArray(defaultSelectedItem)
-          : defaultSelectedItem;
-      } else {
-        initialSelectedItem = multiple ? [] : null;
-      }
+  const getSuggestedItem = inputValue => {
+    if (!inputValue) {
+      return undefined;
     }
-    return {
-      inputValue: initialInputValue,
-      selectedItem: initialSelectedItem,
-      selectedItemFocusIndex: null,
+    return items.find(item => itemToString(item).startsWith(inputValue));
+  };
+
+  const stateReducer = (state, changes) => {
+    const types = Downshift.stateChangeTypes;
+    switch (changes.type) {
+      case types.keyDownEnter:
+      case types.clickItem:
+        if (multiple) {
+          return {
+            ...changes,
+            highlightedIndex: state.highlightedIndex,
+            isOpen: true,
+          };
+        }
+        return changes;
+      default:
+        return changes;
+    }
+  };
+
+  const handleSelection = setState => newItem => {
+    if (!newItem) {
+      setState({ selectedItems: [], inputValue: '' });
+    }
+
+    if (newItem) {
+      setState(({ selectedItems }) => {
+        const newSelectedItems = selectedItems.some(item =>
+          comparator(item, newItem)
+        )
+          ? selectedItems.filter(item => !comparator(item, newItem))
+          : multiple
+            ? [...selectedItems, newItem]
+            : [newItem];
+
+        return {
+          focusIndex: null,
+          selectedItems: newSelectedItems,
+          inputValue: multiple
+            ? ''
+            : newSelectedItems[0]
+              ? itemToString(newSelectedItems[0])
+              : '',
+        };
+      });
+    }
+  };
+
+  const renderFunc = ({ state, setState }, downshift) => {
+    const { selectedItems, focusIndex, inputValue } = state;
+    const { selectItem } = downshift;
+
+    const onInputValueChange = inputValue => {
+      setState({ inputValue });
     };
-  };
 
-  const getItemsAndTypeAhead = ({
-    highlightedIndex,
-    inputValue,
-    items,
-    isOpen,
-    selectedItem,
-  }) => {
-    if (isOpen) {
-      items = getFilteredItems(items, inputValue, selectedItem);
-      const typeAhead =
-        highlightedIndex === -1 ? getTypeAhead(items, inputValue) : {};
-      const groupedItems = getGroupedItems(items);
-      return { groupedItems, typeAhead };
-    } else {
-      return { groupedItems: [], typeAhead: {} };
-    }
-  };
+    const suggestedItem = getSuggestedItem(inputValue);
+    const suggestion = suggestedItem ? itemToString(suggestedItem) : '';
 
-  const getTypeAhead = (items = [], inputValue = '') => {
-    let text;
-    let typeAheadItem;
-    const found = items.some(item => {
-      typeAheadItem = item;
-      text = itemToString(item).toLowerCase();
-      return text.startsWith(inputValue.toLowerCase());
-    });
-    if (found && !!inputValue) {
-      return {
-        typeAheadText: inputValue + text.slice(inputValue.length),
-        typeAheadItem,
-      };
-    } else {
-      return {};
-    }
-  };
+    const last = selectedItems.length - 1;
 
-  const handleChange = state => {
-    // We only want to expose changes to selectedItem, not the full state object
-    // that includes typeAhead.
-    if (state.hasOwnProperty('selectedItem')) {
-      const { selectedItem } = state;
-      onChange && onChange(selectedItem);
-    }
-  };
-
-  const handleKeyDown = props => event => {
-    if (event.key && keyDownHandlers[event.key]) {
-      keyDownHandlers[event.key](props);
-      event.stopPropagation();
-    }
-  };
-
-  const handleSelect = setState => item => {
-    // The `Downshift` `selectedItem` and `inputValue` props are 'controlled'.
-    // They're controlled by the `State` component. We use `State`'s `setState`
-    // render prop to make changes.
-    let newSelectedItem;
-    let newInputValue;
-    setState(({ selectedItem: currentItems }) => {
-      if (multiple) {
-        currentItems = wrapInArray(currentItems);
-        // Find the item in currentItems, if it's there.
-        // It it isn't add it. If it is, remove it.
-        newSelectedItem =
-          currentItems.indexOf(item) === -1
-            ? [...currentItems, item]
-            : currentItems.filter(x => x !== item);
-        newInputValue = '';
-      } else {
-        // Only one selectedItem allowed. Either remove or change/add.
-        newSelectedItem = currentItems === item ? null : item;
-        newInputValue = itemToString(newSelectedItem);
+    const handleKeyDown = event => {
+      if (!event.key) {
+        return;
       }
-      return { selectedItem: newSelectedItem, inputValue: newInputValue };
-    });
-  };
 
-  const keyDownHandlers = {
-    Enter(arg) {
-      const {
-        downshiftProps: { selectItem },
-        typeAheadItem,
-      } = arg;
-      if (typeAheadItem) {
-        selectItem(typeAheadItem);
+      if (suggestedItem && ['Enter', 'Tab'].includes(event.key)) {
+        selectItem(suggestedItem);
       }
-    },
-    Tab(arg) {
-      const {
-        downshiftProps: { selectItem },
-        typeAheadItem,
-      } = arg;
-      if (typeAheadItem) {
-        selectItem(typeAheadItem);
-      }
-    },
-    ArrowLeft(arg) {
-      const {
-        selectedItem,
-        selectedItemFocusIndex: index,
-        inputValue,
-        setState,
-      } = arg;
+
       if (!inputValue) {
-        const getNewIndex = () => {
-          const last = wrapInArray(selectedItem).length - 1;
+        const left = index => {
           return index === null ? last : index === 0 ? 0 : index - 1;
         };
-        setState({ selectedItemFocusIndex: getNewIndex() });
-      }
-    },
-    ArrowRight(arg) {
-      const {
-        selectedItem,
-        selectedItemFocusIndex: index,
-        inputValue,
-        setState,
-      } = arg;
-      if (!inputValue) {
-        const getNewIndex = () => {
-          const last = wrapInArray(selectedItem).length - 1;
+        const right = index => {
           return index === null || index === last ? null : index + 1;
         };
-        setState({ selectedItemFocusIndex: getNewIndex() });
+        const move = func =>
+          setState(({ focusIndex }) => ({
+            focusIndex: func(focusIndex),
+          }));
+
+        switch (event.key) {
+          case 'ArrowLeft':
+            move(left);
+            break;
+          case 'ArrowRight':
+            move(right);
+            break;
+          case 'Delete':
+          case 'Backspace': {
+            const index = focusIndex === null ? last : focusIndex;
+            multiple && selectItem(selectedItems[index]);
+            break;
+          }
+          default:
+            break;
+        }
       }
-    },
-    Delete(arg) {
-      deleteSelectedItem(arg);
-    },
-    Backspace(arg) {
-      deleteSelectedItem(arg);
-    },
-  };
+    };
 
-  const stateReducer = (selectedItem, setState) => (state, changes) => {
-    const { inputValue, isOpen } = changes;
-
-    if (isOpen === true) {
-      setState({ selectedItemFocusIndex: null });
-    }
-
-    // User has closed the menu (eg by clicking outside). Tidy the inputValue.
-    if (isOpen === false) {
-      if (multiple) {
-        setState({ inputValue: '' });
-      } else {
-        setState({
-          inputValue: selectedItem ? itemToString(selectedItem) : '',
-        });
+    return renderProps(
+      { children, render },
+      {
+        selectedItems,
+        multiple,
+        onKeyDown: handleKeyDown,
+        focusIndex,
+        isControlledOpen,
+        downshift,
+        comparator,
+        suggestion,
+        items,
+        onInputValueChange,
+        inputValue,
       }
-      return changes;
-    }
-
-    // User has changed the inputValue:
-    // - update inputValue state, lowerCased
-    // - remove highlightedIndex. We're using a typeAhead which may not
-    // correspond to the first item which is otherwise highlighted by
-    // Downshift
-    if (inputValue !== undefined) {
-      setState({
-        inputValue: inputValue,
-        selectedItemFocusIndex: null,
-      });
-      return {
-        ...changes,
-        highlightedIndex: -1,
-      };
-    }
-
-    return changes;
-  };
-
-  const renderFunc = (stateProps, downshiftProps) => {
-    const {
-      state: { inputValue, selectedItem, selectedItemFocusIndex },
-      setState,
-    } = stateProps;
-    const { highlightedIndex, isOpen } = downshiftProps;
-    const itemsAndTypeAhead = getItemsAndTypeAhead({
-      highlightedIndex,
-      inputValue,
-      items,
-      isOpen,
-      selectedItem,
-    });
-    const {
-      groupedItems,
-      typeAhead: { typeAheadItem, typeAheadText },
-    } = itemsAndTypeAhead;
-
-    const selectedItems = wrapInArray(selectedItem);
-
-    const onKeyDown = handleKeyDown({
-      downshiftProps,
-      groupedItems,
-      inputValue,
-      setState,
-      selectedItem,
-      selectedItemFocusIndex,
-      typeAheadItem,
-    });
-
-    return renderProps(props, {
-      selectedItems,
-      multiple,
-      onKeyDown,
-      typeAheadText,
-      selectedItemFocusIndex,
-      groupedItems,
-      isControlledOpen,
-      downshiftProps,
-    });
+    );
   };
 
   return (
@@ -319,19 +191,34 @@ function ComboboxController(props) {
     <Compose
       components={[
         <State
+          initial={{
+            selectedItems:
+              defaultSelectedItems && wrapInArray(defaultSelectedItems),
+            focusIndex: null,
+            inputValue: '',
+          }}
           key="state"
-          initial={getInitial()}
-          selectedItem={selectedItem}
+          selectedItems={
+            selectedItemsProp === undefined
+              ? undefined
+              : wrapInArray(selectedItemsProp)
+          }
+          inputValue={
+            !multiple && selectedItemsProp
+              ? itemToString(selectedItemsProp)
+              : undefined
+          }
           onChange={handleChange}
         />,
-        (render, { state: { inputValue, selectedItem }, setState }) => (
+        (render, { state: { inputValue }, setState }) => (
           <Downshift
-            itemToString={itemToString}
-            onSelect={callAll(handleSelect(setState), onSelect)}
-            stateReducer={stateReducer(selectedItem, setState)}
-            inputValue={inputValue}
-            isOpen={isControlledOpen}
             {...rest}
+            onInputValueChange={undefined}
+            isOpen={isControlledOpen}
+            itemToString={itemToString}
+            onSelect={handleSelection(setState)}
+            stateReducer={stateReducer}
+            inputValue={inputValue}
           >
             {render}
           </Downshift>

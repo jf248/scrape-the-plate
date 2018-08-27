@@ -1,9 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.db import transaction
-from django.db.models.fields.related import ManyToManyField
-from rest_framework import serializers
+from django.db.models.fields.related import ManyToManyField, ForeignKey
+from rest_framework import serializers, validators
 from rest_framework.fields import CharField
-from rest_framework.utils import model_meta
 from django.contrib.auth import get_user_model
 
 from . import models
@@ -11,25 +10,30 @@ from . import models
 UserModel = get_user_model()
 
 
-class CustomListSerializer(serializers.ListSerializer):
-    def update(self, instances, validated_data):
-        ids_for_updates = [item['id'] for item in validated_data
-                           if item.get('id') is not None]
+class UniqueFieldsMixin(serializers.ModelSerializer):
+    """
+    Remove all UniqueValidator validators from fields. The validator prevents
+    us
+    using a writable nested serializer.  Uniqueness is tested any way in the
+    ModelValidateMixin
+    @see https://github.com/beda-software/drf-writable-nested/blob/master \
+    /drf_writable_nested/mixins.py
+    """
 
-        # Delete instances not in the list
-        instances.exclude(id__in=ids_for_updates).delete()
+    def get_fields(self):
+        self._unique_fields = []
 
-        # Save the new instances
-        ret = []
-        for item in validated_data:
-            id_ = item.get('id')
-            if id_ is None:
-                ret.append(self.child.create(item))
-            else:
-                instance = instances.get(id=id_)
-                ret.append(self.child.update(instance, item))
+        fields = super(UniqueFieldsMixin, self).get_fields()
+        for field_name, field in fields.items():
+            is_unique = any([isinstance(validator, validators.UniqueValidator)
+                             for validator in field.validators])
+            if is_unique:
+                self._unique_fields.append(field_name)
+                field.validators = [
+                    validator for validator in field.validators
+                    if not isinstance(validator, validators.UniqueValidator)]
 
-        return ret
+        return fields
 
 
 class UpdateListMixin(serializers.Serializer):
@@ -38,8 +42,35 @@ class UpdateListMixin(serializers.Serializer):
     # Make id visible in .validated_data:
     id = serializers.IntegerField(required=False)
 
+    class CustomListSerializer(serializers.ListSerializer):
+        """
+        Adds an update method to the ListSerializer.
+        - Any existing instances not in the update instances will be deleted
+        (checks id field of the update instance)
+        - Any completely new instances (no id field) will be created
+        """
+
+        def update(self, instances, validated_data):
+            ids_for_updates = [item['id'] for item in validated_data
+                               if item.get('id') is not None]
+
+            # Delete instances not in the list
+            instances.exclude(id__in=ids_for_updates).delete()
+
+            # Save the new instances
+            ret = []
+            for item in validated_data:
+                id_ = item.get('id')
+                if id_ is None:
+                    ret.append(self.child.create(item))
+                else:
+                    instance = instances.get(id=id_)
+                    ret.append(self.child.update(instance, item))
+
+            return ret
+
     def __init__(self, *args, **kwargs):
-        setattr(self.Meta, 'list_serializer_class', CustomListSerializer)
+        setattr(self.Meta, 'list_serializer_class', self.CustomListSerializer)
         super().__init__(*args, **kwargs)
 
 
@@ -53,17 +84,18 @@ class NestedMixin(serializers.ModelSerializer):
         self.Meta.nested_fields = [name for name, field in self.fields.items()
                                    if isinstance(field,
                                                  serializers.BaseSerializer)]
-        ModelClass = self.Meta.model
-        relations = model_meta.get_field_info(ModelClass).relations
         for field_name in self.Meta.nested_fields:
-            relation = relations.get(field_name)
-            assert relation, (
+            field = self.Meta.model._meta.get_field(field_name)
+            assert (
+                isinstance(field, ManyToManyField) or
+                isinstance(field, ForeignKey)
+            ), (
                 'Nested field %s, is not a relational field' % field_name
             )
-            assert relation.to_many, (
-                'Nested field %s, is not a to_many relational field'
-                % field_name
-            )
+            # assert relation.to_many, (
+            #     'Nested field %s, is not a to_many relational field'
+            #     % field_name
+            # )
 
     def validate(self, data, *args, **kwargs):
         """
@@ -95,20 +127,53 @@ class NestedMixin(serializers.ModelSerializer):
         nested = {}
         for field_name in self.Meta.nested_fields:
             value = validated_data.pop(field_name, None)
-            if value is not None:
-                nested[field_name] = value
+            nested[field_name] = value
         return nested
 
     def update_nested(self, nested, instance):
         """
         Call the nested serializer's update method and set the returned items
         """
-        for field_name, attrs in nested.items():
-            related_manager = getattr(instance, field_name)
-            serializer = self.get_fields()[field_name]
-            related_objects = related_manager.all()
-            ret = serializer.update(related_objects, attrs)
-            related_manager.set(ret)
+        for nested_field_name, attrs in nested.items():
+            serializer = self.get_fields()[nested_field_name]
+            nested_field = self.Meta.model._meta.get_field(nested_field_name)
+
+            if isinstance(nested_field, ManyToManyField):
+                related_manager = getattr(instance, nested_field_name)
+                related_objects = related_manager.all()
+                ret = serializer.update(related_objects, (attrs or []))
+                related_manager.set(ret)
+
+            elif isinstance(nested_field, ForeignKey):
+                related_manager = nested_field.related_model.objects
+                # 3 cases:
+                # No attrs - delete any existing related instance
+                # attrs with id - update the existing related instance
+                # attrs without id - create new related instance
+
+                if not attrs:
+                    setattr(instance, nested_field_name, None)
+                else:
+                    nested_id = attrs.get('id', None)
+
+                    if nested_id:
+                        nested_instance = related_manager.get(
+                            pk=nested_id
+                        )
+                        serializer.update(nested_instance, attrs)
+                        setattr(instance, nested_field_name, nested_instance)
+                    else:
+                        nested_instance = serializer.create(attrs)
+                        setattr(instance, nested_field_name, nested_instance)
+
+            else:
+                raise TypeError(
+                    '{0} is marked as a nested field but is neither'
+                    'a ManyToManyField or a ForeignKey field'.format(
+                        nested_field_name)
+                )
+            # Save the instance
+            instance.save()
 
 
 class ModelValidateMixin(object):
@@ -116,7 +181,7 @@ class ModelValidateMixin(object):
     This mixin implements a custom validate method to run the model's own
     validation checks by calling model.clean().
     This allows us to keep validation better encapsulated at the model level
-    or avoid duplication of validation.
+    and avoid duplication of validation.
     """
 
     def validate(self, attrs):
@@ -136,12 +201,6 @@ class ModelValidateMixin(object):
         if instance is None:
             instance = ModelClass()
 
-        # Ignore, i.e. don't validate ManyToManyField fields
-        for field_name, value in attrs.items():
-            field = meta.get_field(field_name)
-            if not isinstance(field, ManyToManyField):
-                setattr(instance, field_name, value)
-
         # We catch any django ValidationErrors and raise drf ValidationError's
         # instead.
         try:
@@ -153,8 +212,10 @@ class ModelValidateMixin(object):
         return attrs
 
 
-class CustomSerializer(UpdateListMixin, NestedMixin, ModelValidateMixin,
-                       serializers.ModelSerializer):
+class CustomSerializer(
+    UniqueFieldsMixin, UpdateListMixin, NestedMixin, ModelValidateMixin,
+    serializers.ModelSerializer
+):
     def get_field_names(self, declared_fields, info):
         """
         Overwriten to allow .Meta.fields='__all__' to be used and then add
@@ -173,6 +234,7 @@ class GroceryGroupSerializer(CustomSerializer):
     class Meta:
         model = models.GroceryGroup
         fields = '__all__'
+        validators = []
 
 
 class GroceryItemSerializer(CustomSerializer):
@@ -182,6 +244,7 @@ class GroceryItemSerializer(CustomSerializer):
         model = models.GroceryItem
         fields = '__all__'
         extra_fields = ['group']
+        validators = []
 
 
 class TagSerializer(CustomSerializer):
@@ -197,9 +260,12 @@ class SourceSerializer(CustomSerializer):
 
 
 class IngredientSerializer(CustomSerializer):
+    grocery_item = GroceryItemSerializer(required=False, allow_null=True)
+
     class Meta:
         model = models.Ingredient
         fields = '__all__'
+        validators = []
 
 
 class ListField(CharField):
@@ -230,6 +296,7 @@ class RecipeSerializer(CustomSerializer):
     class Meta:
         model = models.Recipe
         exclude = ('image',)
+        validators = []
 
 
 class UserSerializer(CustomSerializer):

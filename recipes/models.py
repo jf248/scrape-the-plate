@@ -16,6 +16,32 @@ class AbstractModel(models.Model):
         self.normalize()
         super().save(*args, **kwargs)
 
+    @classmethod
+    def filter_user(cls, user):
+        if user:
+            return cls.objects.filter(user=user.id)
+        return cls.objects.filter(user=-1)
+
+    @classmethod
+    def filter_user_and_None(cls, user):
+        if user:
+            return cls.objects.filter(
+                models.Q(user=user.id) | models.Q(user=None)
+            )
+        return cls.objects.filter(user=True)
+
+    @classmethod
+    def filter_user_and_public(cls, user):
+        if user:
+            return cls.objects.filter(
+                models.Q(user=user.id) | models.Q(public=True)
+            )
+        return cls.objects.filter(public=True)
+
+    @classmethod
+    def get_all(cls):
+        return list(cls.objects.all())
+
     class Meta:
         abstract = True
 
@@ -54,8 +80,56 @@ class Source(AbstractModel):
         ordering = ['name']
 
 
+class GroceryGroup(AbstractModel):
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, blank=True, null=True
+    )
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+
+class GroceryItem(AbstractModel):
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, blank=True, null=True
+    )
+    name = models.CharField(max_length=255, unique=True)
+    group = models.ForeignKey(GroceryGroup, on_delete=models.PROTECT)
+
+    def save(self, *args, **kwargs):
+        # self.name = general.singular_lower_stripped(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['name']
+
+
+class GroceryPhrase(AbstractModel):
+    user = models.ForeignKey(
+        get_user_model(), on_delete=models.CASCADE, blank=True, null=True
+    )
+    grocery_item = models.ForeignKey(GroceryItem, on_delete=models.CASCADE)
+    text = models.CharField(max_length=255, unique=True)
+
+    def save(self, *args, **kwargs):
+        self.text = general.singular_lower_stripped(
+            self.text, simple_only=True)
+        super(GroceryPhrase, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.text
+
+
 class Ingredient(AbstractModel):
-    # grocery_item = models.ForeignKey(GroceryItem, on_delete=models.PROTECT)
+    grocery_item = models.ForeignKey(
+        GroceryItem, on_delete=models.PROTECT, blank=True, null=True)
     text = models.CharField(max_length=255)
     # group = models.CharField(max_length=255, blank=True)
 
@@ -123,56 +197,3 @@ class Recipe(AbstractModel):
         if self.pk:
             qs = qs.exclude(pk=self.pk)
         return qs.exists()
-
-    @staticmethod
-    def get_user_and_public_recipes(user):
-        if user:
-            return Recipe.objects.filter(
-                models.Q(user=user.id) | models.Q(public=True)
-            )
-        return Recipe.objects.filter(public=True)
-
-
-class GroceryGroup(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-
-
-class GroceryItem(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    group = models.ForeignKey(GroceryGroup, on_delete=models.PROTECT)
-
-    def save(self, *args, **kwargs):
-        self.name = general.singular_lower_stripped(self.name)
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-
-
-class GroceryPhrase(models.Model):
-    grocery_item = models.ForeignKey(GroceryItem, on_delete=models.CASCADE)
-    text = models.CharField(max_length=255, unique=True)
-
-    def save(self, *args, **kwargs):
-        self.text = general.singular_lower_stripped(
-            self.text, simple_only=True)
-        super(GroceryPhrase, self).save(*args, **kwargs)
-
-    def __str__(self):
-        return self.text
-
-
-class ModelHelper(object):
-
-    @staticmethod
-    def get_all(model):
-        return list(model.objects.all())

@@ -1,6 +1,6 @@
 from django.db.models import Q
 from django_filters import rest_framework as filters
-from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 from . import models
 
@@ -12,6 +12,12 @@ class SearchFilter(SearchFilter):
 
 
 class DjangoFilterBackend(filters.DjangoFilterBackend):
+    """
+    A Filter backend
+    """
+
+
+class OrderingFilter(OrderingFilter):
     """
     A Filter backend
     """

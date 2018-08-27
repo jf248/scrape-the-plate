@@ -22,3 +22,14 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         # Write permissions are only allowed to the owner of the snippet.
         return obj.user == request.user
+
+
+class IsOwnerOrIsPublic(permissions.BasePermission):
+    """
+    Custom permission to only allow all access to object if owner or
+    public=True on the object.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        # Write permissions are only allowed to the owner of the snippet.
+        return (obj.user == request.user) or (obj.public)

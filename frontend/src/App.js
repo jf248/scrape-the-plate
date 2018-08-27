@@ -5,7 +5,7 @@ import { Switch } from 'react-router-dom';
 import { hot } from 'react-hot-loader';
 
 import { store, history } from './store';
-import { routes } from 'config';
+import * as config from 'config';
 import { Route as ColdRoute } from 'components/frame';
 
 const Route = hot(module)(ColdRoute);
@@ -15,7 +15,7 @@ function App() {
     <ReduxProvider store={store}>
       <ConnectedRouter history={history}>
         <Switch>
-          {routes.map(route => (
+          {config.routes.map(route => (
             <Route key={route.path} {...route} />
           ))}
         </Switch>

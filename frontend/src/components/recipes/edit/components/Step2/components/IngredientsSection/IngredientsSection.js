@@ -7,9 +7,10 @@ function IngredientsSection(props) {
   const { inputProps, ...rest } = props;
 
   const caption = 'Tip: You can paste multiple ingredients at once.';
+  const isError = !!inputProps.error;
 
   return (
-    <Section caption={caption} title={'Ingredients'} {...rest}>
+    <Section caption={caption} title={'Ingredients'} error={isError} {...rest}>
       <IngredientsField {...inputProps} />
     </Section>
   );

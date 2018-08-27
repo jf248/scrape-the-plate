@@ -1,7 +1,13 @@
 {
-    "*.py": [
-        "autoflake --in-place --remove-all-unused-imports --remove-unused-variables --exclude='*_auto_*,*/settings/__init__.py'",
-        "autopep8 --in-place --exclude='*_auto_*'",
-        "flake8 exclude=*_auto_*"
+    "linters": {
+        "*.py": [
+            "autoflake --in-place --remove-all-unused-imports --remove-unused-variables",
+            "autopep8 --in-place",
+            "flake8"
+        ]
+    },
+    "ignore": [
+        "**/migrations/*",
+        "**setting/__init__.py"
     ]
 }

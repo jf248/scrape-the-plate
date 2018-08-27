@@ -6,7 +6,6 @@ const styles = () => ({
   root: {
     alignItems: 'baseline',
     display: 'flex',
-    flexWrap: 'wrap',
   },
 });
 

@@ -1,4 +1,4 @@
-from rest_framework import status, viewsets
+from rest_framework import status, viewsets, exceptions, generics
 from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.decorators import action, api_view
@@ -11,6 +11,48 @@ from scraper import scrape
 from scraper.exceptions import (
     InvalidURLError, URLError, WebsiteNotImplementedError, RequestException
 )
+
+
+class GetObjectAllMixin():
+    """
+    A mixin that provides an override of the get_object method. Useful when we
+    want both a filtered get_queryset but also want the get_object method to
+    provide 401 and 403 errors not just 404.
+    """
+
+    # Must provide a model class
+    model_cls = None
+
+    def get_object(self):
+        """
+        Overried rest_framework.generics.GenericAPIView get_object method which
+        uses the self.get_queryset(). This would result in 404 errors rather
+        than 401 or 403 errors if the object exists
+        """
+        # Here's the only change: objects.all() instead of self.get_queryset()
+        assert self.model_cls is not None, (
+            "'%s' did not set model_cls"
+            % self.__class__.__name__
+        )
+        queryset = self.filter_queryset(self.model_cls.objects.all())
+
+        # Perform the lookup filtering.
+        lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
+
+        assert lookup_url_kwarg in self.kwargs, (
+            'Expected view %s to be called with a URL keyword argument '
+            'named "%s". Fix your URL conf, or set the `.lookup_field` '
+            'attribute on the view correctly.' %
+            (self.__class__.__name__, lookup_url_kwarg)
+        )
+
+        filter_kwargs = {self.lookup_field: self.kwargs[lookup_url_kwarg]}
+        obj = generics.get_object_or_404(queryset, **filter_kwargs)
+
+        # May raise a permission denied
+        self.check_object_permissions(self.request, obj)
+
+        return obj
 
 
 class CreateWithUserMixin():
@@ -40,21 +82,31 @@ class CreateWithUserMixin():
 class GroceryItemViewSet(viewsets.ModelViewSet):
     queryset = models.GroceryItem.objects.all()
     serializer_class = serializers.GroceryItemSerializer
-    filter_backends = (filters.DjangoFilterBackend)
+    filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('id', 'name',)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           permissions.IsOwnerOrReadOnly,)
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.GroceryItem.filter_user_and_None(user).order_by(
+            'group__name', 'name'
+        )
 
 
 class GroceryGroupViewSet(viewsets.ModelViewSet):
     queryset = models.GroceryGroup.objects.all()
     serializer_class = serializers.GroceryGroupSerializer
-    filter_backends = (filters.SearchFilter, filters.DjangoFilterBackend)
+    filter_backends = (filters.DjangoFilterBackend,)
     search_fields = ('name', 'id',)
     filter_class = filters.GroceryGroupFilter
     pagination_class = pagination.CustomPagination
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           permissions.IsOwnerOrReadOnly,)
+
+    def get_queryset(self):
+        user = self.request.user
+        return models.GroceryGroup.filter_user_and_None(user)
 
 
 class SourceViewSet(viewsets.ReadOnlyModelViewSet):
@@ -71,7 +123,7 @@ class BookViewSet(CreateWithUserMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return models.Book.objects.filter(user=user.id)
+        return models.Book.filter_user(user)
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -80,18 +132,22 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = pagination.CustomPagination
 
 
-class RecipeViewSet(CreateWithUserMixin, viewsets.ModelViewSet):
+class RecipeViewSet(CreateWithUserMixin, GetObjectAllMixin,
+                    viewsets.ModelViewSet):
+    model_cls = models.Recipe
+
     serializer_class = serializers.RecipeSerializer
     pagination_class = pagination.CustomPagination
     filter_class = filters.RecipeFilter
     filter_backends = (filters.SearchFilter, filters.DjangoFilterBackend)
     search_fields = ('title',)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          permissions.IsOwnerOrIsPublic,
                           permissions.IsOwnerOrReadOnly,)
 
     def get_queryset(self):
         user = self.request.user
-        return models.Recipe.get_user_and_public_recipes(user)
+        return self.model_cls.filter_user_and_public(user)
 
 
 class AuthViewSet(viewsets.ViewSet):
@@ -192,3 +248,8 @@ def scrape_view(request):
         raise ParseError(
             err
         )
+
+
+@api_view(['GET', 'POST', 'PATCH', 'DELETE', 'PATCH', 'OPTIONS', 'HEAD'])
+def not_found(request):
+    raise exceptions.NotFound()

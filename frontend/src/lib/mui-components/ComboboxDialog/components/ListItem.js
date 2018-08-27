@@ -22,15 +22,18 @@ function ListItem(props) {
     children,
     className: classNameProp,
     classes,
-    downshiftProps,
+    downshift,
     index,
     item,
     selected,
     submenuItems,
+    style,
+    clickedIndex,
+    onMoreClick,
     ...rest
   } = props;
 
-  const { getItemProps, highlightedIndex, itemToString } = downshiftProps;
+  const { getItemProps, highlightedIndex, itemToString } = downshift;
 
   const className = classnames(
     { [classes.highlighted]: highlightedIndex === index },
@@ -39,24 +42,27 @@ function ListItem(props) {
   );
 
   return (
-    <Mui.ListItem
-      {...getItemProps({
-        className,
-        index,
-        item,
-        button: true,
-        ...rest,
-      })}
-    >
-      <Mui.ListItemText>{itemToString(item)}</Mui.ListItemText>
-      {submenuItems.length > 0 && (
-        <Mui.ListItemSecondaryAction>
-          <Enhanced.MoreButton>
-            {submenuItems.map(submenuItem => submenuItem(item, selected))}
-          </Enhanced.MoreButton>
-        </Mui.ListItemSecondaryAction>
-      )}
-    </Mui.ListItem>
+    <div style={style}>
+      <Mui.ListItem
+        {...getItemProps({
+          className,
+          index,
+          item,
+          button: true,
+          ...rest,
+        })}
+      >
+        <Mui.ListItemText primary={itemToString(item)} />
+        {submenuItems.length > 0 &&
+          (highlightedIndex === index || clickedIndex === index) && (
+            <Mui.ListItemSecondaryAction onClick={onMoreClick(index)}>
+              <Enhanced.MoreButton onExit={onMoreClick()}>
+                {submenuItems.map(submenuItem => submenuItem(item, selected))}
+              </Enhanced.MoreButton>
+            </Mui.ListItemSecondaryAction>
+          )}
+      </Mui.ListItem>
+    </div>
   );
 }
 

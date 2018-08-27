@@ -1,5 +1,5 @@
 from recipes.utils import general
-from recipes.models import ModelHelper, GroceryItem, GroceryPhrase
+from recipes.models import GroceryItem, GroceryPhrase
 
 
 class GroceryMatcher(object):
@@ -25,8 +25,8 @@ class GroceryMatcher(object):
              ...
             ]
         """
-        grocery_items = ModelHelper.get_all(GroceryItem)
-        grocery_phrases = ModelHelper.get_all(GroceryPhrase)
+        grocery_items = GroceryItem.get_all()
+        grocery_phrases = GroceryPhrase.get_all()
         result = GroceryMatcherHelper.match(ingredients, grocery_items,
                                             grocery_phrases)
 
@@ -87,22 +87,22 @@ class GroceryMatcherHelper(object):
 
         return {'grocery_item': grocery_item, 'grocery_phrase': phrase}
 
-    @classmethod
-    def get_grocery(cls, ingredients):
-        """
-        Takes a string (with ingredients seperated by new lines).
-        Finds any GroceryItem or GroceryPhrase objects that match.
-        Returns a list of dictionaries of each ingredient:
-        [{'text':, 'grocery_item':, 'grocery_phrase':},]
-        """
-        ingredients = general.textarea_to_list(ingredients)
-        result = [{'text': x} for x in ingredients]
-        grocery_items, grocery_phrases = ModelHelper.get_all(
-            models=[GroceryItem, GroceryPhrase])
+    # @classmethod
+    # def get_grocery(cls, ingredients):
+    #     """
+    #     Takes a string (with ingredients seperated by new lines).
+    #     Finds any GroceryItem or GroceryPhrase objects that match.
+    #     Returns a list of dictionaries of each ingredient:
+    #     [{'text':, 'grocery_item':, 'grocery_phrase':},]
+    #     """
+    #     ingredients = general.textarea_to_list(ingredients)
+    #     result = [{'text': x} for x in ingredients]
+    #     grocery_items, grocery_phrases = ModelHelper.get_all(
+    #         models=[GroceryItem, GroceryPhrase])
 
-        # Loop through each dictionary in result and match the ingredient text
-        for d in result:
-            match = cls._match(d['text'], grocery_items, grocery_phrases)
-            d.update(match)
+    #     # Loop through each dictionary in result and match the ingredient
+    #     # text for d in result:
+    #         match = cls._match(d['text'], grocery_items, grocery_phrases)
+    #         d.update(match)
 
-        return result
+    #     return result

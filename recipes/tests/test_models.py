@@ -121,12 +121,12 @@ class GroceryGroupTests(SavePatcherMixin, ModelTesterMixin, TestCase):
 
 class GroceryItemTests(SavePatcherMixin, ModelTesterMixin, TestCase):
 
-    def test_save_corrects_name(self):
-        gi = self.mixer.blend(models.GroceryItem, name='  tests  ')
-        gi.save()
+    # def test_save_corrects_name(self):
+    #     gi = self.mixer.blend(models.GroceryItem, name='  tests  ')
+    #     gi.save()
 
-        self.mock_save.assert_called_with(gi)
-        self.assertEqual(gi.name, 'test')
+    #     self.mock_save.assert_called_with(gi)
+    #     self.assertEqual(gi.name, 'test')
 
     def test_meta(self):
         self.assertMeta(models.GroceryItem,
@@ -160,13 +160,37 @@ class GroceryPhraseTests(SavePatcherMixin, ModelTesterMixin, TestCase):
                         ordering=[])
 
 
-class ModelHelperTests(TestCase):
+class AbstractModelTests(TestCase):
 
-    def test_get_all_returns_list_of_all_objects(self):
+    def test_filter_user_returns_list_of_all_objects_of_that_user(self):
         mixer = Mixer(commit=True)
-        phrases = mixer.cycle(3).blend(models.GroceryPhrase)
+        user = mixer.blend(models.User)
+        phrases = mixer.cycle(3).blend(models.GroceryPhrase, user=user)
 
         expected = phrases
-        result = models.ModelHelper.get_all(models.GroceryPhrase)
+        result = list(models.GroceryPhrase.filter_user(user=user))
 
         self.assertEqual(result, expected)
+
+    def test_filter_user_and_None(self):
+        mixer = Mixer(commit=True)
+        user = mixer.blend(models.User)
+        phrase1 = mixer.blend(models.GroceryPhrase, user=user)
+        phrase2 = mixer.blend(models.GroceryPhrase)
+
+        expected = [phrase1, phrase2]
+        result = list(models.GroceryPhrase.filter_user_and_None(user=user))
+
+        self.assertEqual(result, expected)
+
+    def test_filter_user_and_public(self):
+        mixer = Mixer(commit=True)
+        user = mixer.blend(models.User)
+        recipe1 = mixer.blend(models.Recipe, user=user)
+        recipe2 = mixer.blend(models.Recipe, public=True)
+        mixer.blend(models.Recipe, public=False)
+
+        expected = [recipe2, recipe1]
+        result = list(models.Recipe.filter_user_and_public(user=user))
+
+        self.assertCountEqual(result, expected)

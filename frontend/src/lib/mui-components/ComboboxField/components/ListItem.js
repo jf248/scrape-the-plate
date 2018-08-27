@@ -22,19 +22,24 @@ function ListItem(props) {
   const {
     classes,
     className: classNameProp,
-    downshiftProps,
+    comparator,
+    downshift,
     index,
     item,
     selectedItems, // eslint-disable-line no-unused-vars
     ...rest
   } = props;
 
-  const { getItemProps, highlightedIndex, itemToString } = downshiftProps;
+  const { getItemProps, highlightedIndex, itemToString } = downshift;
 
   const className = classnames(
     classes.listItem,
     { [classes.highlighted]: highlightedIndex === index },
-    { [classes.selected]: selectedItems.includes(item) },
+    {
+      [classes.selected]: selectedItems.some(selectedItem =>
+        comparator(item, selectedItem)
+      ),
+    },
     classNameProp
   );
 

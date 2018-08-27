@@ -27,15 +27,17 @@ class ComboboxFieldPres extends React.Component {
       TextFieldProps,
 
       // from controller
-      selectedItems,
+      downshift,
+      focusIndex,
+      items,
+      groupIndicies,
+      innerRef,
+      isControlledOpen,
+      suggestion,
       multiple,
       onKeyDown,
-      typeAheadText,
-      selectedItemFocusIndex,
-      groupedItems,
-      downshiftProps,
-      isControlledOpen,
-      innerRef,
+      selectedItems,
+      comparator,
       ...rest
     } = this.props;
 
@@ -44,19 +46,21 @@ class ComboboxFieldPres extends React.Component {
     return (
       <div ref={innerRef} className={className} {...rest}>
         <Input
-          downshiftProps={downshiftProps}
+          downshift={downshift}
           multiple={multiple}
           renderSelectedItem={renderSelectedItem}
-          typeAheadText={typeAheadText}
-          selectedItemFocusIndex={selectedItemFocusIndex}
+          suggestion={suggestion}
+          focusIndex={focusIndex}
           selectedItems={selectedItems}
           {...TextFieldProps}
           onKeyDown={onKeyDown}
           isControlledOpen={isControlledOpen}
         />
         <List
-          downshiftProps={downshiftProps}
-          groupedItems={groupedItems}
+          comparator={comparator}
+          downshift={downshift}
+          items={items}
+          groupIndicies={groupIndicies}
           listBottomElement={listBottomElement}
           listBottomFixed={listBottomFixed}
           ListProps={ListProps}

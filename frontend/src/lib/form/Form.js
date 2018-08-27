@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import PropTypes from 'prop-types';
 import { omit } from 'lodash';
 
 import { renderProps, callAll } from 'lib/react-powerplug';
@@ -35,6 +36,10 @@ class Form extends Component {
     validate: () => ({}),
     validateOnChange: false,
     validateOnBlur: true,
+  };
+
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
   };
 
   state = {
@@ -98,10 +103,7 @@ class Form extends Component {
     return new Promise(resolve => {
       this.setState(prevState => {
         const validationErrors = this.props.validate(prevState.values);
-        const isValid =
-          Object.keys(validationErrors).length === 0 &&
-          Object.keys(prevState.apiErrors).length === 0;
-        return { validationErrors, isValid };
+        return { validationErrors };
       }, resolve);
     });
   };
@@ -167,20 +169,23 @@ class Form extends Component {
     this.setTouched({ [field]: true });
   };
 
+  noErrors = () => {
+    return (
+      Object.keys(this.state.validationErrors).length === 0 &&
+      Object.keys(this.state.apiErrors).length === 0
+    );
+  };
+
   handleSubmit = (values, bag) => {
     const { onSubmit, normalize } = this.props;
-    if (onSubmit) {
-      return this.runValidation().then(() => {
-        if (this.state.isValid) {
-          onSubmit(normalize(values), bag);
-        } else {
-          this.setTouchedAll();
-        }
-      });
-      //return onSubmit(normalize(values), bag);
-    } else {
-      console.warn('Form: No onSubmit prop'); // eslint-disable-line no-console
-    }
+
+    return this.runValidation().then(() => {
+      if (this.noErrors()) {
+        onSubmit(normalize(values), bag);
+      } else {
+        this.setTouchedAll();
+      }
+    });
   };
 
   render() {
@@ -189,14 +194,13 @@ class Form extends Component {
       touched,
       validationErrors,
       apiErrors,
-      isValid,
       isPristine,
     } = this.state;
     const { submitOnEnter } = this.props;
     const bag = {
       apiErrors,
       isPristine,
-      isValid,
+      isValid: this.noErrors(),
       resetApiErrors: this.resetApiErrors,
       resetForm: this.resetForm,
       setApiErrors: this.setApiErrors,
@@ -234,6 +238,7 @@ class Form extends Component {
         };
       },
       getSubmitProps: (ownProps = {}) => ({
+        disabled: !this.noErrors(),
         ...ownProps,
         onClick: callAll(ownProps.onClick, () =>
           this.handleSubmit(values, bag)

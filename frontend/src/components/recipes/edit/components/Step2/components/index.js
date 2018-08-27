@@ -1,4 +1,3 @@
-export { default as PreparationStep } from './PreparationStep';
 export { default as TitleField } from './TitleField';
 export { default as IngredientsSection } from './IngredientsSection';
 export { default as PreparationSection } from './PreparationSection';

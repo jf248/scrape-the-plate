@@ -8,15 +8,23 @@ import TagsFieldPres from './TagsFieldPres';
 
 function TagsField(props) {
   const { inputProps, ...rest } = props;
-  const { value: valueProp, error, touched, onChange, onBlur } = inputProps;
+  const {
+    value: valueProp,
+    error,
+    touched,
+    onChange: onChangeProp,
+    onBlur,
+  } = inputProps;
 
   const value = valueProp ? valueProp : [];
 
   const renderFunc = (modal, recordsMany) => {
     const { onOpen: onOpenModal, getModalProps } = modal;
-    const { data = [] } = recordsMany;
+    const { data } = recordsMany;
 
-    const tagNames = value ? value.map(id => data[id].name) : [];
+    const selectedItems = value.map(id => data[id]);
+    const tagNames = selectedItems.map(item => item.name);
+    const onChange = items => onChangeProp(items && items.map(item => item.id));
 
     return (
       <TagsFieldPres
@@ -28,7 +36,7 @@ function TagsField(props) {
           onOpenModal,
           tagNames,
           touched,
-          value,
+          selectedItems,
           ...rest,
         }}
       />

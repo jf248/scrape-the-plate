@@ -1,4 +1,9 @@
 # Burn list
+- react-virtualized
+- MoreButton on ListItems in ResourceDialog. Just one modal.
+
+- Think about how GET_LIST changes store.resouces.[resourceName].list
+- Add refine to ResourceDialog
 - Grocery Items
 - Perfomance
 - Add link to users, takes to recipes filter by that user

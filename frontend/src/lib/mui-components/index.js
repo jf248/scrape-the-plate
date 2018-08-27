@@ -3,6 +3,9 @@ export { default as ActionsLeft } from './ActionsLeft';
 export { default as ActionsRight } from './ActionsRight';
 export { default as ComboboxDialog } from './ComboboxDialog';
 export { default as ComboboxController } from './ComboboxController';
+export {
+  default as ComboboxWithFilterController,
+} from './ComboboxWithFilterController';
 export { default as ComboboxField } from './ComboboxField';
 export { default as ExpansionDetails } from './ExpansionDetails';
 export { default as ExpansionSummary } from './ExpansionSummary';

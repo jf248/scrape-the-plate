@@ -35,99 +35,101 @@ const styles = theme => ({
   },
 });
 
-function Step2Pres(props) {
-  const {
-    classes,
-    getInputProps,
-    getModalProps,
-    getSubmitProps,
-    goBack,
-    isCreate,
-    onOpenModal,
-    resetForm,
-  } = props;
-  return (
-    <React.Fragment>
-      <Card>
-        <CardContent>
-          <FlexContainer className={classes.marginBottom}>
-            <FlexGrow>
-              <TitleField
-                className={classes.marginRight}
-                {...getInputProps({ name: 'title' })}
-              />
-            </FlexGrow>
-            <FlexShrink>
-              <ToggleField
-                {...getInputProps({
-                  label: 'Public',
-                  name: 'public',
-                  error: undefined,
-                  touched: undefined,
-                  color: 'primary',
-                })}
-              />
-            </FlexShrink>
-          </FlexContainer>
-          <IngredientsSection
-            defaultExpanded={false}
-            inputProps={getInputProps({ name: 'ingredients' })}
-          />
-          <PreparationSection
-            defaultExpanded={false}
-            inputProps={getInputProps({ name: 'preparation' })}
-          />
-          <NotesSection
-            defaultExpanded={false}
-            inputProps={getInputProps({ name: 'notes' })}
-          />
-          <TagsSection
-            defaultExpanded={false}
-            inputProps={getInputProps({ name: 'tags' })}
-          />
-          <DetailsSection
-            defaultExpanded={false}
-            prepTimeInputProps={getInputProps({ name: 'prep_time' })}
-            cookTimeInputProps={getInputProps({ name: 'cook_time' })}
-            servesInputProps={getInputProps({ name: 'serves' })}
-          />
-          <SourceSection
-            defaultExpanded={false}
-            sourceTypeInputProps={getInputProps({ name: 'sourceType' })}
-            sourceInputProps={getInputProps({ name: 'source' })}
-            urlInputProps={getInputProps({ name: 'url' })}
-            bookInputProps={getInputProps({ name: 'book' })}
-            pageInputProps={getInputProps({ name: 'page' })}
-          />
-        </CardContent>
-        <Divider />
-        <Actions>
-          {isCreate && (
-            <ActionsLeft>
-              <Button size={'small'} onClick={goBack}>
-                Back
+class Step2Pres extends React.Component {
+  render() {
+    const {
+      classes,
+      getInputProps,
+      getModalProps,
+      getSubmitProps,
+      goBack,
+      isCreate,
+      onOpenModal,
+      resetForm,
+    } = this.props;
+    return (
+      <React.Fragment>
+        <Card>
+          <CardContent>
+            <FlexContainer className={classes.marginBottom}>
+              <FlexGrow>
+                <TitleField
+                  className={classes.marginRight}
+                  {...getInputProps({ name: 'title' })}
+                />
+              </FlexGrow>
+              <FlexShrink>
+                <ToggleField
+                  {...getInputProps({
+                    label: 'Public',
+                    name: 'public',
+                    error: undefined,
+                    touched: undefined,
+                    color: 'primary',
+                  })}
+                />
+              </FlexShrink>
+            </FlexContainer>
+            <IngredientsSection
+              defaultExpanded={false}
+              inputProps={getInputProps({ name: 'ingredients' })}
+            />
+            <PreparationSection
+              defaultExpanded={false}
+              inputProps={getInputProps({ name: 'preparation' })}
+            />
+            <NotesSection
+              defaultExpanded={false}
+              inputProps={getInputProps({ name: 'notes' })}
+            />
+            <TagsSection
+              defaultExpanded={false}
+              inputProps={getInputProps({ name: 'tags' })}
+            />
+            <DetailsSection
+              defaultExpanded={false}
+              prepTimeInputProps={getInputProps({ name: 'prep_time' })}
+              cookTimeInputProps={getInputProps({ name: 'cook_time' })}
+              servesInputProps={getInputProps({ name: 'serves' })}
+            />
+            <SourceSection
+              defaultExpanded={false}
+              sourceTypeInputProps={getInputProps({ name: 'sourceType' })}
+              sourceInputProps={getInputProps({ name: 'source' })}
+              urlInputProps={getInputProps({ name: 'url' })}
+              bookInputProps={getInputProps({ name: 'book' })}
+              pageInputProps={getInputProps({ name: 'page' })}
+            />
+          </CardContent>
+          <Divider />
+          <Actions>
+            {isCreate && (
+              <ActionsLeft>
+                <Button size={'small'} onClick={goBack}>
+                  Back
+                </Button>
+              </ActionsLeft>
+            )}
+            <ActionsRight>
+              <Button size={'small'} onClick={onOpenModal}>
+                Reset
               </Button>
-            </ActionsLeft>
-          )}
-          <ActionsRight>
-            <Button size={'small'} onClick={onOpenModal}>
-              Reset
-            </Button>
-            <Button
-              {...getSubmitProps({
-                size: 'small',
-                color: 'primary',
-                variant: 'contained',
-              })}
-            >
-              Save
-            </Button>
-          </ActionsRight>
-        </Actions>
-      </Card>
-      <ResetDialog resetForm={resetForm} {...getModalProps()} />
-    </React.Fragment>
-  );
+              <Button
+                {...getSubmitProps({
+                  size: 'small',
+                  color: 'primary',
+                  variant: 'contained',
+                })}
+              >
+                Save
+              </Button>
+            </ActionsRight>
+          </Actions>
+        </Card>
+        <ResetDialog resetForm={resetForm} {...getModalProps()} />
+      </React.Fragment>
+    );
+  }
 }
 
 export default withStyles(styles)(Step2Pres);

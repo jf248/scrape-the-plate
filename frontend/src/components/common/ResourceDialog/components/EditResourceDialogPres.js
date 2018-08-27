@@ -19,15 +19,13 @@ export default function EditTagDialogPres(props) {
     onClose,
     onExit,
     component: Component,
-    resourceNameSingular,
+    resourceName,
   } = props;
 
   return (
     <Dialog {...getRootProps({ open: isOpen, onClose, onExit })}>
       <DialogTitle>
-        {isCreate
-          ? `Add a ${resourceNameSingular}`
-          : `Edit ${resourceNameSingular}`}
+        {isCreate ? `Add a ${resourceName}` : `Edit ${resourceName}`}
       </DialogTitle>
       <DialogContent>
         <Component {...{ getInputProps }} />

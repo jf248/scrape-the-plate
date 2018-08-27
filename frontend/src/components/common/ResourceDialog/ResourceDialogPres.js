@@ -15,42 +15,38 @@ const styles = () => ({
 ResourceDialogPres.defaultProps = {};
 
 function ResourceDialogPres({
-  classes,
   className: classNameProp,
-  onClose,
+  classes,
+  editDialog,
+  multiple,
   onCreate,
   onDelete,
   onEdit,
-  open,
-  itemToString,
-  items,
-  onChange,
-  selectedItem,
-
-  editDialog,
-  resourceNameSingular,
-  multiple,
-
+  resourceName,
+  getSelectedItems,
+  selectedItems,
   ...rest
 }) {
   const className = classNames(classNameProp, classes.root);
 
   const title = multiple
-    ? `Choose some ${resourceNameSingular}s`
-    : `Choose a ${resourceNameSingular}`;
+    ? `Choose some ${resourceName}s`
+    : `Choose a ${resourceName}`;
 
   return (
     <React.Fragment>
       <Enhanced.ComboboxDialog
         {...{
+          selectedItems: getSelectedItems ? getSelectedItems() : selectedItems,
           className,
-          itemToString,
-          items,
+          listBottomElement: (
+            <Mui.DialogActions className={classes.dialogActions}>
+              <Mui.Button onClick={onCreate} color="primary">
+                {`+ Create a new ${resourceName}`}
+              </Mui.Button>
+            </Mui.DialogActions>
+          ),
           multiple,
-          onChange,
-          onClose,
-          open,
-          selectedItem,
           submenuItems: [
             (item, selected) => (
               <Mui.MenuItem
@@ -74,13 +70,7 @@ function ResourceDialogPres({
           title,
           ...rest,
         }}
-      >
-        <Mui.DialogActions className={classes.dialogActions}>
-          <Mui.Button onClick={onCreate} color="primary">
-            {`+ Create a new ${resourceNameSingular}`}
-          </Mui.Button>
-        </Mui.DialogActions>
-      </Enhanced.ComboboxDialog>
+      />
       {editDialog}
     </React.Fragment>
   );

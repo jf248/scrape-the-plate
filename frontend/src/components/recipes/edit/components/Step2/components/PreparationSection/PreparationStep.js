@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { IconButton, Paper, withStyles } from '@material-ui/core';
+import * as Mui from '@material-ui/core';
 import { Close as CloseIcon } from '@material-ui/icons';
 
 import { Field } from 'components/common';
-import { splitLines } from 'utils';
+import * as utils from 'utils';
 
 const styles = theme => {
   const transition = {
@@ -12,12 +12,16 @@ const styles = theme => {
   };
 
   return {
+    content: {
+      flexGrow: 1,
+    },
     textField: {
-      flex: '1 1 auto',
+      flex: '1 1 100%',
     },
     root: {
       alignItems: 'center',
       display: 'flex',
+      flexWrap: 'wrap',
       justifyContent: 'space-between',
       margin: 0,
       padding: `0${theme.spacing.unit}px ${theme.spacing.unit * 3}px`,
@@ -50,34 +54,34 @@ const styles = theme => {
       },
     },
     removeButton: {},
+    stepTitle: {
+      flex: '1 1 100%',
+      textTransform: 'uppercase',
+    },
   };
 };
 
-class Ingredient extends Component {
+class PreparationStep extends Component {
   static defaultProps = {
-    item: {},
+    step: {},
   };
 
   render() {
     const {
+      index,
       item,
-      blankItem,
+      onBlur,
       onChange,
       onRemove,
-      onBlur,
       classes,
+      last,
       orphan,
+      error,
     } = this.props;
 
     const handleTextChange = event => {
-      if (event.target.value === '') {
-        onChange(blankItem);
-      } else {
-        const split = splitLines(event.target.value);
-        const newItems = split.map(x => ({ ...blankItem, text: x }));
-        newItems[0] = { ...item, ...newItems[0] };
-        onChange(newItems);
-      }
+      const split = utils.splitLines(event.target.value);
+      onChange(split);
     };
 
     const handleBlur = event => {
@@ -96,34 +100,46 @@ class Ingredient extends Component {
       }
     };
 
-    /*
-    const helperText = last ? null : (
-      <span>
-        No matched grocery item. <Link>Edit</Link>
-      </span>
-    );
-    */
-
     const placeholder = orphan
-      ? 'Add some ingredients'
-      : 'Add another ingredient';
+      ? 'Add some preparation steps'
+      : 'Add another step';
+
+    const stepTitle = `Step ${index + 1}`;
 
     /* (create-react-app eslint rule incorrectly flagging inputProps and InputProps as dublicate props.) */
     /* eslint-disable react/jsx-no-duplicate-props */
     return (
-      <Paper elevation={1} square className={classes.root}>
-        <Field
-          InputProps={{ disableUnderline: true }}
-          className={classes.textField}
-          multiline
-          onBlur={handleBlur}
-          onChange={handleTextChange}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          value={item.text || ''}
-        />
-        {item.text && (
-          <IconButton
+      <Mui.Paper elevation={1} square className={classes.root}>
+        <div className={classes.content}>
+          {!last && (
+            <Mui.Typography
+              className={classes.stepTitle}
+              component={'div'}
+              gutterBottom
+              variant={'caption'}
+            >
+              {stepTitle}
+            </Mui.Typography>
+          )}
+          <Field
+            className={classes.textField}
+            fullWidth
+            InputProps={{ disableUnderline: true }}
+            multiline
+            onBlur={handleBlur}
+            onChange={handleTextChange}
+            onKeyDown={handleKeyDown}
+            placeholder={placeholder}
+            value={item || ''}
+          />
+          {error && (
+            <Mui.Typography variant={'caption'} color={'error'}>
+              {utils.formatApiError(error)}
+            </Mui.Typography>
+          )}
+        </div>
+        {item && (
+          <Mui.IconButton
             aria-hidden="true"
             className={classes.removeButton}
             component="div"
@@ -131,12 +147,12 @@ class Ingredient extends Component {
             tabIndex="-1"
           >
             <CloseIcon />
-          </IconButton>
+          </Mui.IconButton>
         )}
-      </Paper>
+      </Mui.Paper>
     );
-    /* eslint-disable react/jsx-no-duplicate-props */
+    /* eslint-enable react/jsx-no-duplicate-props */
   }
 }
 
-export default withStyles(styles)(Ingredient);
+export default Mui.withStyles(styles)(PreparationStep);

@@ -1509,12 +1509,5 @@
         },
         "model": "recipes.groceryitem",
         "pk": 174
-    },
-    {
-        "fields": {
-            "name": "My Own"
-        },
-        "model": "recipes.source",
-        "pk": 1
     }
 ]

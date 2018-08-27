@@ -6,7 +6,13 @@ import { RecordForm } from 'controllers/record-form';
 import { Modal } from 'controllers/modal';
 import EditResourceDialogPres from './EditResourceDialogPres';
 
-function EditResourceDialog({ name, component, resource, ...rest }) {
+function EditResourceDialog({
+  name,
+  component,
+  resource,
+  resourceName,
+  ...rest
+}) {
   const renderFunc = (modal, recordForm) => {
     const {
       isOpen,
@@ -23,8 +29,6 @@ function EditResourceDialog({ name, component, resource, ...rest }) {
 
     const onExit = () => resetForm();
 
-    const resourceNameSingular = resource.slice(0, -1);
-
     return (
       <EditResourceDialogPres
         {...{
@@ -37,7 +41,7 @@ function EditResourceDialog({ name, component, resource, ...rest }) {
           onExit,
 
           component,
-          resourceNameSingular,
+          resourceName,
         }}
       />
     );

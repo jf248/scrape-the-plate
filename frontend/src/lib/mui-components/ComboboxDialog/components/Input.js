@@ -23,18 +23,18 @@ function Input(props) {
   const {
     classes,
     disabled,
-    downshiftProps,
+    downshift,
     inputProps: inputPropsProp,
     InputProps: InputPropsProp,
     isControlledOpen,
     multiple,
-    selectedItemFocusIndex,
+    focusIndex,
     selectedItems,
-    typeAheadText,
+    suggestion,
     ...rest
   } = props;
 
-  const { selectItem, itemToString, inputValue } = downshiftProps;
+  const { selectItem, itemToString, inputValue } = downshift;
 
   const withMargin = multiple && selectedItems && selectedItems.length > 0;
 
@@ -43,7 +43,7 @@ function Input(props) {
       ? selectedItems.map((item, index) => (
           <Chip
             {...{
-              hasFocus: index === selectedItemFocusIndex,
+              hasFocus: index === focusIndex,
               item,
               itemToString,
               deselect: disabled ? () => {} : () => selectItem(item),
@@ -53,17 +53,18 @@ function Input(props) {
         ))
       : null;
 
-  const endAdornment = inputValue ? (
-    <Button
-      className={classnames({ [classes.withMarginBottom]: withMargin })}
-      disabled={disabled}
-      downshiftProps={downshiftProps}
-      multiple={multiple}
-      isControlledOpen={isControlledOpen}
-    />
-  ) : (
-    undefined
-  );
+  const endAdornment =
+    inputValue && !multiple ? (
+      <Button
+        className={classnames({ [classes.withMarginBottom]: withMargin })}
+        disabled={disabled}
+        downshift={downshift}
+        multiple={multiple}
+        isControlledOpen={isControlledOpen}
+      />
+    ) : (
+      undefined
+    );
 
   const inputClassName = classnames({ [classes.withMarginBottom]: withMargin });
 
@@ -81,11 +82,11 @@ function Input(props) {
 
   return (
     <TextField
-      {...downshiftProps.getInputProps({
+      {...downshift.getInputProps({
         disabled,
         inputProps,
         InputProps,
-        typeAheadText,
+        suggestion,
         ...rest,
       })}
     />

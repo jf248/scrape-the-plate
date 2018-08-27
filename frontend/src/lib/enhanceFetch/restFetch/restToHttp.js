@@ -35,14 +35,14 @@ export const restToHttp = apiUrl => fetchFunc => {
       }
       case types.GET_LIST: {
         if (params) {
-          const { page, perPage, sort, order, filter } = params;
+          const { page, perPage, sort, filter } = params;
           const query = {};
           if (page) {
             query.page = page;
             query.page_size = perPage;
           }
           if (sort) {
-            query.ordering = order === 'DESC' ? '-' + sort : sort;
+            query.ordering = Array.isArray(sort) ? sort.join(',') : sort;
           }
           if (filter) {
             Object.keys(filter).forEach(key => {

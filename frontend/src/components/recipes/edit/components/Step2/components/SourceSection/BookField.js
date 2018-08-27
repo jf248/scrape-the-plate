@@ -8,13 +8,20 @@ import BookFieldPres from './BookFieldPres';
 
 function BookField(props) {
   const { bookInputProps, ...rest } = props;
-  const { value, error, touched, onChange, onBlur } = bookInputProps;
+  const {
+    value,
+    error,
+    touched,
+    onChange: onChangeProp,
+    onBlur,
+  } = bookInputProps;
 
   const renderFunc = (modal, recordsMany) => {
     const { onOpen: onOpenModal, getModalProps } = modal;
     const { data } = recordsMany;
 
     const title = data[value] && data[value].title ? data[value].title : '';
+    const onChange = item => onChangeProp(item && item.id);
 
     return (
       <BookFieldPres

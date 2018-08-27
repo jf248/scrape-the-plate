@@ -7,15 +7,24 @@ Field.defaultProps = {
   component: Enhanced.TextField,
 };
 
-function Field({ error: errorProp, touched, component: Component, ...rest }) {
+function Field({
+  error: errorProp,
+  touched,
+  component: Component,
+  formatValue,
+  value: valueProp,
+  ...rest
+}) {
   // Check error is not an object
   const error = utils.isObject(errorProp) ? undefined : errorProp;
+  const value = formatValue ? formatValue(valueProp) : valueProp;
 
   return (
     <Component
       helperText={touched && error}
       error={touched && !!error}
       margin="dense"
+      value={value}
       {...rest}
     />
   );

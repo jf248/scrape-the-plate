@@ -29,7 +29,7 @@ function TextField(props) {
   const {
     classes,
 
-    typeAheadText,
+    suggestion,
     typeAheadProps,
 
     inputProps: inputPropsProp,
@@ -54,7 +54,7 @@ function TextField(props) {
     startAdornment,
     endAdornment,
     multiline,
-    typeAheadText,
+    suggestion,
     typeAheadProps,
     ...inputPropsProp,
   };

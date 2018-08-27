@@ -8,7 +8,7 @@ ModalController.defaultProps = {
 
 function ModalController(props) {
   const { initial } = props;
-  const renderFunc = ({ state: { open }, setState }) => {
+  const renderFunc = ({ state, setState }) => {
     const onOpenWithProps = (props = {}) => {
       setState({ open: true, props });
     };
@@ -23,7 +23,8 @@ function ModalController(props) {
 
     const getModalProps = (ownProps = {}) => ({
       ...ownProps,
-      open,
+      ...state.props,
+      open: state.open,
       onClose: PowerPlug.callAll(ownProps.onClose, onClose),
     });
 

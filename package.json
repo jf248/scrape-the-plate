@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A web app for scraping and collating recipes",
   "scripts": {
-    "test-django": "$VIRTUAL_ENV/bin/python manage.py test",
+    "test-django": "$VIRTUAL_ENV/bin/python manage.py test --parallel --keepdb",
     "heroku-postbuild": "cd frontend/ && yarn install && yarn run build",
     "dumpdata": "$VIRTUAL_ENV/bin/python manage.py dumpdata --indent=2 recipes > fixtures-data/dumped.json ",
     "precommit": "lint-staged && yarn test-django && cd frontend && npm run precommit"

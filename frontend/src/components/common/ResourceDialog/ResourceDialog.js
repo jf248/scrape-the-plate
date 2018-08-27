@@ -12,31 +12,24 @@ import ResourceDialogPres from './ResourceDialogPres';
 
 ResourceDialog.defaultProps = {
   stringField: 'name',
+  idField: 'id',
   editDialogProps: {},
 };
 
 function ResourceDialog({
   editDialogContentComponent,
   editDialogProps,
-  multiple,
-  onChange: onChangeProp,
+  idField,
+  initialParams,
   resource,
   stringField,
-  value: valueProp,
-  open,
-  onClose,
+  resourceName: resourceNameProp,
+  ...rest
 }) {
-  const value = multiple ? (valueProp ? valueProp : []) : valueProp;
-  const resourceNameSingular = resource.slice(0, -1);
+  const resourceName = resourceNameProp || resource.slice(0, -1);
   const editDialogName = `EDIT_${resource}_DIALOG`;
-  const onChange = selectedItem => {
-    if (multiple) {
-      onChangeProp(selectedItem && selectedItem.map(item => item.id));
-    } else {
-      onChangeProp(selectedItem && selectedItem.id);
-    }
-  };
   const itemToString = item => (item === null ? '' : item[stringField]);
+  const comparator = (x, y) => x[idField] === y[idField];
 
   const renderFunc = (
     editResourceDialog,
@@ -47,24 +40,16 @@ function ResourceDialog({
     const { onOpen: onOpenEdit } = editResourceDialog;
     const { onOpen: onOpenConfirmation } = confirmationModal;
     const { destroy } = crud;
-    const { data, ids } = recordsMany;
+    const { data = {}, ids = [] } = recordsMany;
 
-    const getSelectedItem = () => {
-      if (multiple) {
-        return value.map(id => data[id]);
-      } else {
-        return data[value] || null;
-      }
-    };
-    const selectedItem = getSelectedItem();
     const items = ids.map(id => data[id]);
     const onDelete = item =>
       onOpenConfirmation({
-        title: `Delete the ${resourceNameSingular}?`,
-        onConfirm: () => destroy({ id: item.id }),
+        title: `Delete the ${resourceName}?`,
+        onConfirm: () => destroy({ id: item[idField] }),
       });
 
-    const onEdit = item => onOpenEdit({ id: item.id });
+    const onEdit = item => onOpenEdit({ id: item[idField] });
 
     const onCreate = () => onOpenEdit();
 
@@ -72,24 +57,22 @@ function ResourceDialog({
       name: editDialogName,
       component: editDialogContentComponent,
       resource,
+      resourceName,
       ...editDialogProps,
     });
 
     return (
       <ResourceDialogPres
         {...{
-          onClose,
+          comparator,
+          editDialog,
+          itemToString,
+          items,
           onCreate,
           onDelete,
           onEdit,
-          open,
-          itemToString,
-          items,
-          onChange,
-          selectedItem,
-          multiple,
-          editDialog,
-          resourceNameSingular,
+          resourceName,
+          ...rest,
         }}
       />
     );
@@ -102,7 +85,7 @@ function ResourceDialog({
         <Modal name={editDialogName} />,
         <Modal name={CONFIRMATION_MODAL} />,
         <CrudController resource={resource} />,
-        <Crud.RecordsMany resource={resource} />,
+        <Crud.RecordsMany resource={resource} initialParams={initialParams} />,
       ]}
       render={renderFunc}
     />

@@ -18,8 +18,13 @@ function DetailsSection(props) {
     ...rest
   } = props;
 
+  const isError =
+    !!cookTimeInputProps.error ||
+    !!prepTimeInputProps.error ||
+    !!servesInputProps.error;
+
   return (
-    <Section title={'Details'} {...rest}>
+    <Section title={'Details'} error={isError} {...rest}>
       <Field
         {...servesInputProps}
         className={classes.marginRight}
