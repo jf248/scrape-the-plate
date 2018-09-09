@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-import { Button, withStyles } from '@material-ui/core';
+import * as Mui from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { ModeEdit, Add, InsertDriveFile } from '@material-ui/icons';
+import * as Icons from '@material-ui/icons';
 
 const styles = theme => ({
   fixedWrapper: {
@@ -44,24 +44,26 @@ function AppFabButton(props) {
     to,
     variant: variantProp,
     extendedText,
+    tooltipTitle: tooltipTitleProp,
   } = props;
 
   const variants = {
     edit: {
-      title: 'Edit',
-      icon: ModeEdit,
+      tooltipTitle: 'Edit',
+      icon: Icons.Edit,
     },
     add: {
-      title: 'New',
-      icon: Add,
+      tooltipTitle: 'New',
+      icon: Icons.Add,
     },
     copy: {
-      title: 'Copy',
-      icon: InsertDriveFile,
+      tooltipTitle: 'Copy',
+      icon: Icons.FileCopy,
     },
   };
 
   const variant = variants[variantProp];
+  const tooltipTitle = tooltipTitleProp || variant.tooltipTitle;
   const Icon = variant.icon;
 
   const component = to && (props => <Link to={to} {...props} />);
@@ -79,14 +81,18 @@ function AppFabButton(props) {
     <div className={classes.fixedWrapper}>
       <div className={classes.centerWrapper}>
         <div className={classes.floatWrapper}>
-          <Button {...buttonProps}>
-            <Icon />
-            {extendedText}
-          </Button>
+          <Mui.Tooltip title={tooltipTitle}>
+            <div>
+              <Mui.Button {...buttonProps}>
+                <Icon />
+                {extendedText}
+              </Mui.Button>
+            </div>
+          </Mui.Tooltip>
         </div>
       </div>
     </div>
   );
 }
 
-export default withStyles(styles)(AppFabButton);
+export default Mui.withStyles(styles)(AppFabButton);

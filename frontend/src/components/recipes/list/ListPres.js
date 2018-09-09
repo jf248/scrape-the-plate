@@ -66,6 +66,7 @@ class ListPres extends React.PureComponent {
             extendedText={'Add a recipe'}
             variant={'add'}
             to={`/recipes/create`}
+            tooltipTitle={'Add a recipe'}
           />
         </AppContent>
       </React.Fragment>
