@@ -14,7 +14,7 @@ function SourcePres(props) {
   return (
     <React.Fragment>
       {!isOwner && user && `${user.first_name} ${user.last_name.slice(0, 1)}`}
-      {isOwner && !source && !book && 'My own'}
+      {isOwner && !source && !book && !url && 'My own'}
       {source && (
         <React.Fragment>
           {!isOwner && ' via '}
@@ -33,6 +33,19 @@ function SourcePres(props) {
           {`${book.title}${page && includePage ? `, p. ${page}` : ''}`}
         </React.Fragment>
       )}
+      {!source &&
+        url && (
+          <React.Fragment>
+            {!isOwner && ' via '}
+            <Link
+              target={'_blank'}
+              onClick={event => event.stopPropagation()}
+              href={url}
+            >
+              {url}
+            </Link>
+          </React.Fragment>
+        )}
     </React.Fragment>
   );
 }
