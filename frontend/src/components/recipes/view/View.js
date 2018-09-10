@@ -68,7 +68,7 @@ function View(props) {
     /* eslint-disable react/jsx-key */
     <Compose
       components={[
-        <ViewController resource={'recipes'} id={id} render={renderFunc} />,
+        <ViewController resource={'recipes'} id={id} />,
         <Auth />,
         <Modal name={LOGIN_MODAL} />,
         <Modal name={CONFIRMATION_MODAL} />,
