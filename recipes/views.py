@@ -86,12 +86,11 @@ class GroceryItemViewSet(viewsets.ModelViewSet):
     filter_fields = ('id', 'name',)
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           permissions.IsOwnerOrReadOnly,)
+    ordering_fields = ('name', 'group__name')
 
     def get_queryset(self):
         user = self.request.user
-        return models.GroceryItem.filter_user_and_None(user).order_by(
-            'group__name', 'name'
-        )
+        return models.GroceryItem.filter_user_and_None(user)
 
 
 class GroceryGroupViewSet(viewsets.ModelViewSet):
