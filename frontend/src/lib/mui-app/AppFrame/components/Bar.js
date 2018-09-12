@@ -32,10 +32,19 @@ const styles = {
 AppBar.defaultProps = {};
 
 function AppBar(props) {
-  const { classes, drawerToggle, progress, right, title } = props;
+  const {
+    classes,
+    className: classNameProp,
+    drawerToggle,
+    progress,
+    right,
+    title,
+    rest,
+  } = props;
+  const className = classNames(classNameProp, classes.root);
 
   return (
-    <MuiAppBar position="fixed" className={classes.root}>
+    <MuiAppBar position="fixed" className={className} {...rest}>
       <Toolbar>
         <IconButton
           className={classes.menuButton}
