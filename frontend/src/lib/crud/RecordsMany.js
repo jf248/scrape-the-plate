@@ -4,22 +4,22 @@ import { connect } from 'react-redux';
 import { renderProps } from 'lib/react-powerplug';
 
 import { getList } from './actions';
+import { deepEqual } from './utils';
 
 class RecordsMany extends React.Component {
   componentDidMount() {
-    const { lazy, resource, goFetch, params, initialParams } = this.props;
-    !lazy && resource && goFetch(initialParams || params);
+    const { lazy, goFetch, initialParams, params } = this.props;
+    !lazy && goFetch({ ...params, ...initialParams });
   }
 
   componentDidUpdate(prevProps) {
-    const { lazy, resource, goFetch } = this.props;
-    const propsToCheck = ['resource'];
+    const { lazy, goFetch, initialParams, params } = this.props;
+    const propsToCheck = ['resource', 'initialParams'];
     if (
       !lazy &&
-      resource &&
-      propsToCheck.some(prop => prevProps[prop] !== this.props[prop])
+      propsToCheck.some(prop => !deepEqual(prevProps[prop], this.props[prop]))
     ) {
-      goFetch();
+      goFetch({ ...params, ...initialParams });
     }
   }
 
@@ -50,7 +50,7 @@ const mapStateToProps = (state, ownProps) => {
     ids: resource && resource.list.ids,
     total: resource && resource.list.total,
     data: resource && resource.data,
-    params: { ...(resource && resource.list.params), ...ownProps.params },
+    params: { ...(resource && resource.list.params) },
     isLoading: state.crud.loading > 0,
   };
 };

@@ -1,60 +1,57 @@
 import React from 'react';
-import * as Mui from '@material-ui/core';
-import classNames from 'classnames';
-import { Link } from 'react-router-dom';
-import { HelpOutline, Add } from '@material-ui/icons';
 
-import { PlateIcon } from 'components/icons';
+import * as PowerPlug from 'lib/react-powerplug';
+import * as Crud from 'lib/crud';
 
-const styles = () => ({
-  root: {},
-});
+import { Modal } from 'controllers/modal';
+import * as Tags from 'components/tags';
+import * as Common from 'components/common';
+import DrawerContentPres from './DrawerContentPres';
 
-DrawerContent.defaultProps = {
-  config: [],
-  component: 'nav',
-};
+const CREATE_TAG = 'CREATE_TAG';
 
 function DrawerContent(props) {
-  const {
-    classes,
-    className: classNameProp,
-    component,
-    config,
-    ...rest
-  } = props;
+  const { ...rest } = props;
 
-  const renderLink = to => props => <Link to={to} {...props} />;
+  const renderFunc = (crud, createTagModal) => {
+    const { ids, data } = crud;
+    const { onOpen } = createTagModal;
+    const onClickAddTag = () => onOpen();
+    const createTag = (
+      <Common.EditResourceDialog
+        {...{
+          name: CREATE_TAG,
+          ...Tags.editDialogProps,
+        }}
+      />
+    );
 
-  const className = classNames(classes.root, classNameProp);
+    const tags = ids.map(id => data[id]);
+
+    return (
+      <DrawerContentPres
+        onClickAddTag={onClickAddTag}
+        tags={tags}
+        createTag={createTag}
+        {...rest}
+      />
+    );
+  };
 
   return (
-    <Mui.List component={component} className={className} {...rest}>
-      <Mui.ListItem>
-        <Mui.Button
-          variant="extendedFab"
-          component={renderLink('/recipes/create')}
-        >
-          <Mui.Icon>
-            <Add />
-          </Mui.Icon>
-          {'Add a recipe'}
-        </Mui.Button>
-      </Mui.ListItem>
-      <Mui.ListItem button component={renderLink('/recipes')}>
-        <Mui.ListItemIcon>
-          <PlateIcon />
-        </Mui.ListItemIcon>
-        <Mui.ListItemText primary={'Recipes'} />
-      </Mui.ListItem>
-      <Mui.ListItem button component={renderLink('/about')}>
-        <Mui.ListItemIcon>
-          <HelpOutline />
-        </Mui.ListItemIcon>
-        <Mui.ListItemText primary={'About'} />
-      </Mui.ListItem>
-    </Mui.List>
+    /* eslint-disable react/jsx-key */
+    <PowerPlug.Compose
+      components={[
+        <Crud.RecordsMany
+          resource={'tags'}
+          initialParams={{ sort: ['name'] }}
+        />,
+        <Modal name={CREATE_TAG} />,
+      ]}
+      render={renderFunc}
+    />
+    /* eslint-enable react/jsx-key */
   );
 }
 
-export default Mui.withStyles(styles)(DrawerContent);
+export default DrawerContent;

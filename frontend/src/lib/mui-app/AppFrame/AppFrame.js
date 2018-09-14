@@ -4,16 +4,22 @@ import * as Mui from '@material-ui/core';
 
 import { State } from 'lib/react-powerplug';
 
-import { Bar } from './components';
+import { AppBar } from './components';
 
 const styles = theme => ({
   root: {
     width: '100%',
     display: 'flex',
-    minHeight: '100vh',
+    flexDirection: 'column',
+    height: '100vh',
   },
   bar: {
+    flex: '0 0 auto',
     zIndex: theme.zIndex.drawer + 1,
+  },
+  underBar: {
+    flex: '1 1 100%',
+    display: 'flex',
   },
   main: {
     flexGrow: 1,
@@ -22,6 +28,9 @@ const styles = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    overflowY: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
   },
   mainShiftLeft: {
     marginLeft: '-240px',
@@ -34,49 +43,64 @@ const styles = theme => ({
     ...theme.mixins.toolbar,
   },
   drawerPaper: {
-    position: 'relative',
+    flex: '0 0 auto',
+    position: 'static',
   },
 });
 
 function AppFrame(props) {
   const {
     barProgress,
+    barLeft,
     barRight,
     children,
     classes,
+    className,
     drawerContent,
     title,
+    variant,
+    onGoBack,
+    ...rest
   } = props;
 
   const renderFunc = ({ state, setState }) => {
-    const toggle = () => setState(prevState => ({ open: !prevState.open }));
+    const onMenuClick = () => {
+      if (variant === 'back') {
+        onGoBack && onGoBack();
+        return;
+      }
+      setState(prevState => ({ open: !prevState.open }));
+    };
 
     return (
-      <div className={classes.root}>
-        <Bar
+      <div className={classNames(classes.root, className)} {...rest}>
+        <AppBar
           className={classes.bar}
           progress={barProgress}
           right={barRight}
-          drawerToggle={toggle}
+          left={barLeft}
+          onMenuClick={onMenuClick}
           title={title}
+          position={'static'}
+          variant={variant}
         />
-        <Mui.Drawer
-          onToggle={toggle}
-          open={state.open}
-          variant="persistent"
-          classes={{ paper: classes.drawerPaper }}
-        >
-          <div className={classes.toolbar} />
-          {drawerContent}
-        </Mui.Drawer>
-        <main
-          className={classNames(classes.main, {
-            [classes.mainShiftLeft]: !state.open,
-          })}
-        >
-          <div className={classes.toolbar} />
-          {children}
-        </main>
+        <div className={classes.underBar}>
+          <Mui.Drawer
+            onToggle={onMenuClick}
+            open={state.open}
+            variant="persistent"
+            classes={{ paper: classes.drawerPaper }}
+          >
+            {drawerContent}
+          </Mui.Drawer>
+          <main
+            className={classNames(classes.main, {
+              [classes.mainShiftLeft]: !state.open,
+            })}
+          >
+            {children}
+          </main>
+        </div>
       </div>
     );
   };

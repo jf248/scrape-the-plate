@@ -12,11 +12,7 @@ import { LOGIN_MODAL, CONFIRMATION_MODAL } from 'components/frame';
 import ViewPres from './ViewPres';
 
 function View(props) {
-  const {
-    match: {
-      params: { id },
-    },
-  } = props;
+  const { id } = props;
   const renderFunc = (
     view,
     auth,

@@ -44,8 +44,8 @@ class ListFilter(filters.Filter):
         return qs.filter(f)
 
 
-class NumberInFilter(filters.BaseInFilter, filters.CharFilter):
-    pass
+# class NumberInFilter(filters.BaseInFilter, filters.CharFilter):
+#     pass
 
 
 class GroceryGroupFilter(filters.FilterSet):
@@ -58,9 +58,10 @@ class GroceryGroupFilter(filters.FilterSet):
 
 
 class RecipeFilter(filters.FilterSet):
-    id = NumberInFilter(name='id', lookup_expr='in')
-    user = NumberInFilter(name='user', lookup_expr='in')
+    id = ListFilter(name='id')
+    user = ListFilter(name='user')
+    tags = ListFilter(name='tags')
 
     class Meta:
         model = models.Recipe
-        fields = ()
+        fields = ['id', 'user', 'tags']

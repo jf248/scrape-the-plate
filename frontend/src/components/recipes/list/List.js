@@ -1,51 +1,39 @@
 import React from 'react';
 
-import { Compose, renderProps } from 'lib/react-powerplug';
+import { Compose } from 'lib/react-powerplug';
 import { RecordsMany } from 'lib/crud';
 import { Auth } from 'lib/auth';
 
-import { Modal } from 'controllers/modal';
-import { LOGIN_MODAL } from 'components/frame';
 import ListPres from './ListPres';
 
-// This is an ugly hack to force a goFetch call to referesh the
-// RecordsMany component when user logs in.
-class Updater extends React.Component {
-  componentDidUpdate(prevProps) {
-    const { isLoggedIn, goFetch } = this.props;
-    if (isLoggedIn !== prevProps.isLoggedIn) {
-      goFetch();
-    }
-  }
-  render() {
-    return renderProps(this.props, {});
-  }
-}
+function List(props) {
+  const { variant, searchQuery, tagId } = props;
 
-function List() {
-  const renderFunc = (auth, recordsMany, updater, loginModal) => {
-    const { isLoggedIn, user: { id: userId } = {} } = auth;
+  const getInitialParams = userId => {
+    switch (variant) {
+      case 'search':
+        return {
+          filter: { search: searchQuery },
+        };
+      case 'mine':
+        return {
+          filter: { user: userId },
+        };
+      case 'tags':
+        return {
+          filter: { tags: tagId },
+        };
+      case 'all':
+      default:
+        return { filter: {} };
+    }
+  };
+
+  const renderFunc = (auth, recordsMany) => {
     const { ids, data, total, params = {}, goFetch } = recordsMany;
     const { filter, page } = params;
-    const { onOpen: onOpenLoginModal } = loginModal;
 
-    const setPage = page => goFetch({ ...params, page });
-    const setFilter = filter => goFetch({ ...params, filter });
-    const onlyUser = !!filter.user;
-    const onOnlyUserToggle = () => {
-      if (!isLoggedIn) {
-        onOpenLoginModal();
-        return;
-      }
-      let newParams;
-      const { user, ...newFilter } = filter;
-      if (user) {
-        newParams = { ...params, filter: newFilter };
-      } else {
-        newParams = { ...params, filter: { ...newFilter, user: userId } };
-      }
-      goFetch(newParams);
-    };
+    const setPage = page => goFetch({ page });
 
     return (
       <ListPres
@@ -54,11 +42,8 @@ function List() {
           ids,
           page,
           filter,
-          setFilter,
           setPage,
           total,
-          onlyUser,
-          onOnlyUserToggle,
         }}
       />
     );
@@ -69,11 +54,14 @@ function List() {
     <Compose
       components={[
         <Auth />,
-        <RecordsMany resource={'recipes'} />,
-        (render, { isLoggedIn }, { goFetch }) => (
-          <Updater {...{ goFetch, isLoggedIn, render }} />
+        (render, { isLoggedIn, user: { id: userId } = {} }) => (
+          <RecordsMany
+            resource={'recipes'}
+            initialParams={getInitialParams(userId)}
+            key={isLoggedIn}
+            render={render}
+          />
         ),
-        <Modal name={LOGIN_MODAL} />,
       ]}
       render={renderFunc}
     />

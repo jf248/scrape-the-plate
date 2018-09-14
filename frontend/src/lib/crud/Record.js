@@ -7,17 +7,15 @@ import { getOne, update, destroy } from './actions';
 
 class Record extends React.Component {
   componentDidMount() {
-    const { lazy, goFetch, id, resource } = this.props;
-    !lazy && id && resource && goFetch();
+    const { lazy, goFetch } = this.props;
+    !lazy && goFetch();
   }
 
   componentDidUpdate(prevProps) {
-    const { lazy, resource, goFetch, id } = this.props;
+    const { lazy, goFetch } = this.props;
     const propsToCheck = ['resource', 'id'];
     if (
       !lazy &&
-      id &&
-      resource &&
       propsToCheck.some(prop => prevProps[prop] !== this.props[prop])
     ) {
       goFetch();

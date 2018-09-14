@@ -12,9 +12,9 @@ const styles = () => ({
   },
 });
 
-ResourceDialogPres.defaultProps = {};
+SelectResourceDialogPres.defaultProps = {};
 
-function ResourceDialogPres({
+function SelectResourceDialogPres({
   className: classNameProp,
   classes,
   editDialog,
@@ -76,4 +76,4 @@ function ResourceDialogPres({
   );
 }
 
-export default Mui.withStyles(styles)(ResourceDialogPres);
+export default Mui.withStyles(styles)(SelectResourceDialogPres);

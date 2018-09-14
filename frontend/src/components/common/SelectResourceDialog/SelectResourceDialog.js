@@ -7,17 +7,16 @@ import { Modal } from 'controllers/modal';
 import { Crud as CrudController } from 'controllers/crud';
 import { CONFIRMATION_MODAL } from 'components/frame';
 
-import * as C from './components';
-import ResourceDialogPres from './ResourceDialogPres';
+import EditResourceDialog from '../EditResourceDialog';
+import SelectResourceDialogPres from './SelectResourceDialogPres';
 
-ResourceDialog.defaultProps = {
+SelectResourceDialog.defaultProps = {
   stringField: 'name',
   idField: 'id',
   editDialogProps: {},
 };
 
-function ResourceDialog({
-  editDialogContentComponent,
+function SelectResourceDialog({
   editDialogProps,
   idField,
   initialParams,
@@ -53,16 +52,17 @@ function ResourceDialog({
 
     const onCreate = () => onOpenEdit();
 
-    const editDialog = React.createElement(C.EditResourceDialog, {
-      name: editDialogName,
-      component: editDialogContentComponent,
-      resource,
-      resourceName,
-      ...editDialogProps,
-    });
+    const editDialog = (
+      <EditResourceDialog
+        {...{
+          name: editDialogName,
+          ...editDialogProps,
+        }}
+      />
+    );
 
     return (
-      <ResourceDialogPres
+      <SelectResourceDialogPres
         {...{
           comparator,
           editDialog,
@@ -93,4 +93,4 @@ function ResourceDialog({
   );
 }
 
-export default ResourceDialog;
+export default SelectResourceDialog;

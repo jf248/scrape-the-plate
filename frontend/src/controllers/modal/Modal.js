@@ -6,8 +6,8 @@ import { Queue } from 'lib/redux-queue';
 function Modal(props) {
   const { provider, name = 'MODAL' } = props;
 
-  const renderFunc = loginModal => {
-    const { pop, push, queue, hasItems: isOpen } = loginModal;
+  const renderFunc = queueController => {
+    const { pop, push, queue, hasItems: isOpen } = queueController;
     const onOpen = (payload = {}) => {
       push(payload);
     };

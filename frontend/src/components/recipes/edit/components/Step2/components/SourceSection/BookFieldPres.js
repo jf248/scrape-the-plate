@@ -45,9 +45,8 @@ function BookFieldPres(props) {
           ...rest,
         }}
       />
-      <Common.ResourceDialog
+      <Common.SelectResourceDialog
         {...getModalProps({
-          editDialogContentComponent: Books.EditContent,
           editDialogProps: Books.editDialogProps,
           multiple: false,
           onChange,

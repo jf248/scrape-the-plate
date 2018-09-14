@@ -29,9 +29,8 @@ function IngredientsField(props) {
             })}
           />
         ))}
-        <Common.ResourceDialog
+        <Common.SelectResourceDialog
           {...getModalProps({
-            editDialogContentComponent: GroceryItems.EditContent,
             editDialogProps: GroceryItems.editDialogProps,
             multiple: false,
             resource: 'groceryItems',

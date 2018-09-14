@@ -45,9 +45,8 @@ function TagsFieldPres({
           ...rest,
         }}
       />
-      <Common.ResourceDialog
+      <Common.SelectResourceDialog
         {...getModalProps({
-          editDialogContentComponent: Tags.EditContent,
           editDialogProps: Tags.editDialogProps,
           multiple: true,
           onChange,

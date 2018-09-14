@@ -1,10 +1,9 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core';
+import * as Mui from '@material-ui/core';
 
-import { AppContent, AppSearchBar, AppFabButton } from 'lib/mui-app';
+import { AppContent, AppSecondaryToolbar, AppFabButton } from 'lib/mui-app';
 
-import { ListItem, Pagination, Filter, OnlyUserToggle } from './components';
-import { FlexContainer, FlexGrow, FlexShrink } from 'components/common';
+import { ListItem, Pagination } from './components';
 
 const styles = theme => ({
   list: {
@@ -25,43 +24,34 @@ class ListPres extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      data,
-      ids,
-      filter,
-      page,
-      setFilter,
-      setPage,
-      total,
-      onlyUser,
-      onOnlyUserToggle,
-    } = this.props;
+    const { classes, data, ids, page, setPage, total } = this.props;
+
+    if (ids.length === 0) {
+      return (
+        <AppContent className={classes.content}>
+          <Mui.Typography variant={'caption'}>
+            {'No recipes found.'}
+          </Mui.Typography>
+        </AppContent>
+      );
+    }
 
     return (
       <React.Fragment>
-        <AppSearchBar>
-          <FlexContainer>
-            <FlexGrow>
-              <Filter onChange={setFilter} filter={filter} />
-            </FlexGrow>
-            <FlexShrink>
-              <OnlyUserToggle value={onlyUser} onToggle={onOnlyUserToggle} />
-            </FlexShrink>
-          </FlexContainer>
-        </AppSearchBar>
-        <AppContent className={classes.content}>
-          <div className={classes.list}>
-            {ids.map(id => (
-              <ListItem {...{ recipe: data[id], key: id }} />
-            ))}
-          </div>
+        <AppSecondaryToolbar>
           <Pagination
             countPerPage={ids.length}
             count={total}
             page={page}
             onChangePage={setPage}
           />
+        </AppSecondaryToolbar>
+        <AppContent className={classes.content}>
+          <div className={classes.list}>
+            {ids.map(id => (
+              <ListItem {...{ recipe: data[id], key: id }} />
+            ))}
+          </div>
           <AppFabButton
             extendedText={'Add a recipe'}
             variant={'add'}
@@ -74,4 +64,4 @@ class ListPres extends React.PureComponent {
   }
 }
 
-export default withStyles(styles)(ListPres);
+export default Mui.withStyles(styles)(ListPres);

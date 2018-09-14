@@ -2,17 +2,17 @@ import React from 'react';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 
-import MaxWidth from './MaxWidth';
+const MAX_WIDTH = 996;
 
 const styles = theme => ({
   root: {
-    flex: '1 1 100%',
-    paddingTop: '32px',
-    paddingBottom: '104px',
-    [theme.breakpoints.down('sm')]: {
-      paddingTop: '16px',
-    },
-    overflowY: 'scroll',
+    width: '100%',
+  },
+  container: {
+    margin: '0 auto 0 auto',
+    paddingLeft: '24px',
+    paddingRight: '24px',
+    maxWidth: MAX_WIDTH,
   },
 });
 
@@ -20,9 +20,9 @@ function AppContent(props) {
   const { classes, className, children } = props;
 
   return (
-    <MaxWidth className={classNames(classes.root, className)}>
-      {children}
-    </MaxWidth>
+    <div className={classNames(classes.root, className)}>
+      <div className={classes.container}>{children}</div>
+    </div>
   );
 }
 

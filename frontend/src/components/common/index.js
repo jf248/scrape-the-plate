@@ -7,5 +7,6 @@ export { default as Section } from './Section';
 export { default as FlexContainer } from './FlexContainer';
 export { default as FlexGrow } from './FlexGrow';
 export { default as FlexShrink } from './FlexShrink';
-export { default as ResourceDialog } from './ResourceDialog';
+export { default as SelectResourceDialog } from './SelectResourceDialog';
+export { default as EditResourceDialog } from './EditResourceDialog';
 export { default as ChipField } from './ChipField';

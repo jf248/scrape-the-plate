@@ -1,6 +1,7 @@
 import { compose, isRequired } from 'lib/form';
 
 import { toTitleCase } from 'utils';
+import EditContent from './EditContent';
 
 const normalize = values => {
   return {
@@ -11,6 +12,9 @@ const normalize = values => {
 const validate = compose(isRequired(['title']));
 
 export const editDialogProps = {
+  resource: 'books',
+  resourceName: 'book',
+  component: EditContent,
   normalize,
   validate,
 };
