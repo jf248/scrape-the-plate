@@ -78,6 +78,22 @@ class StickyList extends React.PureComponent {
       return rowRendererProp({ index: oldIndex, ...other });
     };
 
+    // No groups, default to basic `Virtualized.List`
+    if (groupIndicies.length === 0) {
+      return (
+        <Virtualized.List
+          {...{
+            ...rest,
+            height,
+            width,
+            rowCount: itemsAndGroups.length,
+            rowHeight,
+            rowRenderer,
+          }}
+        />
+      );
+    }
+
     return (
       <Virtualized.ScrollSync>
         {({ onScroll, scrollTop }) => (
