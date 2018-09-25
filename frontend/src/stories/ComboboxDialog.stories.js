@@ -48,7 +48,7 @@ const StoryComboxDialog = props => (
     }}
     items={ITEMS}
     {...props}
-    itemToString={item => (item === null ? '' : item.text)}
+    itemToString={item => (item == null ? '' : item.text)}
   />
 );
 

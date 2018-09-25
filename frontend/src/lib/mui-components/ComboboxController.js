@@ -12,7 +12,7 @@ ComboboxController.defaultProps = {
   itemToGroup: item => item['group'],
   items: [],
   itemToString: function(item) {
-    return item === null ? '' : item;
+    return item == null ? '' : item;
   },
   MenuProps: {},
   multiple: false,

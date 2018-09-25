@@ -27,7 +27,7 @@ function SelectResourceDialog({
 }) {
   const resourceName = resourceNameProp || resource.slice(0, -1);
   const editDialogName = `EDIT_${resource}_DIALOG`;
-  const itemToString = item => (item === null ? '' : item[stringField]);
+  const itemToString = item => (item == null ? '' : item[stringField]);
   const comparator = (x, y) => x[idField] === y[idField];
 
   const renderFunc = (
