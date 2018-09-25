@@ -8,7 +8,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 
-import { AppContent } from 'lib/mui-app';
+import { AppContent } from 'components/frame';
 import { Step1, Step2 } from './components';
 
 const styles = theme => ({

@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { AppContent } from 'lib/mui-app';
-
+import { AppContent } from 'components/frame';
 import { Step2 } from './components';
 
 function Update(props) {

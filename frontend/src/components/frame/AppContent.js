@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core';
 
-import MaxWidth from './MaxWidth';
+import * as C from './components';
 
 const styles = theme => ({
   root: {
@@ -20,9 +20,9 @@ function AppContent(props) {
   const { classes, className, children } = props;
 
   return (
-    <MaxWidth className={classNames(classes.root, className)}>
+    <C.MaxWidth className={classNames(classes.root, className)}>
       {children}
-    </MaxWidth>
+    </C.MaxWidth>
   );
 }
 

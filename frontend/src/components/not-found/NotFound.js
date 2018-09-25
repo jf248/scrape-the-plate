@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, withStyles } from '@material-ui/core';
 
-import { AppContent } from 'lib/mui-app';
+import { AppContent } from 'components/frame';
 
 const styles = () => ({
   root: {

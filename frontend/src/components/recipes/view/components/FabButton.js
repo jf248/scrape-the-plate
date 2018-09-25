@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AppFabButton } from 'lib/mui-app';
+import { AppFabButton } from 'components/frame';
 
 function FabButtonPres(props) {
   const { isLoggedIn, isOwner, onClickEdit, onClickCopy, ...rest } = props;

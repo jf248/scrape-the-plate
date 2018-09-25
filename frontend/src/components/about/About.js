@@ -1,8 +1,9 @@
 import React from 'react';
 import * as Mui from '@material-ui/core';
 
-import { AppContent } from 'lib/mui-app';
 import { Link } from 'lib/mui-components';
+
+import { AppContent } from 'components/frame';
 
 const styles = () => ({
   root: {

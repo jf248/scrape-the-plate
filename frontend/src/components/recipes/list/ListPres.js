@@ -1,8 +1,11 @@
 import React from 'react';
 import * as Mui from '@material-ui/core';
 
-import { AppContent, AppSecondaryToolbar, AppFabButton } from 'lib/mui-app';
-
+import {
+  AppContent,
+  AppSecondaryToolbar,
+  AppFabButton,
+} from 'components/frame';
 import { ListItem, Pagination } from './components';
 
 const styles = theme => ({

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import * as Mui from '@material-ui/core';
 
-import MaxWidth from './MaxWidth';
+import * as C from './components';
 
 const styles = theme => ({
   root: {
@@ -21,11 +21,11 @@ function AppSecondaryToolbar(props) {
       elevation={0}
       className={classNames(classes.root, className)}
     >
-      <MaxWidth>
+      <C.MaxWidth>
         <Mui.Toolbar disableGutters variant={'dense'}>
           {children}
         </Mui.Toolbar>
-      </MaxWidth>
+      </C.MaxWidth>
     </Mui.Paper>
   );
 }

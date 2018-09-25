@@ -1,9 +1,9 @@
 import React from 'react';
 import { Divider, MenuItem, withStyles } from '@material-ui/core';
 
-import { AppContent } from 'lib/mui-app';
 import { MoreButton } from 'lib/mui-components';
 
+import { AppContent } from 'components/frame';
 import { Time, Source, SubheadingItem } from 'components/common';
 import {
   Content,

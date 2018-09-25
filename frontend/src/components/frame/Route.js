@@ -1,18 +1,18 @@
 import React from 'react';
 
 import * as PowerPlug from 'lib/react-powerplug';
-import { AppFrame } from 'lib/mui-app';
 
 import { RoutePush } from 'controllers/route-push';
 import {
-  ConfirmationModal,
-  LoginModal,
-  LoginButton,
-  Snackbar,
-  Progress,
+  AppFrame,
   ComponentOr404,
+  ConfirmationModal,
   DrawerContent,
+  LoginButton,
+  LoginModal,
+  Progress,
   Search,
+  Snackbar,
 } from './components';
 import { LOGIN_MODAL, CONFIRMATION_MODAL } from './names';
 
@@ -21,6 +21,7 @@ Route.defaultProps = {
 };
 
 const SEARCH_PATH = '/search/:query';
+
 function Route(props) {
   const {
     component,
