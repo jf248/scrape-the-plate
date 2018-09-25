@@ -1,5 +1,7 @@
 import React from 'react';
-import { ArrowDropDown, ArrowDropUp, Close } from '@material-ui/icons';
+import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
+import ArrowDropUp from '@material-ui/icons/ArrowDropUp';
+import Close from '@material-ui/icons/Close';
 import { InputAdornment, ButtonBase } from '@material-ui/core';
 
 function Button(props) {

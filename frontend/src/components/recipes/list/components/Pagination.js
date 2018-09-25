@@ -1,7 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import { withStyles, Toolbar, Typography, IconButton } from '@material-ui/core';
-import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
+import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
+import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 
 import { noop } from 'utils';
 

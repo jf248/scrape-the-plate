@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton, Snackbar, withStyles } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
+import Close from '@material-ui/icons/Close';
 
 const styles = theme => ({
   close: {

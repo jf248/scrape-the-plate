@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as Mui from '@material-ui/core';
-import { Close as CloseIcon } from '@material-ui/icons';
+import Close from '@material-ui/icons/Close';
 
 import * as utils from 'utils';
 import * as Common from 'components/common';
@@ -154,7 +154,7 @@ class Ingredient extends Component {
                 onClick={onRemove}
                 tabIndex="-1"
               >
-                <CloseIcon />
+                <Close />
               </Mui.IconButton>
             )}
           </Common.FlexShrink>

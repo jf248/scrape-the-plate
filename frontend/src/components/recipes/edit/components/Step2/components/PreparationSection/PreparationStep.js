@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as Mui from '@material-ui/core';
-import { Close as CloseIcon } from '@material-ui/icons';
+import Close from '@material-ui/icons/Close';
 
 import { Field } from 'components/common';
 import * as utils from 'utils';
@@ -146,7 +146,7 @@ class PreparationStep extends Component {
             onClick={onRemove}
             tabIndex="-1"
           >
-            <CloseIcon />
+            <Close />
           </Mui.IconButton>
         )}
       </Mui.Paper>

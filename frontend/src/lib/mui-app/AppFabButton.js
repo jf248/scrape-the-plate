@@ -2,7 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 import * as Mui from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import * as Icons from '@material-ui/icons';
+import Edit from '@material-ui/icons/Edit';
+import Add from '@material-ui/icons/Add';
+import FileCopy from '@material-ui/icons/FileCopy';
 
 const styles = theme => ({
   fixedWrapper: {
@@ -50,15 +52,15 @@ function AppFabButton(props) {
   const variants = {
     edit: {
       tooltipTitle: 'Edit',
-      icon: Icons.Edit,
+      icon: Edit,
     },
     add: {
       tooltipTitle: 'New',
-      icon: Icons.Add,
+      icon: Add,
     },
     copy: {
       tooltipTitle: 'Copy',
-      icon: Icons.FileCopy,
+      icon: FileCopy,
     },
   };
 

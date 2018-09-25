@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import * as Mui from '@material-ui/core';
-import * as MuiIcons from '@material-ui/icons';
+import Group from '@material-ui/icons/Group';
 
 const styles = theme => ({
   root: {
@@ -34,7 +34,7 @@ function PublicToggle(props) {
         onClick={onToggle}
         {...rest}
       >
-        <MuiIcons.Group />
+        <Group />
       </Mui.IconButton>
     </Mui.Tooltip>
   );

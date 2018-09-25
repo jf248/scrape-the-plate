@@ -1,5 +1,5 @@
 import React from 'react';
-import { Close } from '@material-ui/icons';
+import Close from '@material-ui/icons/Close';
 import { InputAdornment, ButtonBase, withStyles } from '@material-ui/core';
 
 const style = theme => ({

@@ -1,6 +1,6 @@
 import React from 'react';
 import { IconButton, Menu, withStyles } from '@material-ui/core';
-import { MoreVert } from '@material-ui/icons';
+import MoreVert from '@material-ui/icons/MoreVert';
 
 const styles = () => ({});
 

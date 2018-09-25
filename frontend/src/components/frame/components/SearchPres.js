@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import * as Mui from '@material-ui/core';
-import * as MuiIcons from '@material-ui/icons';
+import Search from '@material-ui/icons/Search';
 import { fade } from '@material-ui/core/styles/colorManipulator'; // eslint-disable-line import/no-internal-modules
 
 const styles = theme => ({
@@ -67,7 +67,7 @@ function SearchPres(props) {
     <div className={classes.wrapper}>
       <div className={classNames(classes.root, className)} {...rest}>
         <div className={classes.searchIcon}>
-          <MuiIcons.Search />
+          <Search />
         </div>
         <Mui.Input
           placeholder={'Search...'}

@@ -40,13 +40,4 @@ if (module.hot) {
 // Verify user token if there is one
 store.dispatch(verify());
 
-if (module.hot) {
-  module.hot.accept('./reducer', () => {
-    store.replaceReducer(connectRouter(history)(reducer));
-  });
-  module.hot.accept('./saga', () => {
-    store.replaceReducer(connectRouter(history)(reducer));
-  });
-}
-
 export { store, history };

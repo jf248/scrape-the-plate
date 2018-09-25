@@ -1,7 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import * as Mui from '@material-ui/core';
-import * as MuiIcons from '@material-ui/icons';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import Menu from '@material-ui/icons/Menu';
 
 const styles = {
   wrapper: {
@@ -60,7 +61,7 @@ function AppBar(props) {
           aria-label="Menu"
           onClick={onMenuClick}
         >
-          {variant === 'back' ? <MuiIcons.ArrowBack /> : <MuiIcons.Menu />}
+          {variant === 'back' ? <ArrowBack /> : <Menu />}
         </Mui.IconButton>
         <Mui.Typography
           variant="title"

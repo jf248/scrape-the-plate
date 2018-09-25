@@ -1,7 +1,10 @@
 import React from 'react';
 import * as Mui from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import * as MuiIcons from '@material-ui/icons';
+import Add from '@material-ui/icons/Add';
+import Label from '@material-ui/icons/Label';
+import HelpOutline from '@material-ui/icons/HelpOutline';
+import Group from '@material-ui/icons/Group';
 
 import { PlateIcon } from 'components/icons';
 
@@ -27,7 +30,7 @@ function DrawerContentPres(props) {
       component={renderLink(`/tags/${tag.id}`)}
     >
       <Mui.ListItemIcon>
-        <MuiIcons.Label />
+        <Label />
       </Mui.ListItemIcon>
       <Mui.ListItemText primary={tag.name} />
     </Mui.ListItem>
@@ -42,7 +45,7 @@ function DrawerContentPres(props) {
             component={renderLink('/recipes/create')}
           >
             <Mui.Icon>
-              <MuiIcons.Add />
+              <Add />
             </Mui.Icon>
             {'Add a recipe'}
           </Mui.Button>
@@ -67,7 +70,7 @@ function DrawerContentPres(props) {
           component={renderLink('/recipes')}
         >
           <Mui.ListItemIcon>
-            <MuiIcons.Group />
+            <Group />
           </Mui.ListItemIcon>
           <Mui.ListItemText primary={'All recipes'} />
         </Mui.ListItem>
@@ -77,7 +80,7 @@ function DrawerContentPres(props) {
         {tagListItems}
         <Mui.ListItem dense button onClick={onClickAddTag}>
           <Mui.ListItemIcon>
-            <MuiIcons.Add />
+            <Add />
           </Mui.ListItemIcon>
           <Mui.ListItemText primary={'Create new...'} />
         </Mui.ListItem>
@@ -91,7 +94,7 @@ function DrawerContentPres(props) {
           component={renderLink('/about')}
         >
           <Mui.ListItemIcon>
-            <MuiIcons.HelpOutline />
+            <HelpOutline />
           </Mui.ListItemIcon>
           <Mui.ListItemText primary={'About'} />
         </Mui.ListItem>
