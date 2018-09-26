@@ -50,6 +50,9 @@ class User(AbstractUser, AbstractModel):
     def normalize(self):
         self.email = self.username
 
+    class Meta:
+        ordering = ['id']
+
 
 class Tag(AbstractModel):
     name = models.CharField(max_length=255, unique=True)

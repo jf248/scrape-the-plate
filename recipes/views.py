@@ -7,34 +7,33 @@ from rest_framework.response import Response
 from rest_framework.settings import api_settings
 
 from . import serializers, permissions, models, filters, pagination
-from scraper import scrape
-from scraper.exceptions import (
-    InvalidURLError, URLError, WebsiteNotImplementedError, RequestException
-)
+import scraper
 
 
 class GetObjectAllMixin():
     """
     A mixin that provides an override of the get_object method. Useful when we
     want both a filtered get_queryset but also want the get_object method to
-    provide 401 and 403 errors not just 404.
+    provide 401 (unauthorized) and 403 (forbidden) errors not just 404 (not
+    found).
     """
 
     # Must provide a model class
-    model_cls = None
+    model_class = None
 
     def get_object(self):
         """
         Overried rest_framework.generics.GenericAPIView get_object method which
         uses the self.get_queryset(). This would result in 404 errors rather
-        than 401 or 403 errors if the object exists
+        than 401 or 403 errors if the object exists but user doesn't have
+        permission.
         """
         # Here's the only change: objects.all() instead of self.get_queryset()
-        assert self.model_cls is not None, (
-            "'%s' did not set model_cls"
+        assert self.model_class is not None, (
+            "'%s' did not set model_class"
             % self.__class__.__name__
         )
-        queryset = self.filter_queryset(self.model_cls.objects.all())
+        queryset = self.filter_queryset(self.model_class.objects.all())
 
         # Perform the lookup filtering.
         lookup_url_kwarg = self.lookup_url_kwarg or self.lookup_field
@@ -79,8 +78,9 @@ class CreateWithUserMixin():
             return {}
 
 
-class GroceryItemViewSet(viewsets.ModelViewSet):
-    queryset = models.GroceryItem.objects.all()
+class GroceryItemViewSet(CreateWithUserMixin, GetObjectAllMixin,
+                         viewsets.ModelViewSet):
+    model_class = models.GroceryItem
     serializer_class = serializers.GroceryItemSerializer
     filter_backends = (filters.DjangoFilterBackend, filters.OrderingFilter)
     filter_fields = ('id', 'name',)
@@ -90,22 +90,23 @@ class GroceryItemViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return models.GroceryItem.filter_user_and_None(user)
+        return self.model_class.filter_user_and_None(user)
 
 
-class GroceryGroupViewSet(viewsets.ModelViewSet):
-    queryset = models.GroceryGroup.objects.all()
+class GroceryGroupViewSet(CreateWithUserMixin, GetObjectAllMixin,
+                          viewsets.ModelViewSet):
+    model_class = models.GroceryGroup
     serializer_class = serializers.GroceryGroupSerializer
+    filter_class = filters.GroceryGroupFilter
     filter_backends = (filters.DjangoFilterBackend,)
     search_fields = ('name', 'id',)
-    filter_class = filters.GroceryGroupFilter
     pagination_class = pagination.CustomPagination
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
                           permissions.IsOwnerOrReadOnly,)
 
     def get_queryset(self):
         user = self.request.user
-        return models.GroceryGroup.filter_user_and_None(user)
+        return self.model_class.filter_user_and_None(user)
 
 
 class SourceViewSet(viewsets.ReadOnlyModelViewSet):
@@ -114,7 +115,9 @@ class SourceViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = pagination.CustomPagination
 
 
-class BookViewSet(CreateWithUserMixin, viewsets.ModelViewSet):
+class BookViewSet(CreateWithUserMixin, GetObjectAllMixin,
+                  viewsets.ModelViewSet):
+    model_class = models.Book
     serializer_class = serializers.BookSerializer
     pagination_class = pagination.CustomPagination
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -122,7 +125,7 @@ class BookViewSet(CreateWithUserMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return models.Book.filter_user(user)
+        return self.model_class.filter_user(user)
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -133,8 +136,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
 class RecipeViewSet(CreateWithUserMixin, GetObjectAllMixin,
                     viewsets.ModelViewSet):
-    model_cls = models.Recipe
-
+    model_class = models.Recipe
     serializer_class = serializers.RecipeSerializer
     pagination_class = pagination.CustomPagination
     filter_class = filters.RecipeFilter
@@ -146,7 +148,7 @@ class RecipeViewSet(CreateWithUserMixin, GetObjectAllMixin,
 
     def get_queryset(self):
         user = self.request.user
-        return self.model_cls.filter_user_and_public(user)
+        return self.model_class.filter_user_and_public(user)
 
 
 class AuthViewSet(viewsets.ViewSet):
@@ -202,7 +204,9 @@ class AuthViewSet(viewsets.ViewSet):
         return Response(data)
 
 
-class TagViewSet(CreateWithUserMixin, viewsets.ModelViewSet):
+class TagViewSet(CreateWithUserMixin, GetObjectAllMixin,
+                 viewsets.ModelViewSet):
+    model_class = models.Tag
     serializer_class = serializers.TagSerializer
     pagination_class = pagination.CustomPagination
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,
@@ -210,7 +214,7 @@ class TagViewSet(CreateWithUserMixin, viewsets.ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return models.Tag.objects.filter(user=user.id)
+        return self.model_class.filter_user(user)
 
 
 @api_view(['GET'])
@@ -235,15 +239,19 @@ def scrape_view(request):
     if url is None:
         raise ParseError({"url": "Url required, or choose manual entry."})
     try:
-        dict_ = scrape(url)
+        dict_ = scraper.scrape(url)
         source_id = models.Source.get_id_from_domain_name(dict_['domain'])
         dict_['source'] = source_id
         return Response(dict_)
-    except (InvalidURLError, URLError, WebsiteNotImplementedError) as err:
+    except (
+        scraper.exceptions.InvalidURLError,
+        scraper.exceptions.URLError,
+        scraper.exceptions.WebsiteNotImplementedError
+    ) as err:
         raise ParseError(
             {"url": err}
         )
-    except (RequestException) as err:
+    except (scraper.exceptions.RequestException) as err:
         raise ParseError(
             err
         )
