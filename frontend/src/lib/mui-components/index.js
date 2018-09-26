@@ -7,9 +7,6 @@ export {
   default as ComboboxWithFilterController,
 } from './ComboboxWithFilterController';
 export { default as ComboboxField } from './ComboboxField';
-export { default as ExpansionDetails } from './ExpansionDetails';
-export { default as ExpansionSummary } from './ExpansionSummary';
-export { default as ExpansionSection } from './ExpansionSection';
 export { default as Link } from './Link';
 export { default as MenuController } from './MenuController';
 export { default as ModalController } from './ModalController';

@@ -55,6 +55,7 @@ function SourceSection(props) {
           <FlexGrow>
             <Field
               fullWidth
+              required
               disabled={isScraped}
               {...urlInputProps}
               label={'URL'}

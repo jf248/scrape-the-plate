@@ -42,6 +42,7 @@ function BookFieldPres(props) {
           onKeyDown: onOpenModal,
           onBlur,
           value: title,
+          required: true,
           ...rest,
         }}
       />

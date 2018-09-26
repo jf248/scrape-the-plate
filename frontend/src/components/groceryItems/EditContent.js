@@ -19,6 +19,7 @@ function EditContent({ classes, getInputProps }) {
           label: 'Name',
           autoFocus: true,
           className: classes.block,
+          required: true,
         })}
       />
       <Crud.RecordsMany resource={'groceryGroups'}>
@@ -32,6 +33,7 @@ function EditContent({ classes, getInputProps }) {
               className: classes.block,
               fullWidth: true,
               formatValue: value => (value ? value.name : ''),
+              required: true,
             })}
           >
             {ids.map(id => (

@@ -11,6 +11,10 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 
 const styles = () => ({
   root: {},
+  summary: {
+    display: 'flex',
+    alignItems: 'baseline',
+  },
   expansionDetails: {
     display: 'block',
   },
@@ -42,18 +46,23 @@ function Section(props) {
       {...rest}
     >
       <ExpansionPanelSummary expandIcon={<ExpandMore />}>
-        <Typography variant={'subheading'} color={error ? 'error' : 'default'}>
-          {title}
-        </Typography>
-        {error && (
+        <div className={classes.summary}>
           <Typography
-            variant={'caption'}
-            color={'error'}
-            className={classes.error}
+            variant={'subheading'}
+            color={error ? 'error' : 'default'}
           >
-            {'Errors in this section'}
+            {title}
           </Typography>
-        )}
+          {error && (
+            <Typography
+              variant={'caption'}
+              color={'error'}
+              className={classes.error}
+            >
+              {'Errors in this section'}
+            </Typography>
+          )}
+        </div>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails className={classes.expansionDetails}>
         {caption && (

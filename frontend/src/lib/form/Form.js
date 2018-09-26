@@ -238,7 +238,6 @@ class Form extends Component {
         };
       },
       getSubmitProps: (ownProps = {}) => ({
-        disabled: !this.noErrors(),
         ...ownProps,
         onClick: callAll(ownProps.onClick, () =>
           this.handleSubmit(values, bag)

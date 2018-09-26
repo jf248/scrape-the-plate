@@ -55,7 +55,7 @@ class Step2Pres extends React.Component {
               <FlexGrow>
                 <TitleField
                   className={classes.marginRight}
-                  {...getInputProps({ name: 'title' })}
+                  {...getInputProps({ name: 'title', required: true })}
                 />
               </FlexGrow>
               <FlexShrink>
