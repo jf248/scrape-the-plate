@@ -33,7 +33,7 @@ function List(props) {
   const renderFunc = (auth, recordsMany, routePush) => {
     const { ids, data, total, params = {}, goFetch } = recordsMany;
     const { push } = routePush;
-    const { filter, page } = params;
+    const { filter, page, perPage } = params;
 
     const setPage = page => goFetch({ page });
 
@@ -47,6 +47,7 @@ function List(props) {
           setPage,
           total,
           push,
+          perPage,
         }}
       />
     );

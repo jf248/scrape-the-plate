@@ -27,7 +27,16 @@ class ListPres extends React.PureComponent {
   };
 
   render() {
-    const { classes, data, ids, page, setPage, total, push } = this.props;
+    const {
+      classes,
+      data,
+      ids,
+      page,
+      perPage,
+      push,
+      setPage,
+      total,
+    } = this.props;
 
     if (ids.length === 0) {
       return (
@@ -43,8 +52,8 @@ class ListPres extends React.PureComponent {
       <React.Fragment>
         <AppSecondaryToolbar>
           <Pagination
-            countPerPage={ids.length}
-            count={total}
+            perPage={perPage}
+            total={total}
             page={page}
             onChangePage={setPage}
           />

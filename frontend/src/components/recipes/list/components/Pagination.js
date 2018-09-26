@@ -33,15 +33,15 @@ Pagination.defaultProps = {
   component: 'div',
   onChangePage: noop,
   page: 1,
-  count: 0,
-  countPerPage: 1,
+  total: 0,
+  perPage: 1,
 };
 
 function Pagination(props) {
   const {
-    count: countProp,
+    total: totalProp,
     page,
-    countPerPage,
+    perPage,
     classes,
     className: classNameProp,
     component: Component,
@@ -49,10 +49,10 @@ function Pagination(props) {
     ...rest
   } = props;
 
-  const count = !countProp ? 0 : countProp;
+  const total = !totalProp ? 0 : totalProp;
 
   const className = classNames(classes.root, classNameProp);
-  const displayCount = ({ from, to, count }) => `${from}-${to} of ${count}`;
+  const displayCount = ({ from, to, total }) => `${from}-${to} of ${total}`;
   const handleBackButtonClick = () => onChangePage(page - 1);
   const handleNextButtonClick = () => onChangePage(page + 1);
 
@@ -61,9 +61,9 @@ function Pagination(props) {
       <Toolbar className={classes.toolbar}>
         <Typography variant="caption" className={classes.caption}>
           {displayCount({
-            from: !count ? 0 : (page - 1) * countPerPage + 1,
-            to: Math.min(count, page * countPerPage),
-            count,
+            from: !total ? 0 : (page - 1) * perPage + 1,
+            to: Math.min(total, page * perPage),
+            total,
             page,
           })}
         </Typography>
@@ -73,7 +73,7 @@ function Pagination(props) {
           </IconButton>
           <IconButton
             onClick={handleNextButtonClick}
-            disabled={!countPerPage || page >= Math.ceil(count / countPerPage)}
+            disabled={!perPage || page >= Math.ceil(total / perPage)}
           >
             <KeyboardArrowRight />
           </IconButton>
