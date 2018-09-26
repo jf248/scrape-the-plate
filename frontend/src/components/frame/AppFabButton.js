@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 import * as Mui from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import Edit from '@material-ui/icons/Edit';
 import Add from '@material-ui/icons/Add';
 import FileCopy from '@material-ui/icons/FileCopy';
@@ -43,7 +42,6 @@ function AppFabButton(props) {
     buttonProps: buttonPropsProp,
     classes,
     onClick,
-    to,
     variant: variantProp,
     extendedText,
     tooltipTitle: tooltipTitleProp,
@@ -68,12 +66,9 @@ function AppFabButton(props) {
   const tooltipTitle = tooltipTitleProp || variant.tooltipTitle;
   const Icon = variant.icon;
 
-  const component = to && (props => <Link to={to} {...props} />);
-
   const buttonProps = {
     variant: extendedText ? 'extendedFab' : 'fab',
     color: 'secondary',
-    component,
     onClick,
     ...buttonPropsProp,
     className: classNames(classes.fab, buttonPropsProp.className),

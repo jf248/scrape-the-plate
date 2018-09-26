@@ -47,10 +47,10 @@ const mapStateToProps = (state, ownProps) => {
   const resource = state.crud.resources[ownProps.resource];
 
   return {
-    ids: resource && resource.list.ids,
-    total: resource && resource.list.total,
-    data: resource && resource.data,
-    params: { ...(resource && resource.list.params) },
+    ids: resource.list.ids,
+    total: resource.list.total,
+    data: resource.data,
+    params: resource.list.params,
     isLoading: state.crud.loading > 0,
   };
 };

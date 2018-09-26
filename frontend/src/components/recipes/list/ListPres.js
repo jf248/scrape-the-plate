@@ -27,7 +27,7 @@ class ListPres extends React.PureComponent {
   };
 
   render() {
-    const { classes, data, ids, page, setPage, total } = this.props;
+    const { classes, data, ids, page, setPage, total, push } = this.props;
 
     if (ids.length === 0) {
       return (
@@ -58,7 +58,7 @@ class ListPres extends React.PureComponent {
           <AppFabButton
             extendedText={'Add a recipe'}
             variant={'add'}
-            to={`/recipes/create`}
+            onClick={() => push(`/recipes/create`)}
             tooltipTitle={'Add a recipe'}
           />
         </AppContent>

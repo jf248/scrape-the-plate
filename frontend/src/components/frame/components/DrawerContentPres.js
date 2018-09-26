@@ -1,6 +1,5 @@
 import React from 'react';
 import * as Mui from '@material-ui/core';
-import { Link } from 'react-router-dom';
 import Add from '@material-ui/icons/Add';
 import Label from '@material-ui/icons/Label';
 import HelpOutline from '@material-ui/icons/HelpOutline';
@@ -17,9 +16,7 @@ DrawerContentPres.defaultProps = {
 };
 
 function DrawerContentPres(props) {
-  const { path, url, tags, onClickAddTag, createTag } = props;
-
-  const renderLink = to => props => <Link to={to} {...props} />;
+  const { path, url, tags, onClickAddTag, createTag, push } = props;
 
   const tagListItems = tags.map(tag => (
     <Mui.ListItem
@@ -27,7 +24,7 @@ function DrawerContentPres(props) {
       selected={url === `/tags/${tag.id}`}
       button
       dense
-      component={renderLink(`/tags/${tag.id}`)}
+      onClick={() => push(`/tags/${tag.id}`)}
     >
       <Mui.ListItemIcon>
         <Label />
@@ -42,7 +39,7 @@ function DrawerContentPres(props) {
         <Mui.ListItem>
           <Mui.Button
             variant="extendedFab"
-            component={renderLink('/recipes/create')}
+            onClick={() => push('/recipes/create')}
           >
             <Mui.Icon>
               <Add />
@@ -56,7 +53,7 @@ function DrawerContentPres(props) {
           selected={path === '/recipes/mine'}
           dense
           button
-          component={renderLink('/recipes/mine')}
+          onClick={() => push('/recipes/mine')}
         >
           <Mui.ListItemIcon>
             <PlateIcon />
@@ -67,7 +64,7 @@ function DrawerContentPres(props) {
           selected={path === '/recipes'}
           dense
           button
-          component={renderLink('/recipes')}
+          onClick={() => push('/recipes')}
         >
           <Mui.ListItemIcon>
             <Group />
@@ -91,7 +88,7 @@ function DrawerContentPres(props) {
           selected={path === '/about'}
           button
           dense
-          component={renderLink('/about')}
+          onClick={() => push('/about')}
         >
           <Mui.ListItemIcon>
             <HelpOutline />

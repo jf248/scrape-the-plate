@@ -39,7 +39,7 @@ const mapStateToProps = (state, ownProps) => {
   const resource = state.crud.resources[resourceName];
 
   return {
-    record: resource && resource.data[id],
+    record: resource.data[id],
     isLoading: state.crud.loading > 0,
   };
 };
