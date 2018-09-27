@@ -10,7 +10,7 @@ import ListPres from './ListPres';
 function List(props) {
   const { variant, searchQuery, tagId } = props;
 
-  const getInitialParams = userId => {
+  const getInitialParams = (userId = -1) => {
     let params = { page: 1, perPage: 12 };
     switch (variant) {
       case 'search':
@@ -34,7 +34,7 @@ function List(props) {
     const { push } = routePush;
     const { filter, page, perPage } = params;
 
-    const setPage = page => goFetch({ page });
+    const setPage = page => goFetch({ ...params, page });
 
     return (
       <ListPres
