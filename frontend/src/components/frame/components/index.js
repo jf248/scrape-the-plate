@@ -8,3 +8,4 @@ export { default as MaxWidth } from './MaxWidth';
 export { default as Progress } from './Progress';
 export { default as Search } from './Search';
 export { default as Snackbar } from './Snackbar';
+export { default as TagListItem } from './Snackbar';

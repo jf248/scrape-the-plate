@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { renderProps } from 'lib/react-powerplug';
@@ -6,16 +7,35 @@ import { renderProps } from 'lib/react-powerplug';
 import { getOne, update, destroy } from './actions';
 
 class Record extends React.Component {
+  static defaultProps = {
+    autoFetch: 'noData',
+  };
+
+  static propTypes = {
+    autoFetch: PropTypes.oneOf(['never', 'always', 'noData']),
+  };
+
   componentDidMount() {
-    const { lazy, goFetch } = this.props;
-    !lazy && goFetch();
+    const { autoFetch, goFetch, id, record } = this.props;
+    if (!id) {
+      return;
+    }
+    if (autoFetch === 'always') {
+      goFetch();
+      return;
+    }
+    if (autoFetch === 'noData' && !record) {
+      goFetch();
+      return;
+    }
   }
 
   componentDidUpdate(prevProps) {
-    const { lazy, goFetch } = this.props;
+    const { autoFetch, goFetch, id } = this.props;
     const propsToCheck = ['resource', 'id'];
     if (
-      !lazy &&
+      autoFetch !== 'never' &&
+      id &&
       propsToCheck.some(prop => prevProps[prop] !== this.props[prop])
     ) {
       goFetch();
@@ -23,13 +43,12 @@ class Record extends React.Component {
   }
 
   render() {
-    const { record, goFetch, update, destroy, isLoading } = this.props;
+    const { record, goFetch, update, destroy } = this.props;
     return renderProps(this.props, {
       record,
       goFetch,
       update,
       destroy,
-      isLoading,
     });
   }
 }
@@ -40,7 +59,6 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     record: resource.data[id],
-    isLoading: state.crud.loading > 0,
   };
 };
 
@@ -61,9 +79,5 @@ const Connected = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Record);
-
-Connected.defaultProps = {
-  lazy: false,
-};
 
 export default Connected;

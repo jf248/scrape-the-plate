@@ -35,7 +35,6 @@ function Route(props) {
 
   const query = path === SEARCH_PATH ? match.params.query : '';
   const variant = path === SEARCH_PATH ? 'back' : 'default';
-  const { url } = match;
 
   const renderFunc = ({ push }) => {
     const onGoBack = () => push('/recipes');
@@ -45,7 +44,7 @@ function Route(props) {
         onGoBack={onGoBack}
         variant={variant}
         title={title}
-        drawerContent={<DrawerContent path={path} url={url} />}
+        drawerContent={<DrawerContent />}
         barProgress={<Progress />}
         barRight={<LoginButton />}
         barLeft={<Search query={query} />}

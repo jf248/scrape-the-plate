@@ -11,14 +11,6 @@ import { reducer as idsReducer } from './ids';
 import { reducer as totalReducer } from './total';
 import { reducer as paramsReducer } from './params';
 
-const paramsInitialState = {
-  sort: null,
-  order: null,
-  page: 1,
-  perPage: 12,
-  filter: {},
-};
-
 const composed = (reducer, initialState, resourceName) =>
   compose(
     withInitialState(initialState),
@@ -30,5 +22,5 @@ export const reducer = resourceName =>
   combineReducers({
     ids: composed(idsReducer, [], resourceName),
     total: composed(totalReducer, 0, resourceName),
-    params: composed(paramsReducer, paramsInitialState, resourceName),
+    params: composed(paramsReducer, {}, resourceName),
   });

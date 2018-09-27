@@ -2,7 +2,7 @@ import React from 'react';
 import { ButtonBase, Card, Typography, withStyles } from '@material-ui/core';
 
 import { Source, Time, SubheadingItem } from 'components/common';
-import Tags from './Tags';
+import Tag from './Tag';
 
 const styles = theme => ({
   root: {
@@ -42,14 +42,14 @@ const styles = theme => ({
   },
 });
 
-ListItem.defaultProps = {
-  recipe: {},
+ListItemPres.defaultProps = {
+  record: {},
 };
 
-function ListItem({ classes, recipe, onClick }) {
-  const { cook_time, notes, prep_time, preparation, tags, title } = recipe;
+function ListItemPres({ classes, record, onClick }) {
+  const { cook_time, notes, prep_time, preparation, tags, title } = record;
 
-  if (!recipe) {
+  if (!record) {
     return null;
   }
 
@@ -62,7 +62,7 @@ function ListItem({ classes, recipe, onClick }) {
               {title}
             </Typography>
             <Typography variant={'caption'} className={classes.oneLine}>
-              <Source recipe={recipe} />
+              <Source recipe={record} />
             </Typography>
             <Typography variant={'caption'} className={classes.oneLine}>
               {prep_time && (
@@ -77,7 +77,9 @@ function ListItem({ classes, recipe, onClick }) {
               )}
             </Typography>
             <Typography variant={'caption'} className={classes.oneLine}>
-              <Tags {...{ tags }} />
+              {tags.map(id => (
+                <Tag {...{ key: id, id }} />
+              ))}
             </Typography>
           </div>
           <Typography variant={'body1'}>
@@ -89,4 +91,4 @@ function ListItem({ classes, recipe, onClick }) {
   );
 }
 
-export default withStyles(styles)(ListItem);
+export default withStyles(styles)(ListItemPres);

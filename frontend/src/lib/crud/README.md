@@ -12,6 +12,7 @@
      list: {
        ids: [ ... ]
        total: number
+       params: {}
      }
    }
  }

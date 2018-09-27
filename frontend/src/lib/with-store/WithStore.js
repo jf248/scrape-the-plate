@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { renderProps } from 'lib/react-powerplug';
 
 function WithStore(props) {
-  const { children, render, actionCreators, ...rest } = props; // eslint-disable-line no-unused-vars
+  const { children, render, actionCreators, selector, ...rest } = props; // eslint-disable-line no-unused-vars
   return renderProps({ children, render }, rest);
 }
 

@@ -27,16 +27,7 @@ class ListPres extends React.PureComponent {
   };
 
   render() {
-    const {
-      classes,
-      data,
-      ids,
-      page,
-      perPage,
-      push,
-      setPage,
-      total,
-    } = this.props;
+    const { classes, ids, page, perPage, push, setPage, total } = this.props;
 
     if (ids.length === 0) {
       return (
@@ -61,7 +52,7 @@ class ListPres extends React.PureComponent {
         <AppContent className={classes.content}>
           <div className={classes.list}>
             {ids.map(id => (
-              <ListItem {...{ recipe: data[id], key: id }} />
+              <ListItem {...{ key: id, id }} />
             ))}
           </div>
           <AppFabButton

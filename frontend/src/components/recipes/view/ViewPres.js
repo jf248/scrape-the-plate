@@ -12,7 +12,7 @@ import {
   Preparation,
   Subheading,
   Title,
-  Tags,
+  Tag,
 } from './components';
 
 const styles = theme => ({
@@ -99,7 +99,9 @@ function ViewPres(props) {
           </SubheadingItem>
         )}
       </Subheading>
-      <Tags {...{ tags }} />
+      {tags.map(id => (
+        <Tag {...{ key: id, id }} />
+      ))}
       <Divider className={classes.divider} />
       <Content
         notes={notes}

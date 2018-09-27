@@ -1,81 +1,55 @@
 import React from 'react';
 import * as Mui from '@material-ui/core';
 import Add from '@material-ui/icons/Add';
-import Label from '@material-ui/icons/Label';
 import HelpOutline from '@material-ui/icons/HelpOutline';
 import Group from '@material-ui/icons/Group';
 
+import * as Tags from 'components/tags';
+import * as Common from 'components/common';
 import { PlateIcon } from 'components/icons';
+import * as C from './components';
 
 const styles = () => ({
   root: {},
 });
 
 DrawerContentPres.defaultProps = {
-  tags: [],
+  tagIds: [],
 };
 
 function DrawerContentPres(props) {
-  const { path, url, tags, onClickAddTag, createTag, push } = props;
-
-  const tagListItems = tags.map(tag => (
-    <Mui.ListItem
-      key={tag.id}
-      selected={url === `/tags/${tag.id}`}
-      button
-      dense
-      onClick={() => push(`/tags/${tag.id}`)}
-    >
-      <Mui.ListItemIcon>
-        <Label />
-      </Mui.ListItemIcon>
-      <Mui.ListItemText primary={tag.name} />
-    </Mui.ListItem>
-  ));
+  const { onAddTag, getModalProps } = props;
 
   return (
     <React.Fragment>
       <Mui.List>
         <Mui.ListItem>
-          <Mui.Button
-            variant="extendedFab"
-            onClick={() => push('/recipes/create')}
-          >
+          <C.Button to={'/recipes/create'} variant="extendedFab">
             <Mui.Icon>
               <Add />
             </Mui.Icon>
             {'Add a recipe'}
-          </Mui.Button>
+          </C.Button>
         </Mui.ListItem>
       </Mui.List>
       <Mui.List subheader={<Mui.ListSubheader>{'Recipes'}</Mui.ListSubheader>}>
-        <Mui.ListItem
-          selected={path === '/recipes/mine'}
-          dense
-          button
-          onClick={() => push('/recipes/mine')}
-        >
+        <C.ListItem to={'/recipes/mine'} dense button>
           <Mui.ListItemIcon>
             <PlateIcon />
           </Mui.ListItemIcon>
           <Mui.ListItemText primary={'My recipes'} />
-        </Mui.ListItem>
-        <Mui.ListItem
-          selected={path === '/recipes'}
-          dense
-          button
-          onClick={() => push('/recipes')}
-        >
+        </C.ListItem>
+        <C.ListItem to={'/recipes'} dense button>
           <Mui.ListItemIcon>
             <Group />
           </Mui.ListItemIcon>
           <Mui.ListItemText primary={'All recipes'} />
-        </Mui.ListItem>
+        </C.ListItem>
       </Mui.List>
       <Mui.Divider />
       <Mui.List subheader={<Mui.ListSubheader>{'Tags'}</Mui.ListSubheader>}>
-        {tagListItems}
-        <Mui.ListItem dense button onClick={onClickAddTag}>
+        <C.TagList />
+        <Mui.ListItem dense button onClick={onAddTag}>
           <Mui.ListItemIcon>
             <Add />
           </Mui.ListItemIcon>
@@ -84,19 +58,14 @@ function DrawerContentPres(props) {
       </Mui.List>
       <Mui.Divider />
       <Mui.List>
-        <Mui.ListItem
-          selected={path === '/about'}
-          button
-          dense
-          onClick={() => push('/about')}
-        >
+        <C.ListItem to={'/about'} button dense>
           <Mui.ListItemIcon>
             <HelpOutline />
           </Mui.ListItemIcon>
           <Mui.ListItemText primary={'About'} />
-        </Mui.ListItem>
+        </C.ListItem>
       </Mui.List>
-      {createTag}
+      <Common.EditResourceDialog {...getModalProps(Tags.editDialogProps)} />
     </React.Fragment>
   );
 }

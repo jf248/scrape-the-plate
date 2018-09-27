@@ -22,9 +22,9 @@ function ModalController(props) {
     };
 
     const getModalProps = (ownProps = {}) => ({
-      ...ownProps,
-      ...state.props,
       open: state.open,
+      ...state.props,
+      ...ownProps,
       onClose: PowerPlug.callAll(ownProps.onClose, onClose),
     });
 

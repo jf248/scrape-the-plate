@@ -11,27 +11,26 @@ function List(props) {
   const { variant, searchQuery, tagId } = props;
 
   const getInitialParams = userId => {
+    let params = { page: 1, perPage: 12 };
     switch (variant) {
       case 'search':
-        return {
-          filter: { search: searchQuery },
-        };
+        params.filter = { search: searchQuery };
+        break;
       case 'mine':
-        return {
-          filter: { user: userId },
-        };
+        params.filter = { user: userId };
+        break;
       case 'tags':
-        return {
-          filter: { tags: tagId },
-        };
+        params.filter = { tags: tagId };
+        break;
       case 'all':
       default:
-        return { filter: {} };
+        break;
     }
+    return params;
   };
 
   const renderFunc = (auth, recordsMany, routePush) => {
-    const { ids, data, total, params = {}, goFetch } = recordsMany;
+    const { ids, total, params = {}, goFetch } = recordsMany;
     const { push } = routePush;
     const { filter, page, perPage } = params;
 
@@ -40,7 +39,6 @@ function List(props) {
     return (
       <ListPres
         {...{
-          data,
           ids,
           page,
           filter,

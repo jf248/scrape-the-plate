@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import { renderProps } from 'lib/react-powerplug';
@@ -7,37 +8,39 @@ import { getList } from './actions';
 import { deepEqual } from './utils';
 
 class RecordsMany extends React.Component {
+  static defaultProps = {
+    autoFetch: 'always',
+  };
+
+  static propTypes = {
+    autoFetch: PropTypes.oneOf(['never', 'always']),
+  };
+
   componentDidMount() {
-    const { lazy, goFetch, initialParams, params } = this.props;
-    !lazy && goFetch({ ...params, ...initialParams });
+    const { autoFetch, goFetch, initialParams } = this.props;
+    if (autoFetch === 'always') {
+      goFetch(initialParams);
+    }
   }
 
   componentDidUpdate(prevProps) {
-    const { lazy, goFetch, initialParams, params } = this.props;
+    const { autoFetch, goFetch, initialParams } = this.props;
     const propsToCheck = ['resource', 'initialParams'];
     if (
-      !lazy &&
+      autoFetch === 'always' &&
       propsToCheck.some(prop => !deepEqual(prevProps[prop], this.props[prop]))
     ) {
-      goFetch({ ...params, ...initialParams });
+      goFetch(initialParams);
     }
   }
 
   render() {
-    const {
-      ids,
-      data,
-      total,
-      params: paramsProp,
-      goFetch,
-      isLoading,
-    } = this.props;
+    const { ids, total, params, goFetch, data } = this.props;
     return renderProps(this.props, {
-      data,
-      goFetch: params => goFetch({ ...paramsProp, ...params }),
+      goFetch,
       ids,
-      isLoading,
-      params: paramsProp,
+      data,
+      params,
       total,
     });
   }
@@ -49,9 +52,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     ids: resource.list.ids,
     total: resource.list.total,
-    data: resource.data,
     params: resource.list.params,
-    isLoading: state.crud.loading > 0,
+    data: resource.data,
   };
 };
 
@@ -67,9 +69,5 @@ const Connected = connect(
   mapStateToProps,
   mapDispatchToProps
 )(RecordsMany);
-
-Connected.defaultProps = {
-  lazy: false,
-};
 
 export default Connected;

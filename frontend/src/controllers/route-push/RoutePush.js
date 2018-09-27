@@ -5,14 +5,19 @@ import { Compose, renderProps } from 'lib/react-powerplug';
 import { WithStore } from 'lib/with-store';
 
 function RoutePush(props) {
-  const renderFunc = ({ push }) => {
-    return renderProps(props, { push });
+  const renderFunc = ({ push, location: { pathname: path } }) => {
+    return renderProps(props, { push, path });
   };
 
   return (
     /* eslint-disable react/jsx-key */
     <Compose
-      components={[<WithStore actionCreators={{ push }} />]}
+      components={[
+        <WithStore
+          selector={state => state.router}
+          actionCreators={{ push }}
+        />,
+      ]}
       render={renderFunc}
     />
     /* eslint-enable react/jsx-key */
